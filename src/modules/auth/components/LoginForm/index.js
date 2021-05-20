@@ -6,7 +6,7 @@ import { UserContext } from '../../../../contexts/UserContext'
 
 function LoginForm() {
     const [formData, setFormData] = useState({ email: '', password: '' })
-    const { setUser } = useContext(UserContext);
+    const { setUser, storeToken } = useContext(UserContext);
     const history = useHistory()
 
     const handleSubmit = async (e) => {
@@ -18,6 +18,7 @@ function LoginForm() {
                 password: password
             })
             setUser(response.data.jwt)
+            storeToken(response.data.jwt)
             history.push(`/user/${response.data.user.id}`);
             console.log('data posted')
         } catch (e) {

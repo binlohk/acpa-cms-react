@@ -4,8 +4,10 @@ import { UserContext } from '../contexts/UserContext';
 
 
 export default function PrivateRoute(props) {
-    const { user, isLoading } = useContext(UserContext);
-    console.log(user, isLoading);
+    // const { user } = useContext(UserContext);
+
+    const user = localStorage.getItem('auth')
+    console.log(user);
 
     const {
         component: Component,

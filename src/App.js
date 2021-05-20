@@ -8,16 +8,17 @@ import PrivateRoute from './services/PrivateRoute'
 import { UserContext } from './contexts/UserContext'
 import useAuth from './hooks/useAuth'
 
-import LoginForm from './components/LoginForm'
-import SignupForm from './components/SignupForm'
-import Home from './components/Home'
-import CourseOverview from './components/CourseOverview'
-import LessonPage from './components/LessonPage'
-import UserProfile from './components/UserProfile'
+import LoginForm from './modules/auth/components/LoginForm'
+import SignupForm from './modules/auth/components/SignupForm'
+import Home from './modules/landingPage/components/Home'
+import CourseOverview from './modules/course/components/CourseOverview'
+import LessonPage from './modules/lesson/components/LessonPage'
+import UserProfile from './modules/user/components/UserProfile'
 
 function App() {
 
   const {
+    storeToken,
     user,
     setUser
   } = useAuth();
@@ -26,7 +27,7 @@ function App() {
   return (
     <div>
       <Router>
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ storeToken, user, setUser }}>
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/login' component={LoginForm} />
