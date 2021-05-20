@@ -4,23 +4,38 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
+import PrivateRoute from './services/PrivateRoute'
+import { UserContext } from './hooks/UserContext'
+import useAuth from './hooks/useAuth'
+
 import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
 import Home from './components/Home'
 import CourseOverview from './components/CourseOverview'
 import LessonPage from './components/LessonPage'
+import UserProfile from './components/UserProfile'
 
 function App() {
+
+  const {
+    user,
+    setUser
+  } = useAuth();
+
+
   return (
     <div>
       <Router>
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/course/:courseId' component={CourseOverview} />
-          <Route exact path='/course/:courseId/lesson/:lessonId' component={LessonPage} />
-          <Route path='/login' component={LoginForm} />
-          <Route path='/signup' component={SignupForm} />
-        </Switch>
+        <UserContext.Provider value={{ user, setUser }}>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route path='/login' component={LoginForm} />
+            <Route path='/signup' component={SignupForm} />
+            <PrivateRoute exact path='/course/:courseId' component={CourseOverview} />
+            <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
+            <PrivateRoute exact path='/user/:userId' component={UserProfile} />
+          </Switch>
+        </UserContext.Provider>
       </Router>
     </div>
   );
