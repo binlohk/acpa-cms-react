@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../hooks/UserContext'
+import { UserContext } from '../../../../contexts/UserContext'
 
 function LoginForm() {
     const [formData, setFormData] = useState({ email: '', password: '' })
@@ -18,7 +18,7 @@ function LoginForm() {
                 password: password
             })
             setUser(response.data.jwt)
-            history.push(`/userId/${response.data.user.id}`);
+            history.push(`/user/${response.data.user.id}`);
             console.log('data posted')
         } catch (e) {
             console.log(e)

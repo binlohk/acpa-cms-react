@@ -5,7 +5,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import PrivateRoute from './services/PrivateRoute'
-import { UserContext } from './hooks/UserContext'
+import { UserContext } from './contexts/UserContext'
 import useAuth from './hooks/useAuth'
 
 import LoginForm from './components/LoginForm'
@@ -33,7 +33,7 @@ function App() {
             <Route path='/signup' component={SignupForm} />
             <PrivateRoute exact path='/course/:courseId' component={CourseOverview} />
             <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
-            <PrivateRoute exact path='/user/:userId' component={UserProfile} />
+            <PrivateRoute exact path='/user/:userId' user={user} component={UserProfile} />
           </Switch>
         </UserContext.Provider>
       </Router>

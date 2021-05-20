@@ -1,9 +1,10 @@
 import React from 'react'
 
-function UserProfile() {
+function UserProfile({ user }) {
     return (
         <div>
             User profile
+            {user}
         </div>
     )
 }
