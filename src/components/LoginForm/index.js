@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../hooks/UserContext'
 
 function LoginForm() {
     const [formData, setFormData] = useState({ email: '', password: '' })
+    const { setUser } = useContext(UserContext);
+    const history = useHistory()
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         const { email, password } = formData
@@ -12,16 +17,20 @@ function LoginForm() {
                 identifier: email,
                 password: password
             })
-            console.log('data posted', response.data)
+            setUser(response.data.jwt)
+            history.push(`/userId/${response.data.user.id}`);
+            console.log('data posted')
         } catch (e) {
             console.log(e)
         }
+
     }
 
 
     const handleChange = async (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
+
 
     return (
         <div classNameName='mt-8 mb-6'>
