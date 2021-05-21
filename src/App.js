@@ -32,7 +32,7 @@ function App() {
             <Route exact path='/' component={Home} />
             <Route path='/login' component={LoginForm} />
             <Route path='/signup' component={SignupForm} />
-            <PrivateRoute exact path='/course/:courseId' component={CourseOverview} />
+            <Route exact path='/course/:courseId' component={CourseOverview} />
             <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
             <PrivateRoute exact path='/user/:userId' user={user} component={UserProfile} />
           </Switch>

@@ -6,9 +6,10 @@ import { UserContext } from '../../../../contexts/UserContext'
 import isEmail from 'validator/lib/isEmail';
 
 function LoginForm() {
-    const [formData, setFormData] = useState({ email: '', password: '' })
+    const [formData, setFormData] = useState({ email: 'winnie@binlo.io', password: 'strapiPassword' })
     const [emailError, setEmailError] = useState(false)
-    const { setUser, storeToken } = useContext(UserContext);
+    const [loginError, setLoginError] = useState(false)
+    const { setUser, storeToken, user } = useContext(UserContext);
     const history = useHistory()
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -29,6 +30,7 @@ function LoginForm() {
                 setEmailError(true)
             }
         } catch (e) {
+            setLoginError(true)
             console.log(e)
         }
 
@@ -36,35 +38,39 @@ function LoginForm() {
 
 
     const handleChange = async (e) => {
+        setLoginError(false)
         if (e.target.name === 'email') {
-            isEmail(e.target.value) ? setFormData({ ...formData, [e.target.name]: e.target.value }) : setEmailError(true)
+            isEmail(e.target.value) ? setFormData({ ...formData, [e.target.name]: e.target.value }) && setEmailError(false) : setEmailError(true)
         }
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
+
     const handleBlur = () => {
         setEmailError(false)
     }
 
     return (
-        <div classNameName='mt-8 mb-6'>
+        <div className='mt-8 mb-6'>
             <form className='bg-grey-lighter min-h-screen flex flex-col'>
                 <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>
                     <div className='bg-white px-6 py-8 rounded shadow-md text-black w-full'>
+                        {loginError && <p class="text-red-500 text-xs italic">Invalid email or password please login again</p>}
                         <h1 className='mb-8 text-3xl text-center'>Login</h1>
-
+                        {emailError && <p class="text-red-500 text-xs italic">Please enter valid email.</p>}
                         <input
                             type='text'
                             className='block border border-grey-light w-full p-3 rounded mb-4'
                             name='email'
                             placeholder='Email'
+                            value={formData.email}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
-                        {emailError && <p class="text-red-500 text-xs italic">Please enter valid email.</p>}
                         <input
                             type='password'
                             className='block border border-grey-light w-full p-3 rounded mb-4'
                             name='password'
+                            value={formData.password}
                             placeholder='Password'
                             onChange={handleChange}
                         />
@@ -76,7 +82,7 @@ function LoginForm() {
                     </div>
                     <div className='text-grey-dark mt-6'>
                         Not yet registered?
-                    <Link className='no-underline border-b border-blue text-blue' to='./login'>
+                    <Link className='no-underline border-b border-blue text-blue' to='./signup'>
                             Sign up
                     </Link>.
                 </div>

@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 
 
 export default function PrivateRoute(props) {
     // const { user } = useContext(UserContext);
-
-    const user = localStorage.getItem('auth')
-    console.log(user);
+    const user = localStorage.getItem('accessToken')
+    // console.log(user);
 
     const {
         component: Component,
