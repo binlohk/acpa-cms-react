@@ -3,24 +3,31 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../../../contexts/UserContext'
+import isEmail from 'validator/lib/isEmail';
 
 function LoginForm() {
     const [formData, setFormData] = useState({ email: '', password: '' })
+    const [emailError, setEmailError] = useState(false)
     const { setUser, storeToken } = useContext(UserContext);
     const history = useHistory()
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         const { email, password } = formData
+
         try {
-            const response = await axios.post(`http://localhost:1337/auth/local`, {
-                identifier: email,
-                password: password
-            })
-            setUser(response.data.jwt)
-            storeToken(response.data.jwt)
-            history.push(`/user/${response.data.user.id}`);
-            console.log('data posted')
+            if (isEmail(email)) {
+                const response = await axios.post(`http://localhost:1337/auth/local`, {
+                    identifier: email,
+                    password: password
+                })
+                setUser(response.data.jwt)
+                storeToken(response.data.jwt)
+                history.push(`/user/${response.data.user.id}`);
+                console.log('data posted')
+
+            } else {
+                setEmailError(true)
+            }
         } catch (e) {
             console.log(e)
         }
@@ -29,9 +36,14 @@ function LoginForm() {
 
 
     const handleChange = async (e) => {
+        if (e.target.name === 'email') {
+            isEmail(e.target.value) ? setFormData({ ...formData, [e.target.name]: e.target.value }) : setEmailError(true)
+        }
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
-
+    const handleBlur = () => {
+        setEmailError(false)
+    }
 
     return (
         <div classNameName='mt-8 mb-6'>
@@ -46,8 +58,9 @@ function LoginForm() {
                             name='email'
                             placeholder='Email'
                             onChange={handleChange}
+                            onBlur={handleBlur}
                         />
-
+                        {emailError && <p class="text-red-500 text-xs italic">Please enter valid email.</p>}
                         <input
                             type='password'
                             className='block border border-grey-light w-full p-3 rounded mb-4'
