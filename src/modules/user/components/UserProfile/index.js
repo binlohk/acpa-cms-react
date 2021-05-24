@@ -13,7 +13,7 @@ function UserProfile({ user }) {
                 const token = getToken()
                 const decodedPayload = jwt.decode(token);
                 const currentTime = Date.now() / 1000
-                if (decodedPayload.exp - currentTime < 86400) {
+                if (decodedPayload.exp === currentTime) {
                     const response = await axios.post(`http://localhost:1337/users-permissions/refreshToken`, {}, {
                         headers: {
                             'Authorization': `Bearer ${token}`

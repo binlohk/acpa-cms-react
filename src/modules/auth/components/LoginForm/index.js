@@ -6,7 +6,7 @@ import { UserContext } from '../../../../contexts/UserContext'
 import isEmail from 'validator/lib/isEmail';
 
 function LoginForm() {
-    const [formData, setFormData] = useState({ email: 'winnie@binlo.io', password: 'strapiPassword' })
+    const [formData, setFormData] = useState({ email: 'wongw859@gmail.com', password: 'strapiPassword' })
     const [emailError, setEmailError] = useState(false)
     const [loginError, setLoginError] = useState(false)
     const { setUser, storeToken, user } = useContext(UserContext);
