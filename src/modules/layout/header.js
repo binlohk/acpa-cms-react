@@ -1,54 +1,70 @@
 import { Fragment } from 'react'
-import Logo from '../../assets/images/KLLogo-removebg.png'
+import Logo from '../../assets/images/KL-logo.png'
+import LogoName from '../../assets/images/KL-logo-name.png'
+import { Link } from 'react-router-dom';
 import { Popover, Transition } from '@headlessui/react'
 import {
     MenuIcon,
   } from '@heroicons/react/outline'
   
   
-  export default function Header() {
+const customStyles = {
+    backgroundColor: "#513A54",
+    color: "#A5924B",
+}
+
+//https://tailwindui.com/components/marketing/elements/headers#component-4aecba5307ec332096ad99f2b688a56d
+
+const Header = ()=>{
     return (
-      <Popover className="relative bg-yellow-300 bg-opacity-70">
+      <Popover className="relative bg-opacity-70" style={customStyles}>
         {({ open }) => (
           <>
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
               <div className="flex justify-between items-center border-b-2 border-transparent py-1 md:justify-start md:space-x-10">
                 <div className="flex justify-start lg:w-0 lg:flex-1">
-                  <a href="#">
+                  <Link to="/" className="flex items-center">
                     <span className="sr-only">Workflow</span>
                     <img
-                      className="h-8 w-auto sm:h-10"
+                      className="w-auto sm:h-10"
                       src={Logo}
-                    //   style={{height: '50px'}}
+                      style={{height: '30px'}}
                       alt=""
                     />
-                  </a>
+                    <img
+                      className="w-auto "
+                      src={LogoName}
+                      style={{height: '20px'}}
+                      alt=""
+                    />
+                  </Link>
                 </div>
 
                 {/* mobile toggle */}
                 <div className="-mr-2 -my-2 md:hidden">
-                  <Popover.Button className="bg-yellow-300 bg-opacity-70 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                  <Popover.Button style={{backgroundColor:"#513A54"}} className="bg-opacity-70 rounded-md p-2 inline-flex items-center justify-center hover:text-yellow-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                     <span className="sr-only">Open menu</span>
                     <MenuIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
                 </div>
+                {/* mobile toggle */}
 
                 <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-                  <a href="#" className="text-xs font-medium text-gray-500 hover:text-gray-900 ml-6">
+                  <Link to="/courses" className="text-xs font-bold hover:text-yellow-500 ml-6">
                     所有課程
-                  </a>
-                  <a href="#" className="text-xs font-medium text-gray-500 hover:text-gray-900 ml-6">
+                  </Link>
+                  <Link to="/courses" className="text-xs font-bold hover:text-yellow-500 ml-6">
                     我的課程
-                  </a>
-                  <a href="#" className="whitespace-nowrap text-xs font-medium text-gray-500 hover:text-gray-900 ml-6">
+                  </Link>
+                  <Link to="/signup" className="whitespace-nowrap text-xs font-bold hover:text-yellow-500 ml-6">
                     注冊
-                  </a>
-                  <a
-                    href="#"
-                    className="ml-6 whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                  </Link>
+                  <Link
+                    to="/login"
+                    className="ml-6 whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow-sm text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700"
                   >
                     登入
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -71,26 +87,26 @@ import {
                 <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
                   <div className="py-3 px-5 space-y-6">
                     <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                      <a href="#" className="text-xs font-medium text-gray-900 hover:text-gray-700">
-                        Pricing
-                      </a>
+                      <Link to="/courses" className="text-xs text-center font-medium text-gray-900 hover:text-gray-700">
+                      所有課程
+                      </Link>
   
-                      <a href="#" className="text-xs font-medium text-gray-900 hover:text-gray-700">
-                        Docs
-                      </a>
+                      <Link to="/courses" className="text-xs text-center font-medium text-gray-900 hover:text-gray-700">
+                      我的課程
+                      </Link>
                     </div>
                     <div>
-                      <a
-                        href="#"
+                      <Link
+                        to="/signup"
                         className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                       >
-                        Sign up
-                      </a>
+                        注冊
+                      </Link>
                       <p className="mt-6 text-center text-xs font-medium text-gray-500">
-                        Existing customer?{' '}
-                        <a href="#" className="text-indigo-600 hover:text-indigo-500">
-                          Sign in
-                        </a>
+                        現有用戶?{' '}
+                        <Link to="/login" className="text-indigo-600 hover:text-indigo-500">
+                          登入
+                        </Link>
                       </p>
                     </div>
                   </div>
@@ -102,3 +118,5 @@ import {
       </Popover>
     )
   }
+
+  export default Header;

@@ -27,13 +27,13 @@ function App() {
 
   return (
     <div>
-      <Header />
       <Router>
         <UserContext.Provider value={{ storeToken, user, setUser }}>
+          <Header/>
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/login' component={LoginForm} />
-            <Route path='/signup' component={SignupForm} />
+            <Route exact path='/login' component={LoginForm} />
+            <Route exact path='/signup' component={SignupForm} />
             <Route exact path='/course/:courseId' component={CourseOverview} />
             <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
             <PrivateRoute exact path='/user/:userId' user={user} component={UserProfile} />
