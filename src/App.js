@@ -12,7 +12,7 @@ import Header from './modules/layout/header'
 import LoginForm from './modules/auth/components/LoginForm'
 import SignupForm from './modules/auth/components/SignupForm'
 import Home from './modules/landingPage/components/Home'
-import CourseOverview from './modules/course/components/CourseOverview'
+import Course from './modules/course/components/CourseOverview/course'
 import LessonPage from './modules/lesson/components/LessonPage'
 import UserProfile from './modules/user/components/UserProfile'
 
@@ -34,7 +34,7 @@ function App() {
             <Route exact path='/' component={Home} />
             <Route exact path='/login' component={LoginForm} />
             <Route exact path='/signup' component={SignupForm} />
-            <Route exact path='/course/:courseId' component={CourseOverview} />
+            <Route exact path='/course/:courseId' component={Course} />
             <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
             <PrivateRoute exact path='/user/:userId' user={user} component={UserProfile} />
           </Switch>
