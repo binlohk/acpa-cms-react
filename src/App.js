@@ -7,7 +7,7 @@ import {
 import PrivateRoute from './services/PrivateRoute'
 import { UserContext } from './contexts/UserContext'
 import useAuth from './hooks/useAuth'
-
+import { storeToken } from './services/authService'
 import Header from './modules/layout/header'
 import LoginForm from './modules/auth/components/LoginForm'
 import SignupForm from './modules/auth/components/SignupForm'
@@ -19,15 +19,15 @@ import UserProfile from './modules/user/components/UserProfile'
 function App() {
 
   const {
-    storeToken,
     user,
     setUser
   } = useAuth();
 
 
+
   return (
     <div>
-      <Header/>
+      <Header />
       <Router>
         <UserContext.Provider value={{ storeToken, user, setUser }}>
           <Switch>
