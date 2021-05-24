@@ -8,6 +8,7 @@ import PrivateRoute from './services/PrivateRoute'
 import { UserContext } from './contexts/UserContext'
 import useAuth from './hooks/useAuth'
 
+import Header from './modules/layout/header'
 import LoginForm from './modules/auth/components/LoginForm'
 import SignupForm from './modules/auth/components/SignupForm'
 import Home from './modules/landingPage/components/Home'
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <div>
+      <Header/>
       <Router>
         <UserContext.Provider value={{ storeToken, user, setUser }}>
           <Switch>
