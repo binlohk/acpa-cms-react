@@ -119,7 +119,12 @@ const Course = ( props ) => {
                         <div className="text-2xl border-b-4">課程價錢</div>
                         <p className='py-6'>${courseData.price}</p>
                         <div className="text-2xl border-b-4">課程內容</div>
-                        {courseData.lessonsDetail.map((lesson, key)=><LessonCard key={key}/>)}
+                        {courseData.lessonsDetail.map((lesson, id)=>
+                            <div key={`lesson-${id}`}>
+                                <input type="checkbox" class="checked:bg-blue-600 checked:border-transparent"/>
+                                <LessonCard />
+                            </div>
+                        )}
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         Item Two
