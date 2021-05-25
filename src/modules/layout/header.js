@@ -6,9 +6,9 @@ import LogoName from '../../assets/images/KL-logo-name.png'
 import { Link } from 'react-router-dom';
 import { Popover, Transition } from '@headlessui/react'
 import {
-  MenuIcon,
+  MenuIcon
 } from '@heroicons/react/outline'
-
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const customStyles = {
   backgroundColor: "#513A54",
@@ -73,19 +73,23 @@ const Header = () => {
                 <Link to="/signup" className="whitespace-nowrap text-xs font-bold hover:text-yellow-500 ml-6">
                   注冊
                   </Link>
-                {
-                  user.id !== '' ?
+                {user.id !== '' ?
+                  <>
+                    <Link to={`/user/${user.id}`} className="hover:text-yellow-500 ml-6">
+                      <AccountCircleIcon className='text-xl' />
+                    </Link>
                     <button
                       onClick={handleLogout}
                       className="ml-6 whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700">
                       <span>登出</span>
                     </button>
-                    :
-                    <Link
-                      to="/login"
-                      className="ml-6 whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow-sm text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700"
-                    >
-                      登入
+                  </>
+                  :
+                  <Link
+                    to="/login"
+                    className="ml-6 whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow-sm text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    登入
                   </Link>
 
                 }
