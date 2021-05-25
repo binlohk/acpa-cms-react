@@ -5,6 +5,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import PrivateRoute from './services/PrivateRoute'
+import AuthRoute from './services/AuthRoute'
 import { UserContext } from './contexts/UserContext'
 import useAuth from './hooks/useAuth'
 import { storeToken } from './services/authService'
@@ -23,23 +24,21 @@ function App() {
     setUser
   } = useAuth();
 
-
-
   return (
     <div>
-      <Router>
-        <UserContext.Provider value={{ storeToken, user, setUser }}>
-          <Header/>
+      <UserContext.Provider value={{ storeToken, user, setUser }}>
+        <Router>
+          <Header />
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route exact path='/login' component={LoginForm} />
-            <Route exact path='/signup' component={SignupForm} />
+            <AuthRoute exact path='/login' component={LoginForm} />
+            <AuthRoute exact path='/signup' component={SignupForm} />
             <Route exact path='/course/:courseId' component={Course} />
             <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
-            <PrivateRoute exact path='/user/:userId' user={user} component={UserProfile} />
+            <PrivateRoute exact path='/user/:userId' component={UserProfile} />
           </Switch>
-        </UserContext.Provider>
-      </Router>
+        </Router>
+      </UserContext.Provider>
     </div>
   );
 }

@@ -4,49 +4,54 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../../../contexts/UserContext'
 import isEmail from 'validator/lib/isEmail';
+import { storeToken } from '../../../../services/api/authHelper'
 
 function LoginForm() {
     const [formData, setFormData] = useState({ email: 'wongw859@gmail.com', password: 'strapiPassword' })
     const [emailError, setEmailError] = useState(false)
+    const [emailValid, setEmailValid] = useState(false)
     const [loginError, setLoginError] = useState(false)
-    const { setUser, storeToken, user } = useContext(UserContext);
+    const [formErrors, setFormErrors] = useState([{ email: '', password: '' }])
+
+    const { user, setUser } = useContext(UserContext);
     const history = useHistory()
     const handleSubmit = async (e) => {
         e.preventDefault()
         const { email, password } = formData
-
         try {
             if (isEmail(email)) {
                 const response = await axios.post(`http://localhost:1337/auth/local`, {
                     identifier: email,
                     password: password
                 })
-                setUser(response.data.jwt)
+                setUser({
+                    id: response.data.user.id,
+                    email: response.data.user.email,
+                    username: response.data.username
+                })
                 storeToken(response.data.jwt)
                 history.push(`/user/${response.data.user.id}`);
                 console.log('data posted')
-
             } else {
-                setEmailError(true)
+                setEmailValid(true)
             }
         } catch (e) {
             setLoginError(true)
             console.log(e)
         }
-
     }
 
 
     const handleChange = async (e) => {
         setLoginError(false)
         if (e.target.name === 'email') {
-            isEmail(e.target.value) ? setFormData({ ...formData, [e.target.name]: e.target.value }) && setEmailError(false) : setEmailError(true)
+            isEmail(e.target.value) ? setFormData({ ...formData, [e.target.name]: e.target.value }) && setEmailValid(false) : setEmailValid(true)
         }
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
     const handleBlur = () => {
-        setEmailError(false)
+        setEmailValid(false)
     }
 
     return (
@@ -56,7 +61,7 @@ function LoginForm() {
                     <div className='bg-white px-6 py-8 rounded shadow-md text-black w-full'>
                         {loginError && <p class="text-red-500 text-xs italic">Invalid email or password please login again</p>}
                         <h1 className='mb-8 text-3xl text-center'>Login</h1>
-                        {emailError && <p class="text-red-500 text-xs italic">Please enter valid email.</p>}
+                        {emailValid && <p class="text-red-500 text-xs italic">Please enter valid email.</p>}
                         <input
                             type='text'
                             className='block border border-grey-light w-full p-3 rounded mb-4'
@@ -74,10 +79,9 @@ function LoginForm() {
                             placeholder='Password'
                             onChange={handleChange}
                         />
-
                         <button
                             className='w-full text-center py-3 rounded bg-green text-gray-800 hover:bg-green-dark focus:outline-none my-1'
-                            onClick={handleSubmit}
+                            onClick={(handleSubmit)}
                         >Login</button>
                     </div>
                     <div className='text-grey-dark mt-6'>
