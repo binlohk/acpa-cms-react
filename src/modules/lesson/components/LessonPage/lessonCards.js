@@ -13,14 +13,13 @@ import Logo from '../../../../assets/images/KL-logo.png'
 
 const LessonCards = ({ lessonsDetail }) => {
 
-  const initialState = lessonsDetail.map(lesson=>lesson.finished);
-  const [progresses, setProgresses] = useState([false,false]);
+  const initialState = lessonsDetail.map(lesson => lesson.finished);
+  const [progresses, setProgresses] = useState([false, false]);
 
   const handleClick = (event) => {
-    event.preventDefault();
     let newState = [...progresses];
-    newState = newState.map((progress,key)=>{
-      if(key==event.target.name){
+    newState = newState.map((progress, key) => {
+      if (key == event.target.name) {
         return event.target.checked;
       }
       return progress
@@ -31,22 +30,22 @@ const LessonCards = ({ lessonsDetail }) => {
   return (
     <>
       <div>
-        0: {progresses[0]?'true':'false'}
+        0: {progresses[0] ? 'true' : 'false'}
       </div>
       <div>
-        1: {progresses[1]?'true':'false'}
+        1: {progresses[1] ? 'true' : 'false'}
       </div>
-      <input type="checkbox" className="form-checkbox h-5 w-5 text-green-600" checked={progresses[0]} onChange={handleClick} name={0}/>
-      <input type="checkbox" className="form-checkbox h-5 w-5 text-green-600" checked={progresses[1]} onChange={handleClick} name={1}/>
-    {lessonsDetail.map((lesson, id)=>
-      <div key={`lesson-${id}`}>
+      <input type="checkbox" className="form-checkbox h-5 w-5 text-green-600" checked={progresses[0]} onChange={handleClick} name={0} />
+      <input type="checkbox" className="form-checkbox h-5 w-5 text-green-600" checked={progresses[1]} onChange={handleClick} name={1} />
+      {lessonsDetail.map((lesson, id) =>
+        <div key={`lesson-${id}`}>
           <div>{lesson.title}</div>
-          
+
           {/* <label className="inline-flex items-center mt-3">
               <input type="checkbox" className="form-checkbox h-5 w-5 text-green-600" checked={progresses[id]} onChange={handleClick} name={id}/>
           </label> */}
-      </div>
-    )}
+        </div>
+      )}
     </>
   )
 }

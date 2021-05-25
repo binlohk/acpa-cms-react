@@ -53,7 +53,6 @@ function SignupForm() {
                         <h1 className='mb-8 text-3xl text-center'>Sign up</h1>
                         {signupError && <p class="text-red-500 text-xs italic">Email is taken, please try again.</p>}
                         <form
-                            onClick={formik.handleSubmit}
                         >
                             {formik.errors.username && formik.touched.username && <p class="text-red-500 text-xs italic">{formik.errors.username}</p>}
                             <input
@@ -83,6 +82,7 @@ function SignupForm() {
                                 onChange={formik.handleChange}
                             />
                             <button
+                                onClick={formik.handleSubmit}
                                 type='submit'
                                 className='w-full text-center py-3 rounded bg-green text-gray-800 hover:bg-green-dark focus:outline-none my-1'
                             >Create Account</button>

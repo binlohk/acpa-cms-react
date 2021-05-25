@@ -85,7 +85,6 @@ function LoginForm() {
                         <h1 className='mb-8 text-gray-700 text-3xl text-center'>登入</h1>
                         <form
                             className='mb-4'
-                            onClick={formik.handleSubmit}
                         >
                             {formik.errors.email && formik.touched.email && <p class="text-red-500 text-xs italic">{formik.errors.email}</p>}
                             <input
@@ -109,7 +108,7 @@ function LoginForm() {
                                 <input type="checkbox" class="checked:bg-blue-600 checked:border-transparent ..." />
                             </div>
                             <div class="flex items-center justify-between">
-                                <button class="bg-indigo-700 hover:bg-blue-dark text-white font-bold w-full h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline" type="submit">
+                                <button onClick={formik.handleSubmit} class="bg-indigo-700 hover:bg-blue-dark text-white font-bold w-full h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline" type="submit">
                                     按此登入
                                 </button>
                             </div>
