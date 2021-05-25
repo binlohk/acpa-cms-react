@@ -18,7 +18,6 @@ import UserProfile from './modules/user/components/UserProfile'
 function App() {
 
   const {
-    storeToken,
     user,
     setUser
   } = useAuth();
@@ -27,7 +26,7 @@ function App() {
   return (
     <div>
       <Router>
-        <UserContext.Provider value={{ storeToken, user, setUser }}>
+        <UserContext.Provider value={{ user, setUser }}>
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/login' component={LoginForm} />

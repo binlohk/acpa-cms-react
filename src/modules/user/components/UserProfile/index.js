@@ -1,13 +1,14 @@
 import axios from 'axios'
+import { httpClient } from '../../../../services/api/axiosHelper'
 import React, { useEffect } from 'react'
 import useAuth from '../../../../hooks/useAuth'
 import jwt from 'jsonwebtoken';
+import { getToken, storeToken } from '../../../../services/api/authHelper'
 
 function UserProfile({ user }) {
-    const { getToken, storeToken, setUser } = useAuth()
+    const { setUser } = useAuth()
 
     useEffect(() => {
-
         const fetchUserData = async () => {
             try {
                 const token = getToken()
@@ -28,11 +29,7 @@ function UserProfile({ user }) {
                     setUser(user)
                     console.log(user.data, 'user', response.data, 'data')
                 }
-                const user = await axios.get(`http://localhost:1337/users/me`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
+                const user = await httpClient.get(`/users/me`)
                 console.log(user.data, 'user')
 
             } catch (e) {
