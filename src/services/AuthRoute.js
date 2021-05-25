@@ -12,7 +12,7 @@ export default function AuthRoute(props) {
         ...rest
     } = props;
 
-    if (token && user !== undefined || user.id !== '') {
+    if (token && user !== undefined) {
         return <Redirect to={`/user/${user.id}`} />
     } else {
         return (<Route {...rest} render={(props) => (<Component {...props} />)} />)

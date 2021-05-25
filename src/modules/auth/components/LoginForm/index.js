@@ -24,11 +24,11 @@ function LoginForm() {
                     identifier: email,
                     password: password
                 })
-                setUser(({
+                setUser({
                     id: response.data.user.id,
                     email: response.data.user.email,
                     username: response.data.username
-                }))
+                })
                 storeToken(response.data.jwt)
                 history.push(`/user/${response.data.user.id}`);
                 console.log('data posted')

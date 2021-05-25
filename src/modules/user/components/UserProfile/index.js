@@ -1,23 +1,21 @@
 import axios from 'axios'
 import { httpClient } from '../../../../services/api/axiosHelper'
-import React, { useEffect } from 'react'
-import useAuth from '../../../../hooks/useAuth'
+import { UserContext } from '../../../../contexts/UserContext'
+import React, { useEffect, useContext } from 'react'
 import jwt from 'jsonwebtoken';
 import { storeToken, getToken, removeToken } from '../../../../services/authService'
-import { Popover } from '@headlessui/react'
 
 function UserProfile() {
-    const { user, setUser } = useAuth()
+    const { user, setUser } = useContext(UserContext);
     const handleLogout = () => {
         console.log('clicked')
-        // removeToken()
         setUser({
             id: '',
             email: '',
             username: ''
         })
         console.log(user)
-        localStorage.clear();
+        removeToken()
         window.location.href = '/'
     }
     useEffect(() => {
@@ -38,12 +36,11 @@ function UserProfile() {
                             'Authorization': `Bearer ${token}`
                         }
                     })
-                    // setUser({
-                    //     ...user,
-                    //     id: loginUser.data.id,
-                    //     email: loginUser.data.email,
-                    //     username: loginUser.data.username,
-                    // })
+                    setUser({
+                        id: loginUser.data.id,
+                        email: loginUser.data.email,
+                        username: loginUser.data.username,
+                    })
                     // console.log(user.data, 'user', response.data, 'data')
                 }
                 const user = await httpClient.get(`/users/me`)

@@ -35,7 +35,7 @@ function App() {
             <AuthRoute exact path='/signup' component={SignupForm} />
             <Route exact path='/course/:courseId' component={Course} />
             <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
-            <PrivateRoute exact path='/user/:userId' user={user} component={UserProfile} />
+            <PrivateRoute exact path='/user/:userId' component={UserProfile} />
           </Switch>
         </Router>
       </UserContext.Provider>
