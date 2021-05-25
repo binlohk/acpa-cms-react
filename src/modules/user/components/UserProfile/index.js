@@ -7,17 +7,7 @@ import { storeToken, getToken, removeToken } from '../../../../services/authServ
 
 function UserProfile() {
     const { user, setUser } = useContext(UserContext);
-    const handleLogout = () => {
-        console.log('clicked')
-        setUser({
-            id: '',
-            email: '',
-            username: ''
-        })
-        console.log(user)
-        removeToken()
-        window.location.href = '/'
-    }
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -55,11 +45,6 @@ function UserProfile() {
     return (
         <div>
             User profile
-            <button
-                onClick={handleLogout}
-                className="ml-6 whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-                <span>logout</span>
-            </button>
         </div>
     )
 }
