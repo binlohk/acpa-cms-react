@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import PermMediaIcon from '@material-ui/icons/PermMedia';
-import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
+const useStyles = makeStyles(theme => ({
+}));
 
 const TabPanel = (props) => {
     const { children, value, index, ...other } = props;
@@ -40,6 +42,7 @@ function a11yProps(index) {
 }
 
 const Course = ( props ) => {
+
     const courseId = props.match.params.courseId;
 
     const [courseData, setCourseData] = useState(null);
@@ -93,18 +96,23 @@ const Course = ( props ) => {
                 </div>
 
                 <div className='m-6'>
-                    <AppBar position="static" >
-                        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                        <Tab icon={<LibraryBooksIcon />} label="課堂概覽" {...a11yProps(0)} wrapped/>
-                        <Tab icon={<PermMediaIcon/>} label="課堂材料" {...a11yProps(1)} wrapped/>
+                    <Paper square>
+                        <Tabs value={value} 
+                        onChange={handleChange} 
+                        aria-label="simple tabs example"
+                        indicatorColor="primary"
+                        textColor="primary"
+                        >
+                        <Tab icon={<LibraryBooksIcon />} label="課堂概覽" {...a11yProps(0)} />
+                        <Tab icon={<PermMediaIcon/>} label="課堂材料" {...a11yProps(1)} />
                         </Tabs>
-                    </AppBar>
+                    </Paper>
                     <TabPanel value={value} index={0}>
                         <div className="p-2 text-sm">課程概覽</div>
                         <p>{courseData.description}</p>
                         <p>${courseData.price}</p>
                         <div>課程內容</div>
-                        {courseData.lessonsDetail.map(lesson=><LessonCard/>)}
+                        {courseData.lessonsDetail.map((lesson, key)=><LessonCard key={key}/>)}
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         Item Two
