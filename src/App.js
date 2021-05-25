@@ -5,13 +5,15 @@ import {
   Switch,
 } from 'react-router-dom';
 import PrivateRoute from './services/PrivateRoute'
+import AuthRoute from './services/AuthRoute'
 import { UserContext } from './contexts/UserContext'
 import useAuth from './hooks/useAuth'
-
+import { storeToken } from './services/authService'
+import Header from './modules/layout/header'
 import LoginForm from './modules/auth/components/LoginForm'
 import SignupForm from './modules/auth/components/SignupForm'
 import Home from './modules/landingPage/components/Home'
-import CourseOverview from './modules/course/components/CourseOverview'
+import Course from './modules/course/components/CourseOverview/course'
 import LessonPage from './modules/lesson/components/LessonPage'
 import UserProfile from './modules/user/components/UserProfile'
 
@@ -22,21 +24,21 @@ function App() {
     setUser
   } = useAuth();
 
-
   return (
     <div>
-      <Router>
-        <UserContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider value={{ storeToken, user, setUser }}>
+        <Router>
+          <Header />
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route path='/login' component={LoginForm} />
-            <Route path='/signup' component={SignupForm} />
-            <Route exact path='/course/:courseId' component={CourseOverview} />
+            <AuthRoute exact path='/login' component={LoginForm} />
+            <AuthRoute exact path='/signup' component={SignupForm} />
+            <Route exact path='/course/:courseId' component={Course} />
             <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
             <PrivateRoute exact path='/user/:userId' user={user} component={UserProfile} />
           </Switch>
-        </UserContext.Provider>
-      </Router>
+        </Router>
+      </UserContext.Provider>
     </div>
   );
 }

@@ -7,13 +7,13 @@ import isEmail from 'validator/lib/isEmail';
 import { storeToken } from '../../../../services/api/authHelper'
 
 function LoginForm() {
-    const [formData, setFormData] = useState({ email: 'winnie@binlo.io', password: 'strapiPassword' })
+    const [formData, setFormData] = useState({ email: 'wongw859@gmail.com', password: 'strapiPassword' })
+    const [emailError, setEmailError] = useState(false)
     const [emailValid, setEmailValid] = useState(false)
-    const [passwordValid, setPasswordValid] = useState(false)
     const [loginError, setLoginError] = useState(false)
     const [formErrors, setFormErrors] = useState([{ email: '', password: '' }])
 
-    const { setUser, user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const history = useHistory()
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -24,7 +24,11 @@ function LoginForm() {
                     identifier: email,
                     password: password
                 })
-                setUser(response.data.jwt)
+                setUser(({
+                    id: response.data.user.id,
+                    email: response.data.user.email,
+                    username: response.data.username
+                }))
                 storeToken(response.data.jwt)
                 history.push(`/user/${response.data.user.id}`);
                 console.log('data posted')
@@ -77,7 +81,7 @@ function LoginForm() {
                         />
                         <button
                             className='w-full text-center py-3 rounded bg-green text-gray-800 hover:bg-green-dark focus:outline-none my-1'
-                            onClick={handleSubmit}
+                            onClick={(handleSubmit)}
                         >Login</button>
                     </div>
                     <div className='text-grey-dark mt-6'>
