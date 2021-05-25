@@ -10,8 +10,12 @@ import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import ReactMarkdown from 'react-markdown';
 
 const useStyles = makeStyles(theme => ({
+    paper:{
+        width: '600px',
+    }
 }));
 
 const TabPanel = (props) => {
@@ -43,6 +47,8 @@ function a11yProps(index) {
 
 const Course = ( props ) => {
 
+    const classes = useStyles();
+
     const courseId = props.match.params.courseId;
 
     const [courseData, setCourseData] = useState(null);
@@ -67,7 +73,7 @@ const Course = ( props ) => {
     };
 
     return (
-        <div>
+        <div className='m-6'>
             {courseData &&
             <>
                 <div className="p-2 text-xl">{courseData.title}</div>
@@ -95,8 +101,8 @@ const Course = ( props ) => {
                     </>}
                 </div>
 
-                <div className='m-6'>
-                    <Paper square>
+                <div>
+                    <Paper elevation={3} className={classes.paper}>
                         <Tabs value={value} 
                         onChange={handleChange} 
                         aria-label="simple tabs example"
@@ -108,11 +114,17 @@ const Course = ( props ) => {
                         </Tabs>
                     </Paper>
                     <TabPanel value={value} index={0}>
-                        <div className="p-2 text-sm">課程概覽</div>
-                        <p>{courseData.description}</p>
-                        <p>${courseData.price}</p>
-                        <div>課程內容</div>
-                        {courseData.lessonsDetail.map((lesson, key)=><LessonCard key={key}/>)}
+                        <div className="text-2xl border-b-4">課程概覽</div>
+                        <ReactMarkdown className='py-6'>{courseData.description}</ReactMarkdown>
+                        <div className="text-2xl border-b-4">課程價錢</div>
+                        <p className='py-6'>${courseData.price}</p>
+                        <div className="text-2xl border-b-4">課程內容</div>
+                        {courseData.lessonsDetail.map((lesson, id)=>
+                            <div key={`lesson-${id}`}>
+                                <input type="checkbox" class="checked:bg-blue-600 checked:border-transparent"/>
+                                <LessonCard />
+                            </div>
+                        )}
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         Item Two
