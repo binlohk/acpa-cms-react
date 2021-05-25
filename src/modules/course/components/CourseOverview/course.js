@@ -58,7 +58,6 @@ const Course = ( props ) => {
         const fetchCourseData = async (courseId) => {
             try {
                 const result = await axios.get(`http://localhost:1337/courses/${courseId}`)
-                console.log(result.data)
                 setCourseData(result.data);
             } catch (e) {
                 console.log(e)
