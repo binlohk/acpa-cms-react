@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import isEmail from 'validator/lib/isEmail';
 
@@ -11,12 +12,15 @@ function SignupForm() {
         const { username, email, password } = formData
         try {
             if (isEmail(email)) {
-                await axios.post(`http://localhost:1337/auth/local/register`, {
+                const result = await axios.post(`http://localhost:1337/auth/local/register`, {
                     username: username,
                     email: email,
                     password: password
                 })
-                console.log('data posted')
+                // console.log('data posted')
+                if(result){
+                    window.location.href = '/login'
+                }
             } else {
                 setEmailError(true)
             }
