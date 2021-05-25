@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import LessonCard from '../../../lesson/components/LessonPage/lessonCard'
+import LessonCards from '../../../lesson/components/LessonPage/lessonCards'
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
@@ -31,7 +31,7 @@ const TabPanel = (props) => {
       >
         {value === index && (
           <Box p={3}>
-            <Typography>{children}</Typography>
+            <Typography component={'span'}>{children}</Typography>
           </Box>
         )}
       </div>
@@ -52,6 +52,7 @@ const Course = ( props ) => {
     const courseId = props.match.params.courseId;
 
     const [courseData, setCourseData] = useState(null);
+    const [value, setValue] = useState(0);
 
     useEffect(() => {
         const fetchCourseData = async (courseId) => {
@@ -66,9 +67,8 @@ const Course = ( props ) => {
         fetchCourseData(courseId);
     }, [])
 
-    const [value, setValue] = React.useState(0);
 
-    const handleChange = (event, newValue) => {
+    const handleTabChange = (event, newValue) => {
         setValue(newValue);
     };
 
@@ -104,7 +104,7 @@ const Course = ( props ) => {
                 <div>
                     <Paper elevation={3} className={classes.paper}>
                         <Tabs value={value} 
-                        onChange={handleChange} 
+                        onChange={handleTabChange} 
                         aria-label="simple tabs example"
                         indicatorColor="primary"
                         textColor="primary"
@@ -119,12 +119,7 @@ const Course = ( props ) => {
                         <div className="text-2xl border-b-4">課程價錢</div>
                         <p className='py-6'>${courseData.price}</p>
                         <div className="text-2xl border-b-4">課程內容</div>
-                        {courseData.lessonsDetail.map((lesson, id)=>
-                            <div key={`lesson-${id}`}>
-                                <input type="checkbox" class="checked:bg-blue-600 checked:border-transparent"/>
-                                <LessonCard />
-                            </div>
-                        )}
+                        <LessonCards lessonsDetail={courseData.lessonsDetail}/>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         Item Two
