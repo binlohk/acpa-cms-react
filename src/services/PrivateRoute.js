@@ -20,7 +20,7 @@ export default function PrivateRoute(props) {
                 username: loginUser.data.username,
             })
         })
-    }, [token])
+    }, [])
 
     const {
         component: Component,

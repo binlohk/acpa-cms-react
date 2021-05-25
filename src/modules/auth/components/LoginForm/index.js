@@ -10,7 +10,6 @@ import { storeToken } from '../../../../services/api/authHelper'
 
 function LoginForm() {
     const [loginError, setLoginError] = useState(false)
-
     const { user, setUser } = useContext(UserContext);
     const history = useHistory()
 
@@ -83,14 +82,15 @@ function LoginForm() {
                 <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>
                     <div className='bg-white px-6 py-8 rounded shadow-md text-black w-full'>
                         {loginError && <p class="text-red-500 text-xs italic">Invalid email or password please login again</p>}
-                        <h1 className='mb-8 text-3xl text-center'>Login</h1>
+                        <h1 className='mb-8 text-gray-700 text-3xl text-center'>登入</h1>
                         <form
+                            className='mb-4'
                             onClick={formik.handleSubmit}
                         >
                             {formik.errors.email && formik.touched.email && <p class="text-red-500 text-xs italic">{formik.errors.email}</p>}
                             <input
                                 type='text'
-                                className='block border border-grey-light w-full p-3 rounded mb-4'
+                                className='shadow appearance-none border rounded w-full h-12 py-2 mb-3 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline'
                                 name='email'
                                 placeholder='Email'
                                 value={formik.values.email}
@@ -99,7 +99,7 @@ function LoginForm() {
                             {formik.errors.password && formik.touched.password && <p class="text-red-500 text-xs italic">{formik.errors.password}</p>}
                             <input
                                 type='password'
-                                className='block border border-grey-light w-full p-3 rounded mb-4'
+                                className='shadow appearance-none border rounded w-full h-12 py-2 mb-3 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline'
                                 name='password'
                                 value={formik.values.password}
                                 placeholder='Password'
@@ -108,21 +108,19 @@ function LoginForm() {
                             <div className='w-12 h-auto'>
                                 <input type="checkbox" class="checked:bg-blue-600 checked:border-transparent ..." />
                             </div>
-                            <button
-                                type='submit'
-                                className='w-full text-center py-3 rounded bg-green text-gray-800 hover:bg-green-dark focus:outline-none my-1'
-                            // onClick={handleSubmit}
-                            >
-                                Login
-                            </button>
+                            <div class="flex items-center justify-between">
+                                <button class="bg-indigo-700 hover:bg-blue-dark text-white font-bold w-full h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline" type="submit">
+                                    按此登入
+                                </button>
+                            </div>
                         </form>
                     </div>
                     <div className='text-grey-dark mt-6'>
-                        Not yet registered?
-                    <Link className='no-underline border-b border-blue text-blue' to='./signup'>
-                            Sign up
-                    </Link>.
-                </div>
+                        尚未註冊?
+                    <Link className='ml-2 no-underline border-b-4s' to='./signup'>
+                            按此
+                    </Link>
+                    </div>
                 </div>
             </form>
         </div>
