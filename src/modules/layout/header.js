@@ -1,7 +1,7 @@
 import { Fragment, useContext } from 'react'
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext'
-import { removeToken, getUser } from '../../services/authService'
+import { removeToken } from '../../services/authService'
 import Logo from '../../assets/images/KL-logo.png'
 import { useEffect } from 'react'
 import LogoName from '../../assets/images/KL-logo-name.png'
@@ -20,12 +20,10 @@ const customStyles = {
 //https://tailwindui.com/components/marketing/elements/headers#component-4aecba5307ec332096ad99f2b688a56d
 
 const Header = () => {
-  const history = useHistory()
   const { getUser } = useContext(UserContext);
-  console.log(getUser())
   const handleLogout = () => {
     removeToken()
-    history.push('/')
+    window.location.href = '/'
   }
 
   return (
@@ -71,7 +69,7 @@ const Header = () => {
 
                 {getUser().id != null ?
                   <>
-                    <Link to={`/user/${getUser.id}`} className="hover:text-yellow-500 ml-6">
+                    <Link to={`/user/${getUser().id}`} className="hover:text-yellow-500 ml-6">
                       <AccountCircleIcon className='text-xl' />
                     </Link>
                     <button

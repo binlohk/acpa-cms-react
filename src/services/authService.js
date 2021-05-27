@@ -6,7 +6,7 @@ export const storeToken = (token) => {
 
 export const storeUser = (user) => {
   localStorage.setItem('id', user.id)
-  localStorage.setItem('name', user.username)
+  localStorage.setItem('username', user.username)
   localStorage.setItem('email', user.email)
 }
 

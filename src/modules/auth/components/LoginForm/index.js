@@ -10,7 +10,6 @@ import { storeToken, storeUser } from '../../../../services/authService'
 
 function LoginForm() {
     const [loginError, setLoginError] = useState(false)
-    const history = useHistory()
 
     const formik = useFormik({
         initialValues: {
@@ -36,8 +35,8 @@ function LoginForm() {
                     })
                     storeUser(response.data.user)
                     storeToken(response.data.jwt)
-                    history.push(`/user/${response.data.user.id}`);
-                    console.log('data posted')
+                    window.location.href = `/user/${response.data.user.id}`
+                    // console.log('data posted')
                 }
             } catch (e) {
                 setLoginError(true)

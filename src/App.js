@@ -18,12 +18,10 @@ import LessonPage from './modules/lesson/components/LessonPage'
 import UserProfile from './modules/user/components/UserProfile'
 
 function App() {
-  const { id, username, email } = getUser()
-
   return (
     <div>
-      <UserContext.Provider value={{ storeToken, getUser, id, username, email }}>
-        <Router>
+      <Router>
+        <UserContext.Provider value={{ storeToken, getUser }}>
           <Header />
           <Switch>
             <Route exact path='/' component={Home} />
@@ -33,8 +31,8 @@ function App() {
             <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
             <PrivateRoute exact path='/user/:userId' component={UserProfile} />
           </Switch>
-        </Router>
-      </UserContext.Provider>
+        </UserContext.Provider>
+      </Router>
     </div>
   );
 }
