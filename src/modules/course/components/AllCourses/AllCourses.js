@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { httpClient } from '../../../../services/api/axiosHelper'
 import CourseCard from './CourseCard'
+import CourseTitle from './CourseTitle'
 import { UserContext } from '../../../../contexts/UserContext'
 
 function AllCourses() {
@@ -29,9 +30,8 @@ function AllCourses() {
                 user.id !== null &&
                 (
                     <>
-                        <div className=''>My courses</div>
-                        <div class="flex flex-wrap items-center justify-start max-w-full">
-                            <div className='rounded m-2 p-2 w-40 bg-gray-400 flex flex-col items-center'></div>
+                        <CourseTitle>我的課程</CourseTitle>
+                        <div class="flex flex-wrap items-start justify-start max-w-full">
                             {purchasedCourses.map((item, ind) => {
                                 return (
                                     <CourseCard
@@ -48,8 +48,8 @@ function AllCourses() {
                     </>
                 )
             }
-            <div>All courses</div>
-            <div class="flex flex-wrap items-center justify-start max-w-full">
+            <CourseTitle>所有課程</CourseTitle>
+            <div class="flex flex-wrap items-start justify-start max-w-full">
                 {
                     courses.length > 0 && courses.map((item, ind) => {
                         return (
@@ -68,8 +68,8 @@ function AllCourses() {
                     })
                 }
             </div>
-            <div>Featured courses</div>
-            <div class="flex items-center justify-start">
+            <CourseTitle>推介課程</CourseTitle>
+            <div class="flex items-start justify-start">
                 {
                     featuredCourses.map((item, ind) => {
                         return (
