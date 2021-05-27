@@ -52,7 +52,8 @@ function a11yProps(index) {
 const Course = ( props ) => {
 
     const classes = useStyles();
-    const { user, setUser } = useContext(UserContext);
+    const { getUser } = useContext(UserContext);
+    const user = getUser();
     const courseId = props.match.params.courseId;
 
     const [courseData, setCourseData] = useState(null);
@@ -60,9 +61,9 @@ const Course = ( props ) => {
 
     const fetchCourseData = async (courseId) => {
         try {
-            const result = await axios.get(`http://localhost:1337/courses/${courseId}`)
+            const result = await httpClient.get(`http://localhost:1337/courses/${courseId}`)
             setCourseData(result.data);
-            console.log('hihi')
+            console.log(result.data);
         } catch (e) {
             console.log(e)
         }
@@ -71,9 +72,14 @@ const Course = ( props ) => {
     const updateLessonProgress = async (lessonId, isFinished) => {
         let result;
         try {
-            if(user.id!="" && isFinished){
-                result = await httpClient.post(`/${lessonId}/${user.id}`)
-                console.log(result)
+            if(user.id!="" && user.id!=null){
+                const route = `user-progresses/${lessonId}/${user.id}`;
+                if(isFinished){
+                    result = await httpClient.post(route);
+                } else {
+                    result = await httpClient.delete(route);
+                }
+                console.log(result);
                 await fetchCourseData(courseId);
             }
         } catch (e) {
@@ -137,7 +143,7 @@ const Course = ( props ) => {
                         <div className="text-2xl border-b-4">課程價錢</div>
                         <p className='py-6'>${courseData.price}</p>
                         <div className="text-2xl border-b-4">課程內容</div>
-                        <LessonCards lessonsDetail={courseData.lessonsDetail} progressHandler={updateLessonProgress}/>
+                        <LessonCards lessonsDetail={courseData.lessonsDetail} progressHandler={updateLessonProgress} purchased={courseData.purchased}/>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         Item Two
