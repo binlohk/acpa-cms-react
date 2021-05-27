@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
-import axios from 'axios';
+import React, { useState, useEffect, useContext } from 'react';
 import { httpClient } from '../../../../services/api/axiosHelper';
 import { UserContext } from '../../../../contexts/UserContext';
-import LessonCards from '../../../lesson/components/LessonPage/lessonCards'
+import LessonCards from '../../../lesson/components/LessonPage/lessonCards';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
@@ -13,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ReactMarkdown from 'react-markdown';
-
+import CourseMaterials from '../courseMaterials'
 
 
 const useStyles = makeStyles(theme => ({
@@ -101,6 +100,7 @@ const Course = ( props ) => {
             {courseData &&
             <>
                 <div className="p-2 text-xl">{courseData.title}</div>
+                <img src={`http://localhost:1337${courseData.image.url}`}></img>
                 <div className="rounded m-2 p-2 w-40 bg-gray-400 flex flex-col items-center">
                     {courseData.purchased? 
                     <>
@@ -146,7 +146,7 @@ const Course = ( props ) => {
                         <LessonCards lessonsDetail={courseData.lessonsDetail} progressHandler={updateLessonProgress} purchased={courseData.purchased}/>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        Item Two
+                        <CourseMaterials courseMaterials={courseData.courseMaterials}/>
                     </TabPanel>
                 </div>
             </>
