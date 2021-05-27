@@ -1,5 +1,21 @@
+import jwt from 'jsonwebtoken';
+
 export const storeToken = (token) => {
   localStorage.setItem('accessToken', token)
+}
+
+export const storeUser = (user) => {
+  localStorage.setItem('id', user.id)
+  localStorage.setItem('name', user.username)
+  localStorage.setItem('email', user.email)
+}
+
+export const getUser = () => {
+  return {
+    id: localStorage.getItem('id'),
+    username: localStorage.getItem('username'),
+    email: localStorage.getItem('email')
+  }
 }
 
 export const getToken = () => {

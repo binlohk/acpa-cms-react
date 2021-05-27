@@ -3,10 +3,9 @@ import { httpClient } from '../../../../services/api/axiosHelper'
 import { UserContext } from '../../../../contexts/UserContext'
 import React, { useEffect, useContext } from 'react'
 import jwt from 'jsonwebtoken';
-import { storeToken, getToken, removeToken } from '../../../../services/authService'
+import { storeUser, storeToken, getToken, removeToken } from '../../../../services/authService'
 
 function UserProfile() {
-    const { user, setUser } = useContext(UserContext);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -26,11 +25,7 @@ function UserProfile() {
                             'Authorization': `Bearer ${token}`
                         }
                     })
-                    setUser({
-                        id: loginUser.data.id,
-                        email: loginUser.data.email,
-                        username: loginUser.data.username,
-                    })
+                    storeUser(loginUser.data)
                     // console.log(user.data, 'user', response.data, 'data')
                 }
                 const user = await httpClient.get(`/users/me`)

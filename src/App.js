@@ -8,7 +8,7 @@ import PrivateRoute from './services/PrivateRoute'
 import AuthRoute from './services/AuthRoute'
 import { UserContext } from './contexts/UserContext'
 import useAuth from './hooks/useAuth'
-import { storeToken } from './services/authService'
+import { storeToken, getUser } from './services/authService'
 import Header from './modules/layout/header'
 import LoginForm from './modules/auth/components/LoginForm'
 import SignupForm from './modules/auth/components/SignupForm'
@@ -18,15 +18,11 @@ import LessonPage from './modules/lesson/components/LessonPage'
 import UserProfile from './modules/user/components/UserProfile'
 
 function App() {
-
-  const {
-    user,
-    setUser
-  } = useAuth();
+  const { id, username, email } = getUser()
 
   return (
     <div>
-      <UserContext.Provider value={{ storeToken, user, setUser }}>
+      <UserContext.Provider value={{ storeToken, getUser, id, username, email }}>
         <Router>
           <Header />
           <Switch>

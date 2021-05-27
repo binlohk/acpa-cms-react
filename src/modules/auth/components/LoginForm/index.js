@@ -6,11 +6,10 @@ import { UserContext } from '../../../../contexts/UserContext'
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { storeToken } from '../../../../services/api/authHelper'
+import { storeToken, storeUser } from '../../../../services/authService'
 
 function LoginForm() {
     const [loginError, setLoginError] = useState(false)
-    const { user, setUser } = useContext(UserContext);
     const history = useHistory()
 
     const formik = useFormik({
@@ -35,11 +34,7 @@ function LoginForm() {
                         identifier: email,
                         password: password
                     })
-                    setUser({
-                        id: response.data.user.id,
-                        email: response.data.user.email,
-                        username: response.data.username
-                    })
+                    storeUser(response.data.user)
                     storeToken(response.data.jwt)
                     history.push(`/user/${response.data.user.id}`);
                     console.log('data posted')
@@ -50,31 +45,6 @@ function LoginForm() {
             }
         }
     });
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const { email, password } = formik.values
-        console.log(email, password)
-        try {
-            if (Object.keys(formik.errors).length === 0) {
-                const response = await axios.post(`http://localhost:1337/auth/local`, {
-                    identifier: email,
-                    password: password
-                })
-                setUser({
-                    id: response.data.user.id,
-                    email: response.data.user.email,
-                    username: response.data.username
-                })
-                storeToken(response.data.jwt)
-                history.push(`/user/${response.data.user.id}`);
-                console.log('data posted')
-            }
-        } catch (e) {
-            setLoginError(true)
-            console.log(e)
-        }
-    }
 
     return (
         <div className='mt-8 mb-6'>

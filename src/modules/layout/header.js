@@ -1,7 +1,9 @@
 import { Fragment, useContext } from 'react'
+import { useHistory } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext'
-import { removeToken } from '../../services/authService'
+import { removeToken, getUser } from '../../services/authService'
 import Logo from '../../assets/images/KL-logo.png'
+import { useEffect } from 'react'
 import LogoName from '../../assets/images/KL-logo-name.png'
 import { Link } from 'react-router-dom';
 import { Popover, Transition } from '@headlessui/react'
@@ -18,16 +20,12 @@ const customStyles = {
 //https://tailwindui.com/components/marketing/elements/headers#component-4aecba5307ec332096ad99f2b688a56d
 
 const Header = () => {
-  const { user, setUser } = useContext(UserContext);
-
+  const history = useHistory()
+  const { getUser } = useContext(UserContext);
+  console.log(getUser())
   const handleLogout = () => {
-    setUser({
-      id: '',
-      email: '',
-      username: ''
-    })
     removeToken()
-    window.location.href = '/'
+    history.push('/')
   }
 
   return (
@@ -70,12 +68,10 @@ const Header = () => {
                 <Link to="/courses" className="text-xs font-bold hover:text-yellow-500 ml-6">
                   我的課程
                   </Link>
-                <Link to="/signup" className="whitespace-nowrap text-xs font-bold hover:text-yellow-500 ml-6">
-                  注冊
-                  </Link>
-                {user.id !== '' ?
+
+                {getUser().id != null ?
                   <>
-                    <Link to={`/user/${user.id}`} className="hover:text-yellow-500 ml-6">
+                    <Link to={`/user/${getUser.id}`} className="hover:text-yellow-500 ml-6">
                       <AccountCircleIcon className='text-xl' />
                     </Link>
                     <button
@@ -85,13 +81,17 @@ const Header = () => {
                     </button>
                   </>
                   :
-                  <Link
-                    to="/login"
-                    className="ml-6 whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow-sm text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700"
-                  >
-                    登入
+                  <>
+                    <Link to="/signup" className="whitespace-nowrap text-xs font-bold hover:text-yellow-500 ml-6">
+                      注冊
                   </Link>
-
+                    <Link
+                      to="/login"
+                      className="ml-6 whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow-sm text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      登入
+                  </Link>
+                  </>
                 }
               </div>
             </div>
@@ -124,7 +124,7 @@ const Header = () => {
                       </Link>
                   </div>
                   {
-                    user.id !== '' ?
+                    !getUser().id ?
                       (
                         <button
                           onClick={handleLogout}

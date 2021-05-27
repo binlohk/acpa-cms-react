@@ -1,6 +1,6 @@
 import axios from "axios";
 import jwt from 'jsonwebtoken';
-import { getToken } from '../..//services/api/authHelper'
+import { getToken } from '../../services/authService'
 
 export const httpClient = axios.create({
     baseURL: "http://localhost:1337",
