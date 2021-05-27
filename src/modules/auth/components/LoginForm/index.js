@@ -6,6 +6,7 @@ import { UserContext } from '../../../../contexts/UserContext'
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { storeToken, storeUser } from '../../../../services/authService'
+import Button from '../../../utilComponents/Button'
 
 function LoginForm() {
     const [loginError, setLoginError] = useState(false)
@@ -86,11 +87,14 @@ function LoginForm() {
                                     忘記密碼
                                 </span>
                             </div>
-                            <div class="flex items-center justify-between">
-                                <button onClick={formik.handleSubmit} class="bg-indigo-700 hover:bg-blue-dark text-white font-bold w-full h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline" type="submit">
-                                    按此登入
-                                </button>
-                            </div>
+                            <Button
+                                onClickMethod={formik.handleSubmit}
+                                color={'bg-indigo-700'}
+                                hoverColor={'bg-blue-dark'}
+                                textColor={'text-white'}
+                                buttonText={'按此登入'}
+                            />
+
                         </form>
                     </div>
                     <div className='text-grey-dark mt-6'>
