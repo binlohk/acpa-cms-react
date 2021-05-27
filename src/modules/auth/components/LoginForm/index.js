@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../../../contexts/UserContext'
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { storeToken, storeUser } from '../../../../services/authService'
@@ -46,8 +45,16 @@ function LoginForm() {
     });
 
     return (
-        <div className='mt-8 mb-6'>
-            <form className='bg-grey-lighter min-h-screen flex flex-col'>
+        <div
+            style={{
+                backgroundImage: `url("/law-firm-18.jpg")`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+            }}
+        >
+            <form
+                className='bg-grey-lighter w-full min-h-screen flex flex-col'>
                 <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>
                     <div className='bg-white px-6 py-8 rounded shadow-md text-black w-full'>
                         {loginError && <p class="text-red-500 text-xs italic">Invalid email or password please login again</p>}
@@ -73,8 +80,11 @@ function LoginForm() {
                                 placeholder='Password'
                                 onChange={formik.handleChange}
                             />
-                            <div className='w-12 h-auto'>
-                                <input type="checkbox" class="checked:bg-blue-600 checked:border-transparent ..." />
+                            <div className='w-24 h-auto pb-2'>
+                                <input type="checkbox" />
+                                <span className='pl-2'>
+                                    忘記密碼
+                                </span>
                             </div>
                             <div class="flex items-center justify-between">
                                 <button onClick={formik.handleSubmit} class="bg-indigo-700 hover:bg-blue-dark text-white font-bold w-full h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline" type="submit">
