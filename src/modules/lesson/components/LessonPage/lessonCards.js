@@ -1,29 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../../../../contexts/UserContext';
 
-const LessonCards = ({ lessonsDetail, progressHandler }) => {
-  const [lessons, setLessons] = useState(lessonsDetail);
+const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
+  const { getUser } = useContext(UserContext);
+  const user = getUser();
 
   const handleClick = async (event) => {
     event.target.disabled = true;
     await progressHandler(event.target.id, event.target.checked);
-    const newState = lessons.map((lesson) => {
-      if (lesson.id == event.target.id) {
-        lesson.finished = event.target.checked;
-      }
-      return lesson
-    });
-    setLessons(newState);
     event.target.disabled = false;
   }
 
   return (
     <>
-      {lessonsDetail.map((lesson, keyId) =>
+      {lessonsDetail.map((lesson) =>
         <div key={`lesson-${lesson.id}`}>
           <div>
+            {(user.id && user.id!="" && purchased) &&
             <label className="inline-flex items-center mt-3">
-              <input type="checkbox" className="form-checkbox h-5 w-5 text-green-600" checked={lessons[keyId].finished} onChange={handleClick} id={lesson.id} />
+              <input type="checkbox" className="form-checkbox h-5 w-5 text-green-600" checked={lesson.finished} onChange={handleClick} id={lesson.id} />
             </label>
+            }
             {lesson.title}
           </div>
         </div>
