@@ -1,5 +1,6 @@
 import React from 'react'
-
+import Button from '../../../utilComponents/Button'
+import { Link } from 'react-router-dom';
 
 function CourseCard({ title, price, description, courseId }) {
     return (
@@ -19,6 +20,14 @@ function CourseCard({ title, price, description, courseId }) {
                     <div class="p-4">
                         <p class="text-3xl text-gray-900">{title}</p>
                         <p class="text-gray-700">{description}</p>
+                        <Link>
+                            <Button
+                                color={'bg-indigo-700'}
+                                hoverColor={'bg-blue-dark'}
+                                textColor={'text-white'}
+                                buttonText={'按此登入'}
+                            />
+                        </Link>
                     </div>
                 </div>
             </div>
