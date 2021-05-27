@@ -9,7 +9,7 @@ function CourseCard({ title, price, description, courseId, image }) {
                 <div className="bg-white shadow-xl rounded-lg overflow-hidden border-2 border-gray-300">
                     <div className=" object-cover bg-no-repeat bg-center h-56 pt-4"
                         style={{
-                            backgroundImage: `url("${image}")`
+                            backgroundImage: `url("${image ? image : ''}")`
                         }}>
                         <div className="flex justify-end">
                             <div className='flex items-center bg-yellow-500 w-1/2 h-12 pl-3 rounded-l-lg text-lg'>
@@ -26,7 +26,7 @@ function CourseCard({ title, price, description, courseId, image }) {
                             {description}
                         </p>
                         <div className='pt-2'>
-                            <Link to={`${process.env.BACKEND_SERVER}/course/${courseId}`}>
+                            <Link to={`/course/${courseId}`}>
                                 <Button
                                     color={'bg-gray-700'}
                                     hoverColor={'bg-blue-dark'}

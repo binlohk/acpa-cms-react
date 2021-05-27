@@ -55,50 +55,43 @@ function LoginForm() {
             }}
         >
             <form
+                style={{ background: 'rgba(81,58,84, 0.75)' }}
                 className='bg-grey-lighter w-full min-h-screen flex flex-col'>
                 <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>
                     <div className='bg-white px-6 py-8 rounded shadow-md text-black w-full'>
                         {loginError && <p class="text-red-500 text-xs italic">Invalid email or password please login again</p>}
                         <h1 className='mb-8 text-gray-700 text-3xl text-center'>登入</h1>
-                        <form
-                            className='mb-4'
+                        {formik.errors.email && formik.touched.email && <p class="text-red-500 text-xs italic">{formik.errors.email}</p>}
+                        <input
+                            type='text'
+                            className='shadow appearance-none border rounded w-full h-12 py-2 mb-4 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline'
+                            name='email'
+                            placeholder='Email'
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.password && formik.touched.password && <p class="text-red-500 text-xs italic">{formik.errors.password}</p>}
+                        <input
+                            type='password'
+                            className='shadow appearance-none border rounded w-full h-12 py-2 mb-4 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline'
+                            name='password'
+                            value={formik.values.password}
+                            placeholder='Password'
+                            onChange={formik.handleChange}
+                        />
+                        <Button
+                            onClickMethod={formik.handleSubmit}
+                            color={'bg-indigo-700'}
+                            hoverColor={'bg-blue-dark'}
+                            textColor={'text-white'}
                         >
-                            {formik.errors.email && formik.touched.email && <p class="text-red-500 text-xs italic">{formik.errors.email}</p>}
-                            <input
-                                type='text'
-                                className='shadow appearance-none border rounded w-full h-12 py-2 mb-3 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline'
-                                name='email'
-                                placeholder='Email'
-                                value={formik.values.email}
-                                onChange={formik.handleChange}
-                            />
-                            {formik.errors.password && formik.touched.password && <p class="text-red-500 text-xs italic">{formik.errors.password}</p>}
-                            <input
-                                type='password'
-                                className='shadow appearance-none border rounded w-full h-12 py-2 mb-3 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline'
-                                name='password'
-                                value={formik.values.password}
-                                placeholder='Password'
-                                onChange={formik.handleChange}
-                            />
-                            <div className='w-24 h-auto pb-2'>
-                                <input type="checkbox" />
-                                <span className='pl-2'>
-                                    忘記密碼
-                                </span>
-                            </div>
-                            <Button
-                                onClickMethod={formik.handleSubmit}
-                                color={'bg-indigo-700'}
-                                hoverColor={'bg-blue-dark'}
-                                textColor={'text-white'}
-                            >
-                                按此登入
+                            按此登入
                                 </Button>
-
-                        </form>
+                        <div className='flex justify-center w-full h-auto pt-8'>
+                            忘記密碼
+                            </div>
                     </div>
-                    <div className='text-grey-dark mt-6'>
+                    <div className='text-white mt-6'>
                         尚未註冊?
                     <Link className='ml-2 no-underline border-b-4s' to='./signup'>
                             按此
