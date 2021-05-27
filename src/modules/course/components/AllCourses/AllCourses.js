@@ -13,7 +13,7 @@ function AllCourses() {
         const fetchUserCourses = async () => {
             const response = await httpClient.get(`http://localhost:1337/courses`)
             const data = response.data
-            // console.log(response.data)
+            console.log(response.data)
             setCourses([...data])
             const featured = data.filter(item => item.featured !== false)
             setFeaturedCourses([...featured])
@@ -39,6 +39,7 @@ function AllCourses() {
                                         price={item.price}
                                         description={item.description}
                                         courseId={item.id}
+                                        image={item.image && `http://localhost:1337${item.image.url}`}
                                     />
                                 )
                             })}
@@ -58,6 +59,7 @@ function AllCourses() {
                                     price={item.price}
                                     description={item.description}
                                     courseId={item.id}
+                                    image={item.image && `http://localhost:1337${item.image.url}`}
                                 />
 
                             </>
@@ -77,6 +79,7 @@ function AllCourses() {
                                     price={item.price}
                                     description={item.description}
                                     courseId={item.id}
+                                    image={item.image && `http://localhost:1337${item.image.url}`}
                                 />
 
                             </>
