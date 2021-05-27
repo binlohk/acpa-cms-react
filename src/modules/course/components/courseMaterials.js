@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Button from '../../utilComponents/Button';
 import { UserContext } from '../../../contexts/UserContext';
 
 const CourseMaterials = ({ courseMaterials }) => {
@@ -6,7 +7,7 @@ const CourseMaterials = ({ courseMaterials }) => {
   const user = getUser();
 
   const handleClick = async (event, material) => {
-    window.open(`http://localhost:1337${material.url}`)
+      window.open(`http://localhost:1337${material.url}`);
   }
 
   return (
@@ -18,8 +19,7 @@ const CourseMaterials = ({ courseMaterials }) => {
                 <div key={courseMaterial.id} >
                     <div className="text-2xl border-b-4">{courseMaterial.title}</div>
                     <div className="py-6">{courseMaterial.materialDescription}</div>
-                    {/* <a href={`http://localhost:1337${courseMaterial.material.url}`} download="proposed_file_name">Download</a> */}
-                    <button onClick={(event)=>handleClick(event, courseMaterial.material)}>Download</button>
+                    <Button onClickMethod={(event)=>handleClick(event, courseMaterial.material)}>Download</Button>
                 </div>
                 )}
             </div>
