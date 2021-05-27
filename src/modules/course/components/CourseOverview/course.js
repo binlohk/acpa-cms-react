@@ -146,7 +146,7 @@ const Course = ( props ) => {
                         <LessonCards lessonsDetail={courseData.lessonsDetail} progressHandler={updateLessonProgress} purchased={courseData.purchased}/>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        <CourseMaterials courseMaterials={courseData.courseMaterials}/>
+                        <CourseMaterials courseMaterials={courseData.courseMaterials} purchased={courseData.purchased}/>
                     </TabPanel>
                 </div>
             </>
