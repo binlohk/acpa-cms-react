@@ -46,7 +46,14 @@ function SignupForm() {
     });
 
     return (
-        <div className='mt-8 mb-6'>
+        <div
+            style={{
+                backgroundImage: `url("/law-firm-18.jpg")`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+            }}
+        >
             <form className='bg-grey-lighter min-h-screen flex flex-col'>
                 <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>
                     <div className='bg-white px-6 py-8 rounded shadow-md text-black w-full'>
