@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
+import { httpClient } from '../../../../services/api/axiosHelper';
+import { UserContext } from '../../../../contexts/UserContext';
 import LessonCards from '../../../lesson/components/LessonPage/lessonCards'
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +13,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ReactMarkdown from 'react-markdown';
+
+
 
 const useStyles = makeStyles(theme => ({
     paper:{
@@ -48,21 +52,36 @@ function a11yProps(index) {
 const Course = ( props ) => {
 
     const classes = useStyles();
-
+    const { user, setUser } = useContext(UserContext);
     const courseId = props.match.params.courseId;
 
     const [courseData, setCourseData] = useState(null);
     const [value, setValue] = useState(0);
 
-    useEffect(() => {
-        const fetchCourseData = async (courseId) => {
-            try {
-                const result = await axios.get(`http://localhost:1337/courses/${courseId}`)
-                setCourseData(result.data);
-            } catch (e) {
-                console.log(e)
+    const fetchCourseData = async (courseId) => {
+        try {
+            const result = await axios.get(`http://localhost:1337/courses/${courseId}`)
+            setCourseData(result.data);
+            console.log('hihi')
+        } catch (e) {
+            console.log(e)
+        }
+    };
+
+    const updateLessonProgress = async (lessonId, isFinished) => {
+        let result;
+        try {
+            if(user.id!="" && isFinished){
+                result = await httpClient.post(`/${lessonId}/${user.id}`)
+                console.log(result)
+                await fetchCourseData(courseId);
             }
-        };
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
         fetchCourseData(courseId);
     }, [])
 
@@ -118,7 +137,7 @@ const Course = ( props ) => {
                         <div className="text-2xl border-b-4">課程價錢</div>
                         <p className='py-6'>${courseData.price}</p>
                         <div className="text-2xl border-b-4">課程內容</div>
-                        <LessonCards lessonsDetail={courseData.lessonsDetail}/>
+                        <LessonCards lessonsDetail={courseData.lessonsDetail} progressHandler={updateLessonProgress}/>
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         Item Two
