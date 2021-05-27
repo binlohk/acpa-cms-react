@@ -62,6 +62,7 @@ const Course = ( props ) => {
         try {
             const result = await axios.get(`http://localhost:1337/courses/${courseId}`)
             setCourseData(result.data);
+            console.log('hihi')
         } catch (e) {
             console.log(e)
         }
@@ -70,9 +71,10 @@ const Course = ( props ) => {
     const updateLessonProgress = async (lessonId, isFinished) => {
         let result;
         try {
-            if(isFinished){
+            if(user.id!="" && isFinished){
                 result = await httpClient.post(`/${lessonId}/${user.id}`)
                 console.log(result)
+                await fetchCourseData(courseId);
             }
         } catch (e) {
             console.log(e)
