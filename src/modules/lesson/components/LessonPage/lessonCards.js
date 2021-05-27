@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Lesson from '../../../lesson/components/LessonPage/lesson'
 import { UserContext } from '../../../../contexts/UserContext';
 
 const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
@@ -23,6 +24,7 @@ const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
             }
             {lesson.title}
           </div>
+          <Lesson lessonId={lesson.id}></Lesson>
         </div>
       )}
     </>

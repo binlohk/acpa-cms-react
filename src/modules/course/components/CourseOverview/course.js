@@ -88,7 +88,7 @@ const Course = ( props ) => {
 
     useEffect(() => {
         fetchCourseData(courseId);
-    }, [])
+    }, []);
 
 
     const handleTabChange = (event, newValue) => {
