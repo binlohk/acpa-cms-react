@@ -29,8 +29,9 @@ function AllCourses() {
                 user.id !== null &&
                 (
                     <>
-                        <div>My courses</div>
+                        <div className=''>My courses</div>
                         <div class="flex flex-wrap items-center justify-start max-w-full">
+                            <div className='rounded m-2 p-2 w-40 bg-gray-400 flex flex-col items-center'></div>
                             {purchasedCourses.map((item, ind) => {
                                 return (
                                     <CourseCard

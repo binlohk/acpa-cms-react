@@ -92,8 +92,9 @@ function LoginForm() {
                                 color={'bg-indigo-700'}
                                 hoverColor={'bg-blue-dark'}
                                 textColor={'text-white'}
-                                buttonText={'按此登入'}
-                            />
+                            >
+                                按此登入
+                                </Button>
 
                         </form>
                     </div>

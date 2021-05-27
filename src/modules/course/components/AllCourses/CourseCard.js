@@ -26,9 +26,10 @@ function CourseCard({ title, price, description, courseId, image }) {
                                     color={'bg-gray-700'}
                                     hoverColor={'bg-blue-dark'}
                                     textColor={'text-white'}
-                                    buttonText={'進入課程'}
                                     borderRadius={'rounded-2xl'}
-                                />
+                                >
+                                    進入課程
+                                </Button>
                             </Link>
                         </div>
                     </div>
