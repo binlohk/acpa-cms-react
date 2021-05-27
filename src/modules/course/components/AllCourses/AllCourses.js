@@ -9,26 +9,16 @@ function AllCourses() {
     const [courses, setCourses] = useState([])
     const [purchasedCourses, setPurchasedCourses] = useState([])
     const [featuredCourses, setFeaturedCourses] = useState([])
-    console.log(purchasedCourses.map(item => item.description), 'purchasedCourses')
     useEffect(() => {
         const fetchUserCourses = async () => {
             const response = await httpClient.get(`http://localhost:1337/courses`)
             const data = response.data
             // console.log(response.data)
-            for (let item of data) {
-                setCourses([...courses, item])
-            }
+            setCourses([...data])
             const featured = data.filter(item => item.featured !== false)
-            // console.log(featured)
-            // console.log(response.data)
-            for (let item of featured) {
-                setFeaturedCourses([...featuredCourses, item])
-            }
+            setFeaturedCourses([...featured])
             const purchased = data.filter(item => item.purchased !== false)
-            for (let item of purchased) {
-                setPurchasedCourses([...purchasedCourses, item])
-            }
-            // console.log(purchased)
+            setPurchasedCourses([...purchased])
         }
         fetchUserCourses()
     }, [])
@@ -40,7 +30,7 @@ function AllCourses() {
                 (
                     <>
                         <div>My courses</div>
-                        <div class="flex flexx-wrap items-center justify-start max-w-full">
+                        <div class="flex flex-wrap items-center justify-start max-w-full">
                             {purchasedCourses.map((item, ind) => {
                                 return (
                                     <CourseCard
@@ -57,9 +47,9 @@ function AllCourses() {
                 )
             }
             <div>All courses</div>
-            <div class="flex items-center justify-start">
+            <div class="flex flex-wrap items-center justify-start max-w-full">
                 {
-                    courses.map((item, ind) => {
+                    courses.length > 0 && courses.map((item, ind) => {
                         return (
                             <>
                                 <CourseCard
