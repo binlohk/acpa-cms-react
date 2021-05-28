@@ -91,9 +91,9 @@ function SignupForm() {
                         <button
                             onClick={formik.handleSubmit}
                             type='submit'
-                            className='bg-indigo-700 hover:bg-blue-dark text-white font-bold w-full h-12 py-2 px-4  rounded focus:outline-none focus:shadow-outline'
+                            className='bg-indigo-700 hover:bg-blue-dark text-white font-bold w-full h-12 pt-2 px-4  rounded focus:outline-none focus:shadow-outline'
                         >開戶</button>
-                        <div className='text-center text-sm text-grey-dark mt-4'>
+                        <div className='text-center text-sm text-grey-dark mt-8'>
                             By signing up, you agree to the
                         <Link className='no-underline border-b border-grey-dark text-grey-dark' to='#'>
                                 <span> Terms of Service</span>
@@ -104,10 +104,10 @@ function SignupForm() {
                         </div>
                     </div>
 
-                    <div className='text-grey-dark mt-6'>
+                    <div className='text-white mt-6'>
                         我已經有帳戶
                     <Link className='ml-2 border-b-4s' to='./login'>
-                            按此登入
+                            (按此登入)
                     </Link>
                     </div>
                 </div>

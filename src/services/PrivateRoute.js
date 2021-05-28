@@ -3,6 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 import axios from 'axios'
 import { getUser, storeUser } from '../services/authService'
+import UserLayout from '../modules/layout/UserLayout'
 
 export default function PrivateRoute(props) {
     const token = localStorage.getItem('accessToken')
@@ -24,7 +25,13 @@ export default function PrivateRoute(props) {
     } = props;
 
     if (token && id !== '') {
-        return (<Route {...rest} render={(props) => (<Component {...props} />)} />)
+        return (<Route {...rest} render={(props) => (
+            <UserLayout>
+                <Component {...props} />
+            </UserLayout>
+        )} />
+
+        )
     } else {
         return <Redirect to='/login' />
     }

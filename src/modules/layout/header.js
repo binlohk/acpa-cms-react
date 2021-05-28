@@ -63,12 +63,12 @@ const Header = () => {
                 <Link to="/courses" className="text-xs font-bold hover:text-yellow-500 ml-6">
                   所有課程
                   </Link>
-                <Link to="/courses" className="text-xs font-bold hover:text-yellow-500 ml-6">
-                  我的課程
-                  </Link>
 
                 {getUser().id != null ?
                   <>
+                    <Link to="/my-courses" className="text-xs font-bold hover:text-yellow-500 ml-6">
+                      我的課程
+                  </Link>
                     <Link to={`/user/${getUser().id}`} className="hover:text-yellow-500 ml-6">
                       <AccountCircleIcon className='text-xl' />
                     </Link>

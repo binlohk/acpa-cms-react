@@ -60,7 +60,7 @@ function LoginForm() {
                 <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>
                     <div className='bg-white px-6 py-8 rounded shadow-md text-black w-full'>
                         {loginError && <p class="text-red-500 text-xs italic">Invalid email or password please login again</p>}
-                        <h1 className='mb-8 text-gray-700 text-3xl text-center'>登入</h1>
+                        <h1 className='mb-8 text-gray-700 text-3xl text-center'>歡迎回來</h1>
                         {formik.errors.email && formik.touched.email && <p class="text-red-500 text-xs italic">{formik.errors.email}</p>}
                         <input
                             type='text'
@@ -85,7 +85,7 @@ function LoginForm() {
                             hoverColor={'bg-blue-dark'}
                             textColor={'text-white'}
                         >
-                            按此登入
+                            登入
                                 </Button>
                         <div className='flex justify-center w-full h-auto pt-8'>
                             忘記密碼

@@ -5,49 +5,24 @@ import CourseTitle from './CourseTitle'
 import { UserContext } from '../../../../contexts/UserContext'
 
 function AllCourses() {
-    const { getUser } = useContext(UserContext);
-    const user = getUser();
+
     const [courses, setCourses] = useState([])
-    const [purchasedCourses, setPurchasedCourses] = useState([])
     const [featuredCourses, setFeaturedCourses] = useState([])
     useEffect(() => {
         const fetchUserCourses = async () => {
+            console.log('run')
             const response = await httpClient.get(`http://localhost:1337/courses`)
             const data = response.data
-            console.log(response.data)
+            // console.log(response.data)
             setCourses([...data])
             const featured = data.filter(item => item.featured !== false)
             setFeaturedCourses([...featured])
-            const purchased = data.filter(item => item.purchased !== false)
-            setPurchasedCourses([...purchased])
         }
         fetchUserCourses()
     }, [])
 
     return (
-        <div>
-            {
-                user.id !== null &&
-                (
-                    <>
-                        <CourseTitle>我的課程</CourseTitle>
-                        <div class="flex flex-wrap items-start justify-start max-w-full">
-                            {purchasedCourses.map((item, ind) => {
-                                return (
-                                    <CourseCard
-                                        key-={ind}
-                                        title={item.title}
-                                        price={item.price}
-                                        description={item.description}
-                                        courseId={item.id}
-                                        image={item.image && `http://localhost:1337${item.image.url}`}
-                                    />
-                                )
-                            })}
-                        </div>
-                    </>
-                )
-            }
+        <>
             <CourseTitle>所有課程</CourseTitle>
             <div class="flex flex-wrap items-start justify-start max-w-full">
                 {
@@ -88,7 +63,7 @@ function AllCourses() {
                     })
                 }
             </div>
-        </div>
+        </>
     )
 }
 
