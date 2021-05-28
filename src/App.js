@@ -30,7 +30,7 @@ function App() {
             <AuthRoute exact path='/login' component={LoginForm} />
             <AuthRoute exact path='/signup' component={SignupForm} />
             <PublicRoute exact path='/courses' component={AllCourses} />
-            <PublicRoute exact path='/course/:courseId' component={Course} />
+            <Route exact path='/course/:courseId' component={Course} />
             <PrivateRoute exact path='/my-courses' component={MyCourses} />
             <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
             <PrivateRoute exact path='/user/:userId' component={UserProfile} />

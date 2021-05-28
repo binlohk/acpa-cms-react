@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { httpClient } from '../../../../services/api/axiosHelper'
-import CourseCard from './CourseCard'
+import AllCourseCard from './AllCourseCard'
 import CourseTitle from './CourseTitle'
+import AllCoursesIntro from './AllCoursesIntro'
 import { UserContext } from '../../../../contexts/UserContext'
+import RecommendedCourseCard from './RecommendedCourseCard'
+import SearchBar from '../../../utilComponents/SearchBar'
 
 function AllCourses() {
 
@@ -23,13 +26,37 @@ function AllCourses() {
 
     return (
         <>
+            <SearchBar />
+            <AllCoursesIntro
+                numberOfCourses={courses.length}
+            />
+            <CourseTitle>推介課程</CourseTitle>
+            <div class="flex flex-wrap px-9">
+                {
+                    featuredCourses.map((item, ind) => {
+                        return (
+                            <>
+                                <RecommendedCourseCard
+                                    key-={ind}
+                                    title={item.title}
+                                    price={item.price}
+                                    description={item.description}
+                                    courseId={item.id}
+                                    image={item.image && `http://localhost:1337${item.image.url}`}
+                                />
+
+                            </>
+                        )
+                    })
+                }
+            </div>
             <CourseTitle>所有課程</CourseTitle>
             <div class="flex flex-wrap items-start justify-start max-w-full">
                 {
                     courses.length > 0 && courses.map((item, ind) => {
                         return (
                             <>
-                                <CourseCard
+                                <AllCourseCard
                                     key-={ind}
                                     title={item.title}
                                     price={item.price}
@@ -43,26 +70,7 @@ function AllCourses() {
                     })
                 }
             </div>
-            <CourseTitle>推介課程</CourseTitle>
-            <div class="flex items-start justify-start">
-                {
-                    featuredCourses.map((item, ind) => {
-                        return (
-                            <>
-                                <CourseCard
-                                    key-={ind}
-                                    title={item.title}
-                                    price={item.price}
-                                    description={item.description}
-                                    courseId={item.id}
-                                    image={item.image && `http://localhost:1337${item.image.url}`}
-                                />
 
-                            </>
-                        )
-                    })
-                }
-            </div>
         </>
     )
 }

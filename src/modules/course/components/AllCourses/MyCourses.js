@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { httpClient } from '../../../../services/api/axiosHelper'
-import CourseCard from './CourseCard'
+import MyCourseCard from './MyCourseCard'
 import CourseTitle from './CourseTitle'
 import { UserContext } from '../../../../contexts/UserContext'
 
@@ -21,7 +21,7 @@ function MyCourses() {
     }, [])
 
     return (
-        <div style={{ background: 'linear-gradient(0deg, rgba(81,54,84,1) 0%, rgba(2,0,36,1) 43%, rgba(81,54,84,1) 100%)' }}>
+        <>
             {
                 user.id !== null &&
                 (
@@ -30,7 +30,7 @@ function MyCourses() {
                         <div class="flex flex-wrap items-start justify-start max-w-full">
                             {purchasedCourses.map((item, ind) => {
                                 return (
-                                    <CourseCard
+                                    <MyCourseCard
                                         key-={ind}
                                         title={item.title}
                                         price={item.price}
@@ -44,7 +44,7 @@ function MyCourses() {
                     </>
                 )
             }
-        </div>
+        </>
     )
 }
 
