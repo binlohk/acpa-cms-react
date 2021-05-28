@@ -74,7 +74,7 @@ const Header = () => {
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="ml-6 whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                      className="text-xs font-bold hover:text-yellow-500 ml-6">
                       <span>登出</span>
                     </button>
                   </>

@@ -16,7 +16,7 @@ function MyCourseCard({ title, price, description, courseId, image }) {
                     </div>
                     <div className="p-4">
                         <p className="text-3xl text-gray-900 pb-2">
-                            {title && '名稱：'}
+                            名稱：
                             {title}</p>
 
                         <div className='pt-2'>

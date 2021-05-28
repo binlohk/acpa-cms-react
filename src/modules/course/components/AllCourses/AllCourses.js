@@ -36,8 +36,7 @@ function AllCourses() {
             setCourses([...data])
             const featured = data.filter(item => item.featured !== false)
             setFeaturedCourses([...featured])
-            setSearchfield('')
-            console.log(filteredCourses, 'console.log(filteredCourses')
+            // console.log(filteredCourses, 'console.log(filteredCourses')
         }
         fetchUserCourses()
     }, [])
