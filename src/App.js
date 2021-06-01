@@ -18,11 +18,13 @@ import AllCourses from './modules/course/components/AllCourses/AllCourses'
 import MyCourses from './modules/course/components/AllCourses/MyCourses'
 import LessonPage from './modules/lesson/components/LessonPage'
 import UserProfile from './modules/user/components/UserProfile'
+import UserLayout from './modules/layout/UserLayout'
 
 function App() {
   return (
     <div>
       <Router>
+        <UserLayout>
         <UserContext.Provider value={{ storeToken, getUser }}>
           <Header />
           <Switch>
@@ -36,6 +38,7 @@ function App() {
             <PrivateRoute exact path='/user/:userId' component={UserProfile} />
           </Switch>
         </UserContext.Provider>
+        </UserLayout>
       </Router>
     </div>
   );
