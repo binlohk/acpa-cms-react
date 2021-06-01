@@ -18,24 +18,27 @@ import AllCourses from './modules/course/components/AllCourses/AllCourses'
 import MyCourses from './modules/course/components/AllCourses/MyCourses'
 import LessonPage from './modules/lesson/components/LessonPage'
 import UserProfile from './modules/user/components/UserProfile'
+import UserLayout from './modules/layout/UserLayout'
 
 function App() {
   return (
     <div>
       <Router>
-        <UserContext.Provider value={{ storeToken, getUser }}>
-          <Header />
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <AuthRoute exact path='/login' component={LoginForm} />
-            <AuthRoute exact path='/signup' component={SignupForm} />
-            <PublicRoute exact path='/courses' component={AllCourses} />
-            <Route exact path='/course/:courseId' component={Course} />
-            <PrivateRoute exact path='/my-courses' component={MyCourses} />
-            <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
-            <PrivateRoute exact path='/user/:userId' component={UserProfile} />
-          </Switch>
-        </UserContext.Provider>
+        <UserLayout>
+          <UserContext.Provider value={{ storeToken, getUser }}>
+            <Header />
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <AuthRoute exact path='/login' component={LoginForm} />
+              <AuthRoute exact path='/signup' component={SignupForm} />
+              <PublicRoute exact path='/courses' component={AllCourses} />
+              <Route exact path='/course/:courseId' component={Course} />
+              <PrivateRoute exact path='/my-courses' component={MyCourses} />
+              <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
+              <PrivateRoute exact path='/user/:userId' component={UserProfile} />
+            </Switch>
+          </UserContext.Provider>
+        </UserLayout>
       </Router>
     </div>
   );

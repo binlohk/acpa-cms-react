@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken';
-
 export const storeToken = (token) => {
   localStorage.setItem('accessToken', token)
 }

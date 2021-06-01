@@ -18,11 +18,11 @@ function LoginForm() {
         },
         validationSchema: Yup.object({
             email: Yup.string()
-                .email("Invalid email format")
-                .required("email is required!"),
+                .email("請輸入正確的電郵格式")
+                .required("請輸入電郵"),
             password: Yup.string()
-                .min(8, "Minimum 8 characters are needed")
-                .required("password is required!"),
+                .min(8, "請輸入至少8個字母")
+                .required("請輸入密碼"),
         }),
         validateOnBlur: false,
         onSubmit: async () => {
@@ -46,39 +46,32 @@ function LoginForm() {
     });
 
     return (
-        <div
-            style={{
-                backgroundImage: `url("/law-firm-18.jpg")`,
-                backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-            }}
-        >
+        <div>
             <form
                 style={{ background: 'rgba(81,58,84, 0.75)' }}
                 className='bg-grey-lighter w-full min-h-screen flex flex-col'>
                 <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>
                     <div className='bg-white px-6 py-8 rounded shadow-md text-black w-full'>
-                        {loginError && <p class="text-red-500 text-xs italic">Invalid email or password please login again</p>}
+                        {loginError && <p class="text-center text-red-500 text-xs italic">電郵或名稱不正確，請重新輸入</p>}
                         <h1 className='mb-8 text-gray-700 text-3xl text-center'>歡迎回來</h1>
-                        {formik.errors.email && formik.touched.email && <p class="text-red-500 text-xs italic">{formik.errors.email}</p>}
                         <input
                             type='text'
-                            className='shadow appearance-none border rounded w-full h-12 py-2 mb-4 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline'
+                            className='shadow appearance-none border rounded w-full h-12 py-2 mb-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline'
                             name='email'
                             placeholder='Email'
                             value={formik.values.email}
                             onChange={formik.handleChange}
                         />
-                        {formik.errors.password && formik.touched.password && <p class="text-red-500 text-xs italic">{formik.errors.password}</p>}
+                        {formik.errors.email && formik.touched.email && <p class="text-red-500 mb-4 text-xs italic">{formik.errors.email}</p>}
                         <input
                             type='password'
-                            className='shadow appearance-none border rounded w-full h-12 py-2 mb-4 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline'
+                            className='shadow appearance-none border rounded w-full h-12 py-2 mb-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline'
                             name='password'
                             value={formik.values.password}
                             placeholder='Password'
                             onChange={formik.handleChange}
                         />
+                        {formik.errors.password && formik.touched.password && <p class="text-red-500 mb-4 text-xs italic">{formik.errors.password}</p>}
                         <Button
                             onClickMethod={formik.handleSubmit}
                             color={'bg-indigo-700'}

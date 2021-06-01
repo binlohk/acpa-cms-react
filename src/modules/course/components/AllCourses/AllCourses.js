@@ -52,27 +52,27 @@ function AllCourses() {
         setCurrentPage(selectedPage);
     }
     useEffect(() => {
-        const PER_PAGE = 10;
+        console.log(courses.length, 'courses.length')
+        const PER_PAGE = 20;
         const offset = currentPage * PER_PAGE;
-        const pageData = courses
-            .slice(offset, offset + PER_PAGE)
+        const pageData = courses.slice(offset, offset + PER_PAGE)
         setCurrentPageData(pageData)
         setPageCount(Math.ceil(courses.length / PER_PAGE));
     }, [courses, currentPage])
 
 
     return (
-        <>
+        <div className='pt-12'>
             <SearchBar onSearchChange={onSearchChange} />
             <AllCoursesIntro
                 numberOfCourses={filteredCourses && filteredCourses.length}
             />
-
             {
                 filteredCourses !== undefined && filteredCourses.length !== 0 ?
                     (
                         <>
-                            <div class="flex flex-wrap items-start justify-start max-w-full">
+                            <CourseTitle>搜尋結果</CourseTitle>
+                            <div class="flex flex-wrap items-start justify-start max-w-full px-4">
                                 {
                                     filteredCourses.map((item, ind) => {
                                         return (
@@ -127,9 +127,9 @@ function AllCourses() {
                                                     key-={ind}
                                                     title={item.title}
                                                     price={item.price}
-                                                    description={item.description}
                                                     courseId={item.id}
                                                     image={item.image && `http://localhost:1337${item.image.url}`}
+                                                    featured={item.featured}
                                                 />
 
                                             </>
@@ -150,7 +150,7 @@ function AllCourses() {
             }
 
 
-        </>
+        </div>
     )
 }
 

@@ -17,11 +17,11 @@ function SignupForm() {
             username: Yup.string()
                 .required("username is required!"),
             email: Yup.string()
-                .email("Invalid email format")
-                .required("email is required!"),
+                .email("請輸入正確的電郵格式")
+                .required("請輸入電郵"),
             password: Yup.string()
-                .min(8, "Minimum 8 characters are needed")
-                .required("password is required!"),
+                .min(8, "請輸入至少8個字母")
+                .required("請輸入密碼"),
         }),
         validateOnBlur: false,
         onSubmit: async () => {
@@ -46,14 +46,7 @@ function SignupForm() {
     });
 
     return (
-        <div
-            style={{
-                backgroundImage: `url("/law-firm-18.jpg")`,
-                backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-            }}
-        >
+        <div>
             <form
                 style={{ background: 'rgba(81,58,84, 0.75)' }}
                 className='bg-grey-lighter min-h-screen flex flex-col'>
