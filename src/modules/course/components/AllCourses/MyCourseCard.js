@@ -3,8 +3,6 @@ import Button from '../../../utilComponents/Button'
 import { Link, useLocation } from 'react-router-dom';
 
 function MyCourseCard({ title, price, description, courseId, image }) {
-    const location = useLocation()
-    console.log()
     return (
         <>
             <div className="max-w-md max-h-full sm:w-1/2 lg:w-1/5 py-6 px-3">

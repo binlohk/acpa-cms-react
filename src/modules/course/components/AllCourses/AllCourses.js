@@ -4,7 +4,9 @@ import AllCourseCard from './AllCourseCard'
 import CourseTitle from './CourseTitle'
 import AllCoursesIntro from './AllCoursesIntro'
 import RecommendedCourseCard from './RecommendedCourseCard'
+import Pagination from './Pagination'
 import SearchBar from '../../../utilComponents/SearchBar'
+import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom/cjs/react-dom.development'
 
 function AllCourses() {
     const indexChecking = (index) => { return index !== 0 && index !== 5 }
@@ -41,6 +43,24 @@ function AllCourses() {
         fetchUserCourses()
     }, [])
 
+    /**pagination */
+    const [currentPage, setCurrentPage] = useState(0)
+    const [pageCount, setPageCount] = useState(0)
+    const [currentPageData, setCurrentPageData] = useState([])
+
+    const handlePageClick = ({ selected: selectedPage }) => {
+        setCurrentPage(selectedPage);
+    }
+    useEffect(() => {
+        const PER_PAGE = 10;
+        const offset = currentPage * PER_PAGE;
+        const pageData = courses
+            .slice(offset, offset + PER_PAGE)
+        setCurrentPageData(pageData)
+        setPageCount(Math.ceil(courses.length / PER_PAGE));
+    }, [courses, currentPage])
+
+
     return (
         <>
             <SearchBar onSearchChange={onSearchChange} />
@@ -51,24 +71,27 @@ function AllCourses() {
             {
                 filteredCourses !== undefined && filteredCourses.length !== 0 ?
                     (
-                        <div class="flex flex-wrap items-start justify-start max-w-full">
-                            {
-                                filteredCourses.map((item, ind) => {
-                                    return (
-                                        <>
-                                            <AllCourseCard
-                                                key-={ind}
-                                                title={item.title}
-                                                price={item.price}
-                                                description={item.description}
-                                                courseId={item.id}
-                                                image={item.image && `http://localhost:1337${item.image.url}`}
-                                            />
-                                        </>
-                                    )
-                                })
-                            }
-                        </div>
+                        <>
+                            <div class="flex flex-wrap items-start justify-start max-w-full">
+                                {
+                                    filteredCourses.map((item, ind) => {
+                                        return (
+                                            <>
+                                                <AllCourseCard
+                                                    key-={ind}
+                                                    title={item.title}
+                                                    price={item.price}
+                                                    description={item.description}
+                                                    courseId={item.id}
+                                                    image={item.image && `http://localhost:1337${item.image.url}`}
+                                                />
+                                            </>
+                                        )
+                                    })
+                                }
+                            </div>
+
+                        </>
                     ) :
                     (
                         <>
@@ -89,7 +112,6 @@ function AllCourses() {
                                                     courseId={item.id}
                                                     image={item.image && `http://localhost:1337${item.image.url}`}
                                                 />
-
                                             </>
                                         )
                                     })
@@ -98,7 +120,7 @@ function AllCourses() {
                             <CourseTitle>所有課程</CourseTitle>
                             <div class="flex flex-wrap items-start justify-start max-w-full">
                                 {
-                                    courses.length > 0 && courses.map((item, ind) => {
+                                    currentPageData.length > 0 && currentPageData.map((item, ind) => {
                                         return (
                                             <>
                                                 <AllCourseCard
@@ -114,6 +136,14 @@ function AllCourses() {
                                         )
                                     })
                                 }
+                            </div>
+                            <div className='flex justify-center items-center z-0 rounded-md shadow-sm -space-x-px'>
+                                <Pagination
+                                    currentPage={currentPage}
+                                    setCurrentPage={setCurrentPage}
+                                    pageCount={pageCount}
+                                    handlePageClick={handlePageClick}
+                                />
                             </div>
                         </>
                     )

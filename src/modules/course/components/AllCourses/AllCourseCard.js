@@ -2,7 +2,6 @@ import React from 'react'
 import Button from '../../../utilComponents/Button'
 import { Link } from 'react-router-dom';
 
-
 function AllCourseCard({ title, price, description, courseId, image }) {
 
     return (
