@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import {
+    useParams,
+    Link
+} from "react-router-dom";
 import CheckIcon from '@material-ui/icons/Check';
 import Avatar from '@material-ui/core/Avatar';
 
 function PaymentSuccess() {
+    const [slug, setSlug] = useState(null)
+
+    useEffect(() => {
+        const newSlug = window.location.pathname.substring(17)
+        setSlug(newSlug)
+    }, [])
+
+    console.log(slug, 'slug')
     return (
         <div className='p-24'>
             <div className="m-auto bg-white w-full md:max-w-4xl rounded-lg shadow">
@@ -24,11 +36,13 @@ function PaymentSuccess() {
                     </div>
                 </div>
                 <div className="p-6 ">
-                    <button
-                        style={{ backgroundColor: '#A5924B' }}
-                        className="p-4 hover:bg-green-500 w-full rounded-lg shadow text-xl font-medium uppercase text-white">
-                        前往課程
+                    <Link to={`/course/${slug}`}>
+                        <button
+                            style={{ backgroundColor: '#A5924B' }}
+                            className="p-4 hover:bg-green-500 w-full rounded-lg shadow text-xl font-medium uppercase text-white">
+                            前往課程
                         </button>
+                    </Link>
                 </div>
             </div>
         </div>
