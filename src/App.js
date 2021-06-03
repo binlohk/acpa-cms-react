@@ -19,7 +19,6 @@ import MyCourses from './modules/course/components/AllCourses/MyCourses'
 import LessonPage from './modules/lesson/components/LessonPage'
 import UserProfile from './modules/user/components/UserProfile'
 import UserLayout from './modules/layout/UserLayout'
-import BuyButton from './modules/utilComponents/BuyButton'
 
 function App() {
   return (
@@ -40,7 +39,6 @@ function App() {
           </Switch>
         </UserContext.Provider>
         </UserLayout>
-        <BuyButton courseId={2}>Buy course</BuyButton>
       </Router>
     </div>
   );
