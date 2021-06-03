@@ -19,6 +19,7 @@ import MyCourses from './modules/course/components/AllCourses/MyCourses'
 import UserProfile from './modules/user/components/UserProfile'
 import UserLayout from './modules/layout/UserLayout'
 import PaymentSuccess from './modules/course/components/Payment/PaymentSuccess'
+import PaymentFailure from './modules/course/components/Payment/PaymentFailure'
 
 function App() {
   return (
@@ -30,12 +31,13 @@ function App() {
               <Route exact path='/' component={Home} />
               <AuthRoute exact path='/login' component={LoginForm} />
               <AuthRoute exact path='/signup' component={SignupForm} />
-              <PublicRoute exact path='/courses' component={AllCourses} />
+              <Route exact path='/courses' component={AllCourses} />
               <Route exact path='/course/:courseId' component={Course} />
               <PrivateRoute exact path='/my-courses' component={MyCourses} />
               <PrivateRoute exact path='/lesson/:lessonId' />
               <PrivateRoute exact path='/user/:userId' component={UserProfile} />
               <PrivateRoute exact path='/payment-success/:courseId' component={PaymentSuccess} />
+              <PrivateRoute exact path='/payment-failure/:courseId' component={PaymentFailure} />
             </Switch>
           </UserLayout>
         </UserContext.Provider>

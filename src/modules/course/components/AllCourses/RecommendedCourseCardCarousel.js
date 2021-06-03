@@ -4,6 +4,7 @@ import React from 'react'
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
+import './RecommendedCourseCardCarousel.css'
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css"
 import "swiper/components/navigation/navigation.min.css"
@@ -21,14 +22,14 @@ function RecommendedCourseCardCarousel({ children }) {
             <Swiper
                 slidesPerView={5}
                 spaceBetween={0}
-                slidesPerGroup={5}
+                slidesPerGroup={1}
                 loop={true}
                 loopFillGroupWithBlank={true}
                 pagination={{
                     "clickable": true
                 }}
                 navigation={true}
-                className="mySwiper">
+            >
                 {children}
             </Swiper>
         </>

@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { httpClient } from '../../../../services/api/axiosHelper'
 import {
     Link
 } from "react-router-dom";
-import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
 import Avatar from '@material-ui/core/Avatar';
-import { httpClient } from '../../../../services/api/axiosHelper'
 
-function PaymentSuccess() {
+function PaymentFailure() {
     const [slug, setSlug] = useState(null)
-    const [data, setData] = useState(null)
-    const fetchPaidCourse = async () => {
+    const [title, setTitle] = useState(null)
+    const fetchCourse = async () => {
         const newSlug = window.location.pathname.substring(17)
         setSlug(newSlug)
         const result = await httpClient.get(`http://localhost:1337/courses`, { params: { id: window.location.pathname.substring(17) } })
-        setData(result.data[0])
+        setTitle(result.data[0].title)
         console.log(result.data[0].title, 'fetchPaidCourse')
     }
 
     useEffect(() => {
-        fetchPaidCourse()
+        fetchCourse()
     }, [])
 
     return (
@@ -30,10 +30,12 @@ function PaymentSuccess() {
                     <div className="flex justify-between items-center h-16 p-4 my-6  rounded-lg border border-gray-100 shadow-md">
                         <div className="flex items-center">
                             <Avatar alt="Remy Sharp" className="rounded-full h-12 w-12" >
-                                <CheckIcon />
+                                <ClearIcon
+                                    color='error'
+                                />
                             </Avatar>
                             <div className="ml-2">
-                                <div className="text-md font-semibold text-gray-600">您已成功購買此課程: {data.title}</div>
+                                <div className="text-md font-semibold text-gray-600">您尚未購買此課程:{title} </div>
                             </div>
                         </div>
                     </div>
@@ -42,8 +44,8 @@ function PaymentSuccess() {
                     <Link to={`/course/${slug}`}>
                         <button
                             style={{ backgroundColor: '#A5924B' }}
-                            className="p-4 hover:bg-green-500 w-full rounded-lg shadow text-xl font-medium uppercase text-white">
-                            前往課程
+                            className="p-4 hover:bg-green-500 rounded-lg shadow text-xl uppercase text-white">
+                            重新購買
                         </button>
                     </Link>
                 </div>
@@ -52,4 +54,4 @@ function PaymentSuccess() {
     )
 }
 
-export default PaymentSuccess
+export default PaymentFailure
