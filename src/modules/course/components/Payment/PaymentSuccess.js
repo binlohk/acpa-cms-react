@@ -13,7 +13,7 @@ function PaymentSuccess() {
         const newSlug = window.location.pathname.substring(17)
         setSlug(newSlug)
         const result = await httpClient.get(`http://localhost:1337/courses`, { params: { id: window.location.pathname.substring(17) } })
-        setData(result.data[0])
+        setData(result.data[0].title)
         console.log(result.data[0].title, 'fetchPaidCourse')
     }
 
@@ -33,7 +33,7 @@ function PaymentSuccess() {
                                 <CheckIcon />
                             </Avatar>
                             <div className="ml-2">
-                                <div className="text-md font-semibold text-gray-600">您已成功購買此課程: {data.title}</div>
+                                <div className="text-md font-semibold text-gray-600">您已成功購買此課程:{data}</div>
                             </div>
                         </div>
                     </div>
