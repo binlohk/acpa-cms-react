@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ReactMarkdown from 'react-markdown';
 import CourseMaterials from '../courseMaterials'
-
+import BuyButton from '../../../utilComponents/BuyButton'
 
 const useStyles = makeStyles(theme => ({
     paper:{
@@ -62,7 +62,6 @@ const Course = ( props ) => {
         try {
             const result = await httpClient.get(`http://localhost:1337/courses/${courseId}`)
             setCourseData(result.data);
-            console.log(result.data);
         } catch (e) {
             console.log(e)
         }
@@ -78,7 +77,6 @@ const Course = ( props ) => {
                 } else {
                     result = await httpClient.delete(route);
                 }
-                console.log(result);
                 await fetchCourseData(courseId);
             }
         } catch (e) {
@@ -116,12 +114,7 @@ const Course = ( props ) => {
                     :
                     <>
                         <span>你尚未擁有此課程</span>
-                        <Link
-                        to="/login"
-                        className="whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow-sm text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700"
-                        >
-                        購買課程
-                        </Link>
+                        <BuyButton courseId={courseId}>購買課程</BuyButton>
                     </>}
                 </div>
 

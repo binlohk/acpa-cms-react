@@ -12,7 +12,7 @@ export const getUser = () => {
   return {
     id: localStorage.getItem('id'),
     username: localStorage.getItem('username'),
-    email: localStorage.getItem('email')
+    email: localStorage.getItem('email'),
   }
 }
 
