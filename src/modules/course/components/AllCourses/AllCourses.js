@@ -6,7 +6,8 @@ import AllCoursesIntro from './AllCoursesIntro'
 import RecommendedCourseCard from './RecommendedCourseCard'
 import Pagination from './Pagination'
 import SearchBar from '../../../utilComponents/SearchBar'
-import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom/cjs/react-dom.development'
+import RecommendedCourseCardCarousel from './RecommendedCourseCardCarousel'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 function AllCourses() {
     const indexChecking = (index) => { return index !== 0 && index !== 5 }
@@ -62,7 +63,7 @@ function AllCourses() {
 
 
     return (
-        <div className='pt-12'>
+        <div>
             <SearchBar onSearchChange={onSearchChange} />
             <AllCoursesIntro
                 numberOfCourses={filteredCourses && filteredCourses.length}
@@ -97,25 +98,28 @@ function AllCourses() {
                         <>
                             <CourseTitle>推介課程</CourseTitle>
                             <div class="flex flex-wrap px-9">
-                                {
-                                    featuredCourses.map((item, ind) => {
-                                        return (
-                                            <>
-
-                                                <RecommendedCourseCard
-                                                    key-={ind}
-                                                    index={ind}
-                                                    indexChecking={indexChecking}
-                                                    title={item.title}
-                                                    price={item.price}
-                                                    description={item.description}
-                                                    courseId={item.id}
-                                                    image={item.image && `http://localhost:1337${item.image.url}`}
-                                                />
-                                            </>
-                                        )
-                                    })
-                                }
+                                <RecommendedCourseCardCarousel>
+                                    {
+                                        featuredCourses.map((item, ind) => {
+                                            return (
+                                                <>
+                                                    <SwiperSlide>
+                                                        <RecommendedCourseCard
+                                                            key-={ind}
+                                                            index={ind}
+                                                            indexChecking={indexChecking}
+                                                            title={item.title}
+                                                            price={item.price}
+                                                            description={item.description}
+                                                            courseId={item.id}
+                                                            image={item.image && `http://localhost:1337${item.image.url}`}
+                                                        />
+                                                    </SwiperSlide>
+                                                </>
+                                            )
+                                        })
+                                    }
+                                </RecommendedCourseCardCarousel>
                             </div>
                             <CourseTitle>所有課程</CourseTitle>
                             <div class="flex flex-wrap items-start justify-start max-w-full">
@@ -148,7 +152,7 @@ function AllCourses() {
                         </>
                     )
             }
-
+            <RecommendedCourseCardCarousel />
 
         </div>
     )

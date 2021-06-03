@@ -19,14 +19,14 @@ import MyCourses from './modules/course/components/AllCourses/MyCourses'
 import LessonPage from './modules/lesson/components/LessonPage'
 import UserProfile from './modules/user/components/UserProfile'
 import UserLayout from './modules/layout/UserLayout'
+import PaymentSuccess from './modules/course/components/Payment/PaymentSuccess'
 
 function App() {
   return (
     <div>
       <Router>
-        <UserLayout>
-          <UserContext.Provider value={{ storeToken, getUser }}>
-            <Header />
+        <UserContext.Provider value={{ storeToken, getUser }}>
+          <UserLayout>
             <Switch>
               <Route exact path='/' component={Home} />
               <AuthRoute exact path='/login' component={LoginForm} />
@@ -36,9 +36,10 @@ function App() {
               <PrivateRoute exact path='/my-courses' component={MyCourses} />
               <PrivateRoute exact path='/lesson/:lessonId' component={LessonPage} />
               <PrivateRoute exact path='/user/:userId' component={UserProfile} />
+              <PrivateRoute exact path='/payment-success/:courseId' component={PaymentSuccess} />
             </Switch>
-          </UserContext.Provider>
-        </UserLayout>
+          </UserLayout>
+        </UserContext.Provider>
       </Router>
     </div>
   );

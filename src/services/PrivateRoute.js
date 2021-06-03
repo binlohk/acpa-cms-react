@@ -26,9 +26,7 @@ export default function PrivateRoute(props) {
 
     if (token && id !== '') {
         return (<Route {...rest} render={(props) => (
-            <UserLayout>
-                <Component {...props} />
-            </UserLayout>
+            <Component {...props} />
         )} />
 
         )

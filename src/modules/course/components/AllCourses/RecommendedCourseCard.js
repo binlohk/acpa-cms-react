@@ -5,8 +5,8 @@ function RecommendedCourseCard({ title, price, description, courseId, image, ind
 
     return (
         <>
-            <div className='max-w-md sm:w-1/2 lg:w-1/5 py-6 px-3'>
-                <div className='bg-gray-600 shadow-xl rounded-lg overflow-hidden'>
+            <div className='max-w-md sm:w-1/2 lg:w-full py-6 px-3'>
+                <div className='bg-gray-700 shadow-xl rounded-lg overflow-hidden'>
                     <div className='rounded overflow-hidden'>
                         <img className='w-full h-60 object-contain px-2 py-2' src={image} alt={image} />
                         <div className='h-40 overflow-hidden'>
@@ -29,7 +29,7 @@ function RecommendedCourseCard({ title, price, description, courseId, image, ind
                             </div>
                         </div>
                         <Link to={`/course/${courseId}`}>
-                            <div className='px-6 py-4 text-white text-xl font-bold flex justify-center items-center'>
+                            <div className='px-6 py-4 bg-gray-600 text-white text-xl font-bold flex justify-center items-center'>
                                 $ {price}
                             </div>
                         </Link>

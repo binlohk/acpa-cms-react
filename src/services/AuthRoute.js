@@ -18,9 +18,7 @@ export default function AuthRoute(props) {
         return <Redirect to={`/user/${id}`} />
     } else {
         return (
-            <UserLayout>
-                <Route {...rest} render={(props) => (<Component {...props} />)} />
-            </UserLayout>
+            <Route {...rest} render={(props) => (<Component {...props} />)} />
         )
     }
 }
