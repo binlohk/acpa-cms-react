@@ -33,6 +33,7 @@ function App() {
               <Route exact path='/' component={Home} />
               <AuthRoute exact path='/login' component={LoginForm} />
               <AuthRoute exact path='/signup' component={SignupForm} />
+              <AuthRoute exact path='/signup/:referralToken' component={SignupForm} />
               <Route exact path='/courses' component={AllCourses} />
               <Route exact path='/course/:courseId' component={Course} />
               <PrivateRoute exact path='/my-courses' component={MyCourses} />
