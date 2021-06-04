@@ -20,6 +20,7 @@ import UserProfile from './modules/user/components/UserProfile'
 import UserLayout from './modules/layout/UserLayout'
 import PaymentSuccess from './modules/course/components/Payment/PaymentSuccess'
 import PaymentFailure from './modules/course/components/Payment/PaymentFailure'
+import PageNotFound from './modules/404/components/404page';
 
 function App() {
   return (
@@ -36,8 +37,9 @@ function App() {
               <PrivateRoute exact path='/my-courses' component={MyCourses} />
               <PrivateRoute exact path='/lesson/:lessonId' />
               <PrivateRoute exact path='/user/:userId' component={UserProfile} />
-              <PrivateRoute exact path='/payment-success/:courseId' component={PaymentSuccess} />
-              <PrivateRoute exact path='/payment-failure/:courseId' component={PaymentFailure} />
+              <PrivateRoute exact path='/payment-success/:courseId/:sessionId' component={PaymentSuccess} />
+              <PrivateRoute exact path='/payment-failure/:courseId/:sessionId' component={PaymentFailure} />
+              <Route component={PageNotFound} />
             </Switch>
           </UserLayout>
         </UserContext.Provider>
