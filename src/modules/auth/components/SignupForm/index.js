@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-function SignupForm() {
+function SignupForm(props) {
+    const { referralToken } = props.match.params;
+
     const [signupError, setSignupError] = useState(false)
     const formik = useFormik({
         initialValues: {
@@ -28,11 +30,20 @@ function SignupForm() {
             const { username, email, password } = formik.values
             try {
                 if (Object.keys(formik.errors).length === 0) {
-                    const result = await axios.post(`http://localhost:1337/auth/local/register`, {
-                        username: username,
-                        email: email,
-                        password: password
-                    })
+                    let result = null;
+                    if(referralToken){
+                        result = await axios.post(`http://localhost:1337/auth/local/register/${referralToken}`, {
+                            username: username,
+                            email: email,
+                            password: password
+                        });
+                    } else {
+                        result = await axios.post(`http://localhost:1337/auth/local/register`, {
+                            username: username,
+                            email: email,
+                            password: password
+                        });
+                    }
                     console.log('data posted')
                     if (result) {
                         window.location.href = '/login'

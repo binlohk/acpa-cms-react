@@ -40,24 +40,30 @@ const Header = () => {
     <Popover className='fixed w-full z-50' style={customStyles(offset)}>
       {({ open }) => (
         <>
-          <div className='max-w-7xl mx-auto px-4 py-2 sm:px-6'>
+          <div className='max-w-full mx-auto py-4 sm:px-6'>
             <div className='flex justify-between items-center border-b-2 border-transparent py-1 md:justify-start md:space-x-10'>
-              <div className='flex justify-start lg:w-0 lg:flex-1'>
+              <div className='flex justify-start items-center lg:w-0 lg:flex-1'>
                 <Link to='/' className='flex items-center'>
                   <span className='sr-only'>Workflow</span>
                   <img
-                    className='w-auto sm:h-10'
+                    className='h-8 w-auto sm:h-10'
                     src={Logo}
-                    style={{ height: '30px' }}
-                    alt=''
+                    alt='嘉林財俊'
                   />
                   <img
-                    className='w-auto '
+                    className='h-8 w-auto'
                     src={LogoName}
-                    style={{ height: '20px' }}
-                    alt=''
+                    alt='嘉林財俊'
                   />
                 </Link>
+                <Link to='/courses' className='text-md font-bold hover:text-yellow-500 ml-6'>
+                  所有課程
+                  </Link>
+                {getUser().id != null &&
+                  <Link to='/my-courses' className='text-md font-bold hover:text-yellow-500 ml-6'>
+                    我的課程
+                  </Link>
+                }
               </div>
 
               {/* mobile toggle */}
@@ -70,32 +76,26 @@ const Header = () => {
               {/* mobile toggle */}
 
               <div className='hidden md:flex items-center justify-end md:flex-1 lg:w-0'>
-                <Link to='/courses' className='text-xs font-bold hover:text-yellow-500 ml-6'>
-                  所有課程
-                  </Link>
-
                 {getUser().id != null ?
                   <>
-                    <Link to='/my-courses' className='text-xs font-bold hover:text-yellow-500 ml-6'>
-                      我的課程
-                  </Link>
+
                     <Link to={`/user/${getUser().id}`} className='hover:text-yellow-500 ml-6'>
                       <AccountCircleIcon className='text-xl' />
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className='text-xs font-bold hover:text-yellow-500 ml-6'>
+                      className='text-md font-bold hover:text-yellow-500 ml-6'>
                       <span>登出</span>
                     </button>
                   </>
                   :
                   <>
-                    <Link to='/signup' className='whitespace-nowrap text-xs font-bold hover:text-yellow-500 ml-6'>
+                    <Link to='/signup' className='whitespace-nowrap text-md font-bold hover:text-yellow-500 ml-6'>
                       注冊
                   </Link>
                     <Link
                       to='/login'
-                      className='text-xs font-bold hover:text-yellow-500 ml-6'
+                      className='text-md font-bold hover:text-yellow-500 ml-6'
                     >
                       登入
                   </Link>
@@ -123,11 +123,11 @@ const Header = () => {
               <div className='rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50'>
                 <div className='py-3 px-5 space-y-6'>
                   <div className='grid grid-cols-2 gap-y-4 gap-x-8'>
-                    <Link to='/courses' className='text-xs text-center font-medium text-gray-900 hover:text-gray-700'>
+                    <Link to='/courses' className='text-md text-center font-medium text-gray-900 hover:text-gray-700'>
                       所有課程
                       </Link>
 
-                    <Link to='/courses' className='text-xs text-center font-medium text-gray-900 hover:text-gray-700'>
+                    <Link to='/courses' className='text-md text-center font-medium text-gray-900 hover:text-gray-700'>
                       我的課程
                       </Link>
                   </div>
@@ -136,7 +136,7 @@ const Header = () => {
                       (
                         <button
                           onClick={handleLogout}
-                          className='ml-6 whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
+                          className='ml-6 whitespace-nowrap inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-indigo-600 hover:bg-indigo-700'>
                           <span>登出</span>
                         </button>
                       )
@@ -145,11 +145,11 @@ const Header = () => {
                         <div>
                           <Link
                             to='/signup'
-                            className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700'
+                            className='w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-indigo-600 hover:bg-indigo-700'
                           >
                             注冊
                           </Link>
-                          <p className='mt-6 text-center text-xs font-medium text-gray-500'>
+                          <p className='mt-6 text-center text-md font-medium text-gray-500'>
                             現有用戶?{' '}
                             <Link to='/login' className='text-indigo-600 hover:text-indigo-500'>
                               登入

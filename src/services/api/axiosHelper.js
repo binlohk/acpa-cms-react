@@ -1,5 +1,4 @@
 import axios from "axios";
-import jwt from 'jsonwebtoken';
 import { getToken, storeToken, storeUser } from '../../services/authService'
 
 export const httpClient = axios.create({

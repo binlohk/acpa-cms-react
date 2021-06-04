@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { httpClient } from './api/axiosHelper'
+import axios from 'axios'
 
 export const storeToken = (token) => {
   localStorage.setItem('accessToken', token)
@@ -20,11 +21,11 @@ export const getUser = () => {
 }
 
 export const getToken = () => {
-  // const token = localStorage.getItem('accessToken')
-  // if (_checkExpiry()) {
-  _checkRefresh()
-  // }
-  // return token
+  if (_checkExpiry()) {
+    _checkRefresh()
+  }
+  const token = localStorage.getItem('accessToken')
+  return token
 }
 
 export const removeToken = () => {
@@ -41,13 +42,13 @@ const _checkExpiry = () => {
 
 const _checkRefresh = async () => {
   const token = localStorage.getItem('accessToken')
-  const res = await httpClient.post(`/users-permissions/refreshToken`, {}, {
+  const res = await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/users-permissions/refreshToken`, {}, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   })
-  storeToken(res)
-  const loginUser = await httpClient.get(`/users/me`, {
+  storeToken(res.data)
+  const loginUser = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/users/me`, {
     headers: {
       'Authorization': `Bearer ${token}`
     }

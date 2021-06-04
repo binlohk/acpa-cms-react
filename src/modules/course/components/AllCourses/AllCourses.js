@@ -14,7 +14,6 @@ import { getToken } from '../../../../services/authService'
 import jwt from 'jsonwebtoken';
 
 function AllCourses() {
-    const indexChecking = (index) => { return index !== 0 && index !== 5 }
     const [courses, setCourses] = useState([])
     const [featuredCourses, setFeaturedCourses] = useState([])
     const [searchfield, setSearchfield] = useState('')
@@ -44,9 +43,7 @@ function AllCourses() {
             const featured = data.filter(item => item.featured !== false)
             setFeaturedCourses([...featured])
             // console.log(filteredCourses, 'console.log(filteredCourses')
-            const token = getToken()
-            const decodedPayload = jwt.decode(token);
-            console.log(decodedPayload.exp, 'exp')
+
         }
         trackPromise(
             fetchUserCourses()
@@ -70,6 +67,24 @@ function AllCourses() {
         setPageCount(Math.ceil(courses.length / PER_PAGE));
     }, [courses, currentPage])
 
+    /**pagination for filtered results*/
+    const [currentFilteredPage, setCurrentFilteredPage] = useState(0)
+    const [pageFilteredCount, setFilteredPageCount] = useState(0)
+    const [currentFilteredPageData, setFilteredCurrentPageData] = useState([])
+
+    const handleFilteredPageClick = ({ selected: selectedPage }) => {
+        setCurrentFilteredPage(selectedPage);
+    }
+
+    useEffect(() => {
+        const PER_PAGE = 12;
+        const offset = currentFilteredPage * PER_PAGE;
+        const pageData = filteredCourses.slice(offset, offset + PER_PAGE)
+        setFilteredCurrentPageData(pageData)
+        setFilteredPageCount(Math.ceil(filteredCourses.length / PER_PAGE));
+        console.log(pageData, 'pageData')
+    }, [filteredCourses, currentFilteredPage])
+
 
     return (
         <>
@@ -83,9 +98,9 @@ function AllCourses() {
                         (
                             <>
                                 <CourseTitle>搜尋結果</CourseTitle>
-                                <div class="flex flex-wrap items-start justify-start max-w-full px-4">
+                                <div class="flex flex-wrap px-9">
                                     {
-                                        filteredCourses.map((item, ind) => {
+                                        currentFilteredPageData.length > 0 && currentFilteredPageData.map((item, ind) => {
                                             return (
                                                 <>
                                                     <AllCourseCard
@@ -95,20 +110,28 @@ function AllCourses() {
                                                         description={item.description}
                                                         courseId={item.id}
                                                         image={item.image && `http://localhost:1337${item.image.url}`}
+                                                        filteredCourseLength={filteredCourses.length}
                                                     />
                                                 </>
                                             )
                                         })
                                     }
                                 </div>
-
+                                <div className='flex justify-center items-center z-0 rounded-md shadow-sm'>
+                                    <Pagination
+                                        currentPage={currentFilteredPage}
+                                        setCurrentPage={setCurrentFilteredPage}
+                                        pageCount={pageFilteredCount}
+                                        handlePageClick={handleFilteredPageClick}
+                                    />
+                                </div>
                             </>
                         ) :
                         (
                             <>
                                 <CourseTitle>推介課程</CourseTitle>
                                 <LoadingSpinner />
-                                <div class="flex flex-wrap px-9">
+                                <div class="flex flex-wrap px-12">
                                     <RecommendedCourseCardCarousel
                                         slidesPerView={5}
                                         slidesPerGroup={1}
@@ -121,7 +144,6 @@ function AllCourses() {
                                                             <RecommendedCourseCard
                                                                 key-={ind}
                                                                 index={ind}
-                                                                indexChecking={indexChecking}
                                                                 title={item.title}
                                                                 price={item.price}
                                                                 description={item.description}
