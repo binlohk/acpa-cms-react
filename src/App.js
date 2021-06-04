@@ -20,7 +20,8 @@ import UserProfile from './modules/user/components/UserProfile'
 import UserLayout from './modules/layout/UserLayout'
 import PaymentSuccess from './modules/course/components/Payment/PaymentSuccess'
 import PaymentFailure from './modules/course/components/Payment/PaymentFailure'
-import PageNotFound from './modules/404/components/404page';
+import PageNotFound from './modules/404/components/404page'
+
 
 function App() {
   return (

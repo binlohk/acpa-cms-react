@@ -94,7 +94,7 @@ const Course = ( props ) => {
     };
 
     return (
-        <div className='m-6'>
+        <div className='m-6 text-white'>
             {courseData &&
             <>
                 <div className="p-2 text-xl">{courseData.title}</div>

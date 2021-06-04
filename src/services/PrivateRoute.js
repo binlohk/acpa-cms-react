@@ -8,7 +8,6 @@ import UserLayout from '../modules/layout/UserLayout'
 export default function PrivateRoute(props) {
     const token = localStorage.getItem('accessToken')
     const { id } = getUser()
-
     useEffect(() => {
         axios.get(`http://localhost:1337/users/me`, {
             headers: {
