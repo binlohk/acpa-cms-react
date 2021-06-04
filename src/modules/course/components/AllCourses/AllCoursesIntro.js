@@ -1,12 +1,18 @@
 import React from 'react'
+import SearchBar from '../../../utilComponents/SearchBar'
 
-function AllCoursesIntro({ numberOfCourses }) {
+function AllCoursesIntro({ numberOfCourses, onSearchChange }) {
     return (
         <div className='flex'>
             <div className='flex flex-col justify-center items-center flex-1 text-center'>
-                <div className='text-white text-4xl pb-4'>
-                    我們致力提供優質的金融課程
-                </div>
+                <SearchBar onSearchChange={onSearchChange} />
+                {
+                    numberOfCourses === 0 && (
+                        <div className='text-white text-4xl pb-4'>
+                            我們致力提供優質的金融課程
+                        </div>
+                    )
+                }
                 {
                     numberOfCourses > 0 && (
                         <>

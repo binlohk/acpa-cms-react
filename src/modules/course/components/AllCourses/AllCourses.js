@@ -54,7 +54,7 @@ function AllCourses() {
     }
     useEffect(() => {
         console.log(courses.length, 'courses.length')
-        const PER_PAGE = 20;
+        const PER_PAGE = 12;
         const offset = currentPage * PER_PAGE;
         const pageData = courses.slice(offset, offset + PER_PAGE)
         setCurrentPageData(pageData)
@@ -64,9 +64,10 @@ function AllCourses() {
 
     return (
         <div>
-            <SearchBar onSearchChange={onSearchChange} />
+
             <AllCoursesIntro
                 numberOfCourses={filteredCourses && filteredCourses.length}
+                onSearchChange={onSearchChange}
             />
             {
                 filteredCourses !== undefined && filteredCourses.length !== 0 ?

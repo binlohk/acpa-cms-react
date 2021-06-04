@@ -1,4 +1,3 @@
-import { Card } from '@material-ui/core';
 import React from 'react'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -25,9 +24,6 @@ function RecommendedCourseCardCarousel({ children }) {
                 slidesPerGroup={1}
                 loop={true}
                 loopFillGroupWithBlank={true}
-                pagination={{
-                    "clickable": true
-                }}
                 navigation={true}
             >
                 {children}

@@ -1,6 +1,6 @@
 .swiper-button-next {
-  background: gray !important;
-  border-radius: 50%;
+  width: 3rem !important;
+  height: 3rem !important;
   color: black !important;
   font-weight: 700;
 }
@@ -8,15 +8,6 @@
 .swiper-button-prev {
   width: 3rem !important;
   height: 3rem !important;
-  background: gray !important;
-  border-radius: 50%;
   color: black !important;
   font-weight: 700;
-}
-
-.swiper-pagination-bullet {
-  color: #fff !important;
-  cursor: pointer;
-  display: block;
-  font-size: 35px;
 }

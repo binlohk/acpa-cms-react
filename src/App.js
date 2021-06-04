@@ -37,8 +37,8 @@ function App() {
               <PrivateRoute exact path='/my-courses' component={MyCourses} />
               <PrivateRoute exact path='/lesson/:lessonId' />
               <PrivateRoute exact path='/user/:userId' component={UserProfile} />
-              <PrivateRoute exact path='/payment-success/:courseId/:sessionId' component={PaymentSuccess} />
-              <PrivateRoute exact path='/payment-failure/:courseId/:sessionId' component={PaymentFailure} />
+              <PrivateRoute exact path='/payment-success/:courseId' component={PaymentSuccess} />
+              <PrivateRoute exact path='/payment-failure/:courseId' component={PaymentFailure} />
               <Route component={PageNotFound} />
             </Switch>
           </UserLayout>
