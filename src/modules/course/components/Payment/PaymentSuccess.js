@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { httpClient } from '../../../../services/api/axiosHelper'
 import queryString from 'query-string'
 import { useLocation } from 'react-router-dom'
+import PageNotFound from '../../../404/components/404page'
 
 function PaymentSuccess(props) {
     const params = props.match.params;
@@ -21,11 +22,10 @@ function PaymentSuccess(props) {
         } catch(e) {
             setIfSessionIdValid(false);
         }
-        const result = await httpClient.get(`http://localhost:1337/courses`, { params: { id: params.courseId } });
-        setData(result.data[0])
-        console.log(result.data[0].title, 'fetchPaidCourse')
+        const result = await httpClient.get(`http://localhost:1337/courses/${params.courseId}`);
+        setData(result.data);
     }
-
+        
     useEffect(() => {
         fetchPaidCourse()
     }, [])
@@ -42,7 +42,8 @@ function PaymentSuccess(props) {
                                     <CheckIcon />
                                 </Avatar>
                                 <div className="ml-2">
-                                    <div className="text-md font-semibold text-gray-600">您已成功購買此課程: {data.title}</div>
+                                    <div className="text-md font-semibold text-gray-600">您已成功購買此課程: </div>
+                                    {data && <div className="text-md font-semibold text-gray-600">{data.title}</div>}
                                 </div>
                             </div>
                         </div>
@@ -60,7 +61,9 @@ function PaymentSuccess(props) {
             </div>
         )
     } else {
-        
+        return(
+            <PageNotFound/>
+        )
     }
 }
 
