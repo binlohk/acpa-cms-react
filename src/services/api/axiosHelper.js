@@ -1,13 +1,14 @@
 import axios from "axios";
 import jwt from 'jsonwebtoken';
-import { getToken } from '../../services/authService'
+import { getToken, storeToken, storeUser } from '../../services/authService'
 
 export const httpClient = axios.create({
-    baseURL: "http://localhost:1337",
-    // baseURL: process.env.APP_API_BASE_URL,
+    baseURL: process.env.REACT_APP_BACKEND_SERVER,
 });
 httpClient.interceptors.request.use(function (config) {
     const token = getToken()
     config.headers.Authorization = token ? `Bearer ${token}` : '';
     return config;
 });
+
+

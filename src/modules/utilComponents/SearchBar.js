@@ -3,8 +3,8 @@ import SearchIcon from '@material-ui/icons/Search';
 
 function SearchBar({ onSearchChange }) {
     return (
-        <div className='w-full flex justify-center items-center py-2'>
-            <div class="relative flex w-1/4 flex-wrap items-stretch mb-3">
+        <div className='w-full flex justify-end items-center'>
+            <div class="relative flex w-1/4 flex-wrap">
                 <span class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
                     <SearchIcon />
                 </span>

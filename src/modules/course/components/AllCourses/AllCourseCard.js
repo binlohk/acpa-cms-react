@@ -27,3 +27,4 @@ function AllCourseCard({ title, price, description, courseId, image }) {
 
 export default AllCourseCard
 
+

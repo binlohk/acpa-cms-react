@@ -3,6 +3,7 @@ import { httpClient } from '../../../../services/api/axiosHelper'
 import MyCourseCard from './MyCourseCard'
 import CourseTitle from './CourseTitle'
 import { UserContext } from '../../../../contexts/UserContext'
+import Pagination from './Pagination'
 
 function MyCourses() {
     const { getUser } = useContext(UserContext);
@@ -20,6 +21,22 @@ function MyCourses() {
         fetchUserCourses()
     }, [])
 
+    /**pagination */
+    const [currentPage, setCurrentPage] = useState(0)
+    const [pageCount, setPageCount] = useState(0)
+    const [currentPageData, setCurrentPageData] = useState([])
+
+    const handlePageClick = ({ selected: selectedPage }) => {
+        setCurrentPage(selectedPage);
+    }
+    useEffect(() => {
+        const PER_PAGE = 12;
+        const offset = currentPage * PER_PAGE;
+        const pageData = purchasedCourses.slice(offset, offset + PER_PAGE)
+        setCurrentPageData(pageData)
+        setPageCount(Math.ceil(purchasedCourses.length / PER_PAGE));
+    }, [purchasedCourses, currentPage])
+
     return (
         <>
             {
@@ -28,7 +45,7 @@ function MyCourses() {
                     <>
                         <CourseTitle>我的課程</CourseTitle>
                         <div class="flex flex-wrap items-start justify-start max-w-full">
-                            {purchasedCourses.map((item, ind) => {
+                            {currentPageData.map((item, ind) => {
                                 return (
                                     <MyCourseCard
                                         key-={ind}
@@ -44,6 +61,14 @@ function MyCourses() {
                     </>
                 )
             }
+            <div className='flex justify-center items-center z-0 rounded-md shadow-sm -space-x-px'>
+                <Pagination
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    pageCount={pageCount}
+                    handlePageClick={handlePageClick}
+                />
+            </div>
         </>
     )
 }

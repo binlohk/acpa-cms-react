@@ -10,6 +10,8 @@ import RecommendedCourseCardCarousel from './RecommendedCourseCardCarousel'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { trackPromise } from 'react-promise-tracker'
 import LoadingSpinner from '../../../utilComponents/LoadingSpinner'
+import { getToken } from '../../../../services/authService'
+import jwt from 'jsonwebtoken';
 
 function AllCourses() {
     const indexChecking = (index) => { return index !== 0 && index !== 5 }
@@ -17,7 +19,6 @@ function AllCourses() {
     const [featuredCourses, setFeaturedCourses] = useState([])
     const [searchfield, setSearchfield] = useState('')
     const [filteredCourses, setFilteredCourses] = useState([])
-    const [loading, setLoading] = useState(false)
 
     const onSearchChange = (e) => {
         setSearchfield(e.target.value)
@@ -36,15 +37,16 @@ function AllCourses() {
 
     useEffect(() => {
         const fetchUserCourses = async () => {
-            const response = await httpClient.get(`http://localhost:1337/courses`)
-            if (!response) { setLoading(true) }
+            const response = await httpClient.get(`/courses`)
             const data = response.data
             // console.log(response.data)
             setCourses([...data])
             const featured = data.filter(item => item.featured !== false)
             setFeaturedCourses([...featured])
             // console.log(filteredCourses, 'console.log(filteredCourses')
-            setLoading(false)
+            const token = getToken()
+            const decodedPayload = jwt.decode(token);
+            console.log(decodedPayload.exp, 'exp')
         }
         trackPromise(
             fetchUserCourses()
@@ -107,7 +109,10 @@ function AllCourses() {
                                 <CourseTitle>推介課程</CourseTitle>
                                 <LoadingSpinner />
                                 <div class="flex flex-wrap px-9">
-                                    <RecommendedCourseCardCarousel>
+                                    <RecommendedCourseCardCarousel
+                                        slidesPerView={5}
+                                        slidesPerGroup={1}
+                                    >
                                         {
                                             featuredCourses.map((item, ind) => {
                                                 return (
@@ -161,8 +166,6 @@ function AllCourses() {
                             </>
                         )
                 }
-                <RecommendedCourseCardCarousel />
-
             </div>
         </>
     )

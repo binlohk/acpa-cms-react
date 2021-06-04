@@ -17,7 +17,6 @@ export default function PrivateRoute(props) {
             storeUser(loginUser.data)
         })
     }, [])
-
     const {
         component: Component,
         ...rest

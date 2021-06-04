@@ -42,3 +42,4 @@ function RecommendedCourseCard({ title, price, description, courseId, image, ind
 
 export default RecommendedCourseCard
 
+

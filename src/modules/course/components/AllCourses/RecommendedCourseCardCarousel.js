@@ -15,13 +15,13 @@ import SwiperCore, {
 
 SwiperCore.use([Pagination, Navigation]);
 
-function RecommendedCourseCardCarousel({ children }) {
+function RecommendedCourseCardCarousel({ children, slidesPerView, slidesPerGroup }) {
     return (
         <>
             <Swiper
-                slidesPerView={5}
+                slidesPerView={slidesPerView}
                 spaceBetween={0}
-                slidesPerGroup={1}
+                slidesPerGroup={slidesPerGroup}
                 loop={true}
                 loopFillGroupWithBlank={true}
                 navigation={true}
