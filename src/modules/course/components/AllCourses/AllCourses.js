@@ -71,7 +71,6 @@ function AllCourses() {
     const [currentFilteredPage, setCurrentFilteredPage] = useState(0)
     const [pageFilteredCount, setFilteredPageCount] = useState(0)
     const [currentFilteredPageData, setFilteredCurrentPageData] = useState([])
-
     const handleFilteredPageClick = ({ selected: selectedPage }) => {
         setCurrentFilteredPage(selectedPage);
     }
@@ -82,7 +81,6 @@ function AllCourses() {
         const pageData = filteredCourses.slice(offset, offset + PER_PAGE)
         setFilteredCurrentPageData(pageData)
         setFilteredPageCount(Math.ceil(filteredCourses.length / PER_PAGE));
-        console.log(pageData, 'pageData')
     }, [filteredCourses, currentFilteredPage])
 
 
@@ -94,99 +92,107 @@ function AllCourses() {
                     onSearchChange={onSearchChange}
                 />
                 {
-                    filteredCourses !== undefined && filteredCourses.length !== 0 ?
-                        (
-                            <>
-                                <CourseTitle>搜尋結果</CourseTitle>
-                                <div class="flex flex-wrap px-9">
-                                    {
-                                        currentFilteredPageData.length > 0 && currentFilteredPageData.map((item, ind) => {
-                                            return (
-                                                <>
-                                                    <AllCourseCard
-                                                        key-={ind}
-                                                        title={item.title}
-                                                        price={item.price}
-                                                        description={item.description}
-                                                        courseId={item.id}
-                                                        image={item.image && `http://localhost:1337${item.image.url}`}
-                                                        filteredCourseLength={filteredCourses.length}
-                                                    />
-                                                </>
-                                            )
-                                        })
-                                    }
-                                </div>
-                                <div className='flex justify-center items-center z-0 rounded-md shadow-sm'>
-                                    <Pagination
-                                        currentPage={currentFilteredPage}
-                                        setCurrentPage={setCurrentFilteredPage}
-                                        pageCount={pageFilteredCount}
-                                        handlePageClick={handleFilteredPageClick}
-                                    />
-                                </div>
-                            </>
-                        ) :
-                        (
-                            <>
-                                <CourseTitle>推介課程</CourseTitle>
-                                <LoadingSpinner />
+                    currentFilteredPageData.length !== 0 &&
+                    (
+                        <>
+                            <CourseTitle>搜尋結果</CourseTitle>
+                            <div class="flex flex-wrap px-12">
+                                {
+                                    currentFilteredPageData.length > 0 && currentFilteredPageData.map((item, ind) => {
+                                        return (
+                                            <>
+                                                <RecommendedCourseCard
+                                                    key-={ind}
+                                                    title={item.title}
+                                                    price={item.price}
+                                                    description={item.description}
+                                                    courseId={item.id}
+                                                    image={item.image && `http://localhost:1337${item.image.url}`}
+                                                    filteredCourseLength={filteredCourses.length}
+                                                />
+                                            </>
+                                        )
+                                    })
+                                }
+                            </div>
+                            <div className='flex justify-center items-center z-0 rounded-md shadow-sm'>
+                                <Pagination
+                                    currentPage={currentFilteredPage}
+                                    setCurrentPage={setCurrentFilteredPage}
+                                    pageCount={pageFilteredCount}
+                                    handlePageClick={handleFilteredPageClick}
+                                />
+                            </div>
+                        </>
+                    )
+                }
+                {
+                    currentFilteredPageData.length === 0 && searchfield !== '' &&
+                    (
+                        <h1 className='min-h-screen text-white text-center text-3xl'>沒有搜尋結果</h1>
+                    )
+                }
+                {
+                    searchfield === '' && (
+                        <>
+                            <CourseTitle> 推介課程</CourseTitle>
+                            <LoadingSpinner />
+                            <RecommendedCourseCardCarousel
+                                slidesPerView={5}
+                                slidesPerGroup={1}
+                            >
                                 <div class="flex flex-wrap px-12">
-                                    <RecommendedCourseCardCarousel
-                                        slidesPerView={5}
-                                        slidesPerGroup={1}
-                                    >
-                                        {
-                                            featuredCourses.map((item, ind) => {
-                                                return (
-                                                    <>
-                                                        <SwiperSlide>
-                                                            <RecommendedCourseCard
-                                                                key-={ind}
-                                                                index={ind}
-                                                                title={item.title}
-                                                                price={item.price}
-                                                                description={item.description}
-                                                                courseId={item.id}
-                                                                image={item.image && `http://localhost:1337${item.image.url}`}
-                                                            />
-                                                        </SwiperSlide>
-                                                    </>
-                                                )
-                                            })
-                                        }
-                                    </RecommendedCourseCardCarousel>
-                                </div>
-                                <CourseTitle>所有課程</CourseTitle>
-                                <div class="flex flex-wrap items-start justify-start max-w-full">
                                     {
-                                        currentPageData.length > 0 && currentPageData.map((item, ind) => {
+                                        featuredCourses.map((item, ind) => {
                                             return (
                                                 <>
-                                                    <AllCourseCard
-                                                        key-={ind}
-                                                        title={item.title}
-                                                        price={item.price}
-                                                        courseId={item.id}
-                                                        image={item.image && `http://localhost:1337${item.image.url}`}
-                                                        featured={item.featured}
-                                                    />
-
+                                                    <SwiperSlide>
+                                                        <RecommendedCourseCard
+                                                            key-={ind}
+                                                            index={ind}
+                                                            title={item.title}
+                                                            price={item.price}
+                                                            description={item.description}
+                                                            courseId={item.id}
+                                                            image={item.image && `http://localhost:1337${item.image.url}`}
+                                                        />
+                                                    </SwiperSlide>
                                                 </>
                                             )
                                         })
                                     }
                                 </div>
-                                <div className='flex justify-center items-center z-0 rounded-md shadow-sm -space-x-px'>
-                                    <Pagination
-                                        currentPage={currentPage}
-                                        setCurrentPage={setCurrentPage}
-                                        pageCount={pageCount}
-                                        handlePageClick={handlePageClick}
-                                    />
-                                </div>
-                            </>
-                        )
+                            </RecommendedCourseCardCarousel>
+                            <CourseTitle>所有課程</CourseTitle>
+                            <div class="flex flex-wrap items-start justify-start max-w-full">
+                                {
+                                    currentPageData.length > 0 && currentPageData.map((item, ind) => {
+                                        return (
+                                            <>
+                                                <AllCourseCard
+                                                    key-={ind}
+                                                    title={item.title}
+                                                    price={item.price}
+                                                    courseId={item.id}
+                                                    image={item.image && `http://localhost:1337${item.image.url}`}
+                                                    featured={item.featured}
+                                                />
+
+                                            </>
+                                        )
+                                    })
+                                }
+                            </div>
+                            <div className='flex justify-center items-center z-0 rounded-md shadow-sm -space-x-px'>
+                                <Pagination
+                                    currentPage={currentPage}
+                                    setCurrentPage={setCurrentPage}
+                                    pageCount={pageCount}
+                                    handlePageClick={handlePageClick}
+                                />
+                            </div>
+                        </>
+                    )
                 }
             </div>
         </>

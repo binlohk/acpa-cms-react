@@ -35,7 +35,6 @@ export const removeToken = () => {
 const _checkExpiry = () => {
   const token = localStorage.getItem('accessToken')
   const decodedPayload = jwt.decode(token);
-  console.log(decodedPayload.exp)
   const currentTime = Date.now() / 1000
   return decodedPayload.exp === currentTime;
 }

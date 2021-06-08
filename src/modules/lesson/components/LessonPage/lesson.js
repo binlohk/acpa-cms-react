@@ -10,7 +10,7 @@ const Lesson = ({ lessonId }) => {
     const [lessonData, setLessonData] = useState(null);
 
     const fetchLessonData = async (lessonId) => {
-        if(user && user.id!=="" && user.id!==null){
+        if (user && user.id !== "" && user.id !== null) {
             try {
                 const result = await httpClient.get(`http://localhost:1337/lessons/${lessonId}`)
                 setLessonData(result.data);
@@ -28,9 +28,10 @@ const Lesson = ({ lessonId }) => {
 
     return (
         <div className='m-6'>
-            {lessonData && 
+            123
+            {lessonData &&
                 <div>
-                    <Video videoUrl={lessonData.videoUrl} width='640' height='360'/>
+                    <Video videoUrl={lessonData.videoUrl} width='640' height='360' />
                     <div>{lessonData.lessonDescription}</div>
                 </div>
             }
