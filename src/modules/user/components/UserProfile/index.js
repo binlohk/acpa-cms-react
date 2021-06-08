@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import { storeUser, storeToken, getToken, removeToken } from '../../../../services/authService'
 import { Button, TextField, InputAdornment, Input, InputLabel, FormControl, makeStyles } from '@material-ui/core';
 import { FileCopy } from '@material-ui/icons';
+import ReferralList from './referralList';
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -153,7 +154,7 @@ function UserProfile() {
                         </FormControl>
                 </div>
             }
-
+            <ReferralList/>
         </div>
     )
 }
