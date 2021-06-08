@@ -142,7 +142,7 @@ function UserProfile() {
             {userProfile&&
                 <div >
                         {userProfile.profilePicture && 
-                            <img src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.formats.thumbnail.url}`}/>
+                            <img src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`}/>
                         }
                         <div>用戶名稱: {userProfile.username}</div>
                         <div>注冊日期: {userProfile.created_at}</div>
