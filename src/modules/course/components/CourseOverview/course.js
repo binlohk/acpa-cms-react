@@ -80,6 +80,7 @@ const Course = (props) => {
                     result = await httpClient.delete(route);
                 }
                 await fetchCourseData(courseId);
+                console.log('checked ok')
             }
         } catch (e) {
             console.log(e)

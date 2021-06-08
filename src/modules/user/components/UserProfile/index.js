@@ -31,10 +31,14 @@ const useStyles = makeStyles((theme) => ({
             cursor: 'pointer'
         }
     },
+    input: {
+        display: 'none',
+    },
 }));
 
 function UserProfile() {
     const [userProfile, setUserProfile] = useState(null);
+    const [currentFormData, setFormData] = useState(null);
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -54,39 +58,101 @@ function UserProfile() {
                         }
                     })
                     storeUser(loginUser.data)
-                    // console.log(user.data, 'user', response.data, 'data')
                 }
                 const user = await httpClient.get(`/users/me`)
                 setUserProfile(user.data);
-                console.log(user.data, 'user')
-
             } catch (e) {
                 console.log(e)
             }
         }
         fetchUserData()
-    }, [])
+    }, [currentFormData])
 
     const referralURL = userProfile ? `${process.env.REACT_APP_FRONTEND_SERVER}/signup/${userProfile.referralToken}` : '';
     const classes = useStyles();
 
+    console.log(userProfile);
+
+    const handlePicSelect = async (event) => {
+        const formData = new FormData();
+        formData.append('files', event.target.files[0]);
+        formData.append('ref', 'user');
+        formData.append('source', 'users-permissions');
+        formData.append('refId', userProfile.id);
+        formData.append('field', 'profilePicture');
+        setFormData(formData);
+    }
+    const uploadPic = async (event) => {
+        if(!currentFormData){
+            return alert('你尚未選擇一張相片!');
+        }
+        if (!currentFormData.get('files').name.match(/.(jpg|jpeg|png|gif)$/i)){
+            alert('請選擇一張相片!');
+        }
+        try {
+            await httpClient.post('/upload', currentFormData);
+            setFormData(null);
+            return alert('上載成功!');
+        } catch (e) {
+            return alert('上載系統出現錯誤!');
+        }
+    }
+
     return (
-        <div className='m-6'>
+        <div className='m-6 text-white'>
             <div className='max-w-5xl' onClick={() => { navigator.clipboard.writeText(referralURL) }}>
+            {currentFormData &&
+                <div>
+                    <div>{currentFormData.get('files').name}</div>
+                    <img src={URL.createObjectURL(currentFormData.get('files'))}/>
+                </div>
+            }
                 <FormControl fullWidth className={classes.hoverEffect}>
-                    <InputLabel htmlFor="input-with-icon-adornment" className={classes.textColor}>注冊連結</InputLabel>
-                    <Input
-                        id="input-with-icon-adornment"
-                        endAdornment={
-                            <InputAdornment position="start">
-                                <FileCopy className={classes.copyButton} />
-                            </InputAdornment>
-                        }
-                        value={referralURL}
-                        className={classes.textColor}
+                    <input
+                        accept="image/*"
+                        className={classes.input}
+                        id="contained-button-file"
+                        multiple
+                        type="file"
+                        onChange={handlePicSelect}
                     />
+                    <label htmlFor="contained-button-file">
+                        <Button variant="contained" color="primary" component="span">
+                        Select
+                        </Button>
+                    </label>
+                    <label>
+                        <Button variant="contained" color="primary" component="span" onClick={uploadPic}>
+                            Upload
+                        </Button>
+                    </label>
                 </FormControl>
             </div>
+            <br/>
+            {userProfile&&
+                <div >
+                        {userProfile.profilePicture && 
+                            <img src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.formats.thumbnail.url}`}/>
+                        }
+                        <div>用戶名稱: {userProfile.username}</div>
+                        <div>注冊日期: {userProfile.created_at}</div>
+                        <div>獎賞分數: {userProfile.point}</div>
+                        <div>會員階級: {userProfile.Membership}</div>
+                        <FormControl fullWidth className={classes.hoverEffect}>
+                            <InputLabel htmlFor="input-with-icon-adornment" className={classes.textColor}>注冊連結</InputLabel>
+                            <Input
+                                id="input-with-icon-adornment"
+                                endAdornment={
+                                    <InputAdornment position="start">
+                                        <FileCopy className={classes.copyButton} />
+                                    </InputAdornment>
+                                }
+                                value={referralURL}
+                                className={classes.textColor}
+                            />
+                        </FormControl>
+                </div>
+            }
 
         </div>
     )
