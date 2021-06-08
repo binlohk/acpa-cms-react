@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 function UserProfile() {
     const [userProfile, setUserProfile] = useState(null);
     const [currentFormData, setFormData] = useState(null);
+    const [purchasedCourses, setPurchasedCourses] = useState(null);
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -99,6 +100,14 @@ function UserProfile() {
         }
     }
 
+    const fetchUserCourses = async () => {
+        const response = await httpClient.get(`http://localhost:1337/courses`)
+        const data = response.data
+        const purchased = data.filter(item => item.purchased !== false)
+        setPurchasedCourses([...purchased])
+    }
+    useEffect(()=>{fetchUserCourses()},[]);
+
     return (
         <div className='m-6 text-white'>
             <div className='max-w-5xl' onClick={() => { navigator.clipboard.writeText(referralURL) }}>
@@ -155,6 +164,20 @@ function UserProfile() {
                 </div>
             }
             <ReferralList/>
+            {
+            purchasedCourses ?
+            <div>
+                <div>你擁有的課程: </div>
+                {
+                    purchasedCourses.map((course,index)=><div key={`courseName-${index}`}>
+                        <div>課程名稱: {course.title}</div>
+                        <div>購買日期: {course.published_at}</div>
+                    </div>)
+                }
+            </div>
+            :
+            <div>你尚未購買任何課程</div>
+            }
         </div>
     )
 }
