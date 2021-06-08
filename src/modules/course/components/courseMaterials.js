@@ -26,7 +26,10 @@ const CourseMaterials = ({ courseMaterials, purchased }) => {
                 {
                   (user && user.id && user.id != "") && purchased
                     ?
-                    <Button onClick={(event) => handleClick(event, courseMaterial)} color="primary" variant="contained">下載</Button>
+                    <Button
+                      style={{ background: '#235789' }}
+                      className='inline-flex items-center justify-center my-2 px-3 py-2 border border-transparent rounded-3xl shadow-sm text-xs font-bold text-white'
+                      onClick={(event) => handleClick(event, courseMaterial)} variant="contained">下載</Button>
                     :
                     <Button disabled variant="contained">你尚未購買此課程</Button>
                 }

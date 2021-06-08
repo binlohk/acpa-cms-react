@@ -11,6 +11,7 @@ import {
   MenuIcon
 } from '@heroicons/react/outline'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import useSidebar from '../../hooks/useSidebar'
 
 const customStyles = (offset) => {
   return {
@@ -21,6 +22,8 @@ const customStyles = (offset) => {
 
 const Header = () => {
   const { getUser } = useContext(UserContext);
+  const { open } = useSidebar();
+
   const [offset, setOffset] = useState(0);
   const handleLogout = () => {
     removeToken()

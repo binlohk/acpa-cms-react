@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import Lesson from '../../../lesson/components/LessonPage/lesson'
+import Lesson from './Lesson'
 import { UserContext } from '../../../../contexts/UserContext';
 import CheckIcon from '@material-ui/icons/Check';
 
@@ -19,7 +19,7 @@ const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
 
   return (
     <>
-      {lessonsDetail.map((lesson) =>
+      {/* {lessonsDetail.map((lesson) =>
         <div key={`lesson-${lesson.id}`}>
           <div>
             {(user.id && user.id != "" && purchased) &&
@@ -29,9 +29,8 @@ const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
             }
             {lesson.title}
           </div>
-          <Lesson lessonId={lesson.id}></Lesson>
         </div>
-      )}
+      )} */}
 
       {/*  */}
       <div
@@ -90,23 +89,26 @@ const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
             <tbody>
               {
                 lessonsDetail.map((lesson, ind) =>
-
                   <tr key={ind}>
                     <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                       {/* course input */}
-                      <button type="checkbox" className='w-10 h-10 rounded-full border-2 border-blueGray-50 shadow' onClick={handleClick} name={lesson.finished} value={lesson.id} >
-                        {
-                          (button && lesson.finished) && <CheckIcon />
-                        }
-                      </button>
+                      {(user.id && user.id != "" && purchased) &&
+                        <button type='button' className='w-10 h-10 rounded-full border-2 border-blueGray-50 shadow' onClick={handleClick} name={lesson.finished} value={lesson.id} >
+                        </button>
+                      }
                       {/* course name */}
-                      <span
-                        className={
-                          "ml-3 font-bold "
-                        }
-                      >
-                        {lesson.title}
-                      </span>
+                      <div className='flex flex-col ml-3'>
+                        <span
+                          className={
+                            "font-bold text-lg"
+                          }
+                        >
+                          {lesson.title}
+                        </span>
+                        <span>
+                          {lesson.text}
+                        </span>
+                      </div>
                     </th>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     </td>

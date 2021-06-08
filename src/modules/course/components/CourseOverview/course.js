@@ -19,6 +19,10 @@ import BuyButton from '../../../utilComponents/BuyButton'
 const useStyles = makeStyles(theme => ({
     paper: {
         width: '100%',
+        background: 'transparent'
+    },
+    tab: {
+        color: 'white'
     }
 }));
 
@@ -96,7 +100,7 @@ const Course = (props) => {
         setValue(newValue);
     };
     return (
-        <div className='flex flex-col items-center text-white'>
+        <div className='flex flex-col items-center text-gray-300'>
             {courseData &&
                 <>
                     <h1 className="py-12 text-5xl text-gray-200">{courseData.title}</h1>
@@ -122,12 +126,13 @@ const Course = (props) => {
                     </div>
 
                     <div className='w-1/2'>
-                        <Paper elevation={3} className={classes.paper}>
+                        <Paper className={classes.paper}>
                             <Tabs value={value}
                                 onChange={handleTabChange}
                                 aria-label="simple tabs example"
-                                indicatorColor="primary"
-                                textColor="primary"
+                                indicatorColor="white"
+                                textColor="white"
+                                className={classes.tab}
                             >
                                 <Tab icon={<LibraryBooksIcon />} label="課堂概覽" {...a11yProps(0)} />
                                 <Tab icon={<PermMediaIcon />} label="課堂材料" {...a11yProps(1)} />
@@ -138,7 +143,6 @@ const Course = (props) => {
                             <p className='py-6'>{courseData.description}</p>
                             <div className="text-2xl  mt-12 border-b-4">課程價錢</div>
                             <p className='py-6'>${courseData.price}</p>
-                            <div className="text-2xl  mt-12 border-b-4">課程內容</div>
                             <LessonCards lessonsDetail={courseData.lessonsDetail} progressHandler={updateLessonProgress} purchased={courseData.purchased} />
                         </TabPanel>
                         <TabPanel value={value} index={1}>

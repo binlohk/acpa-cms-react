@@ -16,6 +16,7 @@ import Home from './modules/landingPage/components/Home'
 import Course from './modules/course/components/CourseOverview/course'
 import AllCourses from './modules/course/components/AllCourses/AllCourses'
 import MyCourses from './modules/course/components/AllCourses/MyCourses'
+import Lesson from './modules/lesson/components/LessonPage/Lesson'
 import UserProfile from './modules/user/components/UserProfile'
 import UserLayout from './modules/layout/UserLayout'
 import PaymentSuccess from './modules/course/components/Payment/PaymentSuccess'
@@ -38,7 +39,7 @@ function App() {
               <Route exact path='/courses' component={AllCourses} />
               <Route exact path='/course/:courseId' component={Course} />
               <PrivateRoute exact path='/my-courses' component={MyCourses} />
-              <PrivateRoute exact path='/lesson/:lessonId' />
+              <PrivateRoute exact path='/lesson/:lessonId' component={Lesson} />
               <PrivateRoute exact path='/user/:userId' component={UserProfile} />
               <PrivateRoute exact path='/payment-success/:courseId' component={PaymentSuccess} />
               <PrivateRoute exact path='/payment-failure/:courseId' component={PaymentFailure} />
