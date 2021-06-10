@@ -47,7 +47,7 @@ const Lesson = ({ history, match }) => {
                 const result = await httpClient.get(`http://localhost:1337/lessons/${lessonId}`)
                 setLessonData(result.data);
                 const courseResult = await httpClient.get(`http://localhost:1337/courses/${result.data.course.id}`)
-                setCourseData(courseResult.data.lessonsDetail)
+                setCourseData(courseResult.data)
                 console.log(courseResult.data.lessonsDetail);
             } catch (e) {
                 // history.push(`/user/${user.id}`)
@@ -145,7 +145,7 @@ const Lesson = ({ history, match }) => {
                     courseData && courseData.title
                 }
                 {
-                    courseData && courseData.map((course, ind) => {
+                    courseData && courseData.lessonsDetail.map((course, ind) => {
                         return (
                             <>
                                 <ListItem
