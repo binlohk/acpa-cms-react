@@ -9,6 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
 import useSidebar from '../../../../hooks/useSidebar';
+import Vimeo from '@u-wave/react-vimeo';
 
 const useStyles = makeStyles(theme => ({
     list: {
@@ -65,7 +66,7 @@ const Lesson = ({ history, match }) => {
         setButton(!button)
         await updateLessonProgress(event.target.id, button);
         event.target.disabled = false;
-        console.log(event.target, 'event.target.id')
+        console.log(event.target.id, 'event.target.id')
     }
 
     const updateLessonProgress = async (lessonId, isFinished) => {
@@ -95,14 +96,40 @@ const Lesson = ({ history, match }) => {
         }
     };
 
+    /**on video end */
+    const handleEnd = async () => {
+        await updateLessonProgressByFinishVideo();
+    }
+
+    const updateLessonProgressByFinishVideo = async () => {
+        try {
+            if (!lessonData.finished) {
+                const route = `user-progresses/${lessonId}/${user.id}`;
+                await httpClient.post(route);
+                const result = await httpClient.get(`http://localhost:1337/lessons/${lessonId}`);
+                setLessonData(result.data);
+                const courseResult = await httpClient.get(`http://localhost:1337/courses/${result.data.course.id}`);
+                setCourseData(courseResult.data.lessonsDetail);
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    };
 
     return (
         <div className='m-6 text-gray-300 '>
             {lessonData && (
                 <>
                     <div className='flex justify-center'>
-                        <Video
-                            videoUrl={lessonData.videoUrl} width='1000' height='600' />
+                        {/* <Video
+                            videoUrl={lessonData.videoUrl} width='1000' height='600' /> */}
+                        <Vimeo
+                            video="517298823"
+                            autoplay
+                            width='1000'
+                            height='600'
+                            onEnd={handleEnd}
+                        />
                     </div>
                     <h1 className='text-3xl'>課程內容</h1>
                     <div>{lessonData.lessonDescription}</div>
@@ -136,12 +163,13 @@ const Lesson = ({ history, match }) => {
                                     <ListItemIcon>
                                         <Checkbox
                                             edge="end"
-                                            checked={`${course.finished}`}
+                                            checked={course.finished}
                                             // checked='true'
                                             disableRipple
                                             onChange={handleClick}
                                             id={course.id}
                                         />
+                                        {/* {course.finished && <CheckIcon />} */}
 
                                     </ListItemIcon>
                                 </ListItem>
