@@ -2,17 +2,18 @@ import React, { useContext, useState } from 'react';
 import Lesson from './Lesson'
 import { UserContext } from '../../../../contexts/UserContext';
 import CheckIcon from '@material-ui/icons/Check';
-
+import ForwardIcon from '@material-ui/icons/Forward';
+import { Link } from 'react-router-dom';
 const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
   const { getUser } = useContext(UserContext);
   const user = getUser();
 
-  const [button, setButton] = useState(false)
+  const [button, setButton] = useState({})
 
   const handleClick = async (event) => {
     // event.target.disabled = true;
     // event.target.disabled = false;
-    setButton(!button)
+    setButton({ ...button })
     await progressHandler(event.target.value, button);
     console.log(event.target.value, 'event.target.value', event.target.name, 'event.target.name', button, 'button')
   }
@@ -33,11 +34,7 @@ const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
       )} */}
 
       {/*  */}
-      <div
-        className={
-          "relative bg-white text-gray-600 flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded "
-        }
-      >
+      <div>
         <div className="rounded-t mb-0 py-3 border-0">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full px-4 max-w-full flex-grow flex-1">
@@ -93,11 +90,12 @@ const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
                     <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                       {/* course input */}
                       {(user.id && user.id != "" && purchased) &&
-                        <button type='button' className='w-10 h-10 rounded-full border-2 border-blueGray-50 shadow' onClick={handleClick} name={lesson.finished} value={lesson.id} >
+                        <button type='button' className='w-10 h-10 rounded-full border-2 border-blueGray-50 shadow' onClick={handleClick} value={lesson.id} >
+                          {lesson.finished && <CheckIcon />}
                         </button>
                       }
                       {/* course name */}
-                      <div className='flex flex-col ml-3'>
+                      <div className='flex flex-col ml-3 max-w-6xl'>
                         <span
                           className={
                             "font-bold text-lg"
@@ -105,9 +103,11 @@ const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
                         >
                           {lesson.title}
                         </span>
-                        <span>
-                          {lesson.text}
-                        </span>
+                        <div>
+                          <p className='max-w-xl'>
+                            {lesson.text}
+                          </p>
+                        </div>
                       </div>
                     </th>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -115,7 +115,9 @@ const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     </td>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                      {/* progress bar? */}
+                      <Link to={`/lesson/${lesson.id}`}>
+                        <ForwardIcon />
+                      </Link>
                     </td>
                   </tr>
                 )

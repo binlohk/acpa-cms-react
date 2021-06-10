@@ -126,28 +126,55 @@ const Course = (props) => {
                     </div>
 
                     <div className='w-1/2'>
-                        <Paper className={classes.paper}>
-                            <Tabs value={value}
-                                onChange={handleTabChange}
-                                aria-label="simple tabs example"
-                                indicatorColor="white"
-                                textColor="white"
-                                className={classes.tab}
-                            >
-                                <Tab icon={<LibraryBooksIcon />} label="課堂概覽" {...a11yProps(0)} />
-                                <Tab icon={<PermMediaIcon />} label="課堂材料" {...a11yProps(1)} />
-                            </Tabs>
-                        </Paper>
-                        <TabPanel value={value} index={0}>
-                            <div className="text-2xl mt-12 border-b-4 ">課程概覽</div>
-                            <p className='py-6'>{courseData.description}</p>
-                            <div className="text-2xl  mt-12 border-b-4">課程價錢</div>
-                            <p className='py-6'>${courseData.price}</p>
-                            <LessonCards lessonsDetail={courseData.lessonsDetail} progressHandler={updateLessonProgress} purchased={courseData.purchased} />
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            <CourseMaterials courseMaterials={courseData.courseMaterials} purchased={courseData.purchased} />
-                        </TabPanel>
+                        <div className='relative bg-white text-gray-600 flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded'>
+                            <Paper className={classes.paper}>
+                                <Tabs value={value}
+                                    onChange={handleTabChange}
+                                    aria-label="simple tabs example"
+                                    indicatorColor="white"
+                                    textColor="white"
+                                    className={classes.tab}
+                                >
+                                    <Tab icon={<LibraryBooksIcon />} label="課堂概覽" {...a11yProps(0)} />
+                                    <Tab icon={<PermMediaIcon />} label="課堂材料" {...a11yProps(1)} />
+                                </Tabs>
+                            </Paper>
+                            <TabPanel value={value} index={0}>
+
+                                <div className="rounded-t mb-0 py-3  border-b-2">
+                                    <div className="flex flex-wrap items-center">
+                                        <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+                                            <h3
+                                                className={
+                                                    "font-semibold text-lg "
+                                                }
+                                            >
+                                                課程概覽
+                                    </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p className='py-6 pl-4'>{courseData.description}</p>
+                                <div className="rounded-t mb-0 py-3  border-b-2">
+                                    <div className="flex flex-wrap items-center">
+                                        <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+                                            <h3
+                                                className={
+                                                    "font-semibold text-lg "
+                                                }
+                                            >
+                                                課程價錢
+                                    </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p className='py-6 pl-4'>${courseData.price}</p>
+                                <LessonCards lessonsDetail={courseData.lessonsDetail} progressHandler={updateLessonProgress} purchased={courseData.purchased} />
+                            </TabPanel>
+                            <TabPanel value={value} index={1}>
+                                <CourseMaterials courseMaterials={courseData.courseMaterials} purchased={courseData.purchased} />
+                            </TabPanel>
+                        </div>
                     </div>
                 </>
             }
