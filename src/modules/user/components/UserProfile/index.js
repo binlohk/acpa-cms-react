@@ -85,10 +85,10 @@ function UserProfile() {
         setFormData(formData);
     }
     const uploadPic = async (event) => {
-        if(!currentFormData){
+        if (!currentFormData) {
             return alert('你尚未選擇一張相片!');
         }
-        if (!currentFormData.get('files').name.match(/.(jpg|jpeg|png|gif)$/i)){
+        if (!currentFormData.get('files').name.match(/.(jpg|jpeg|png|gif)$/i)) {
             alert('請選擇一張相片!');
         }
         try {
@@ -106,43 +106,17 @@ function UserProfile() {
         const purchased = data.filter(item => item.purchased !== false)
         setPurchasedCourses([...purchased])
     }
-    useEffect(()=>{fetchUserCourses()},[]);
+    useEffect(() => { fetchUserCourses() }, []);
 
     return (
-        <div className='m-6 text-white'>
-            <div className='max-w-5xl' onClick={() => { navigator.clipboard.writeText(referralURL) }}>
-            {currentFormData &&
-                <div>
-                    <div>{currentFormData.get('files').name}</div>
-                    <img src={URL.createObjectURL(currentFormData.get('files'))}/>
-                </div>
-            }
-                <FormControl fullWidth className={classes.hoverEffect}>
-                    <input
-                        accept="image/*"
-                        className={classes.input}
-                        id="contained-button-file"
-                        multiple
-                        type="file"
-                        onChange={handlePicSelect}
-                    />
-                    <label htmlFor="contained-button-file">
-                        <Button variant="contained" color="primary" component="span">
-                        Select
-                        </Button>
-                    </label>
-                    <label>
-                        <Button variant="contained" color="primary" component="span" onClick={uploadPic}>
-                            Upload
-                        </Button>
-                    </label>
-                </FormControl>
-            </div>
-            <br/>
-            {userProfile&&
-                <div >
-                        {userProfile.profilePicture && 
-                            <img src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`}/>
+        <div className='m-6 bg-gray-200 text-gray-700'>
+            {/* user info */}
+            <div>
+                {userProfile &&
+                    /** user info */
+                    <div className='flex flex-col justify-center'>
+                        {userProfile.profilePicture &&
+                            <img className='w-24 h-24' src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`} />
                         }
                         <div>用戶名稱: {userProfile.username}</div>
                         <div>注冊日期: {userProfile.created_at}</div>
@@ -161,22 +135,54 @@ function UserProfile() {
                                 className={classes.textColor}
                             />
                         </FormControl>
-                </div>
-            }
-            <ReferralList/>
-            {
-            purchasedCourses ?
-            <div>
-                <div>你擁有的課程: </div>
-                {
-                    purchasedCourses.map((course,index)=><div key={`courseName-${index}`}>
-                        <div>課程名稱: {course.title}</div>
-                        <div>購買日期: {course.published_at}</div>
-                    </div>)
+                    </div>
                 }
+                <FormControl fullWidth className={classes.hoverEffect}>
+                    <input
+                        accept="image/*"
+                        className={classes.input}
+                        id="contained-button-file"
+                        multiple
+                        type="file"
+                        onChange={handlePicSelect}
+                    />
+                    <label htmlFor="contained-button-file">
+                        <Button variant="contained" color="primary" component="span">
+                            Select
+                        </Button>
+                    </label>
+                    <label>
+                        <Button variant="contained" color="primary" component="span" onClick={uploadPic}>
+                            Upload
+                        </Button>
+                    </label>
+                </FormControl>
             </div>
-            :
-            <div>你尚未購買任何課程</div>
+            <div className='max-w-5xl' onClick={() => { navigator.clipboard.writeText(referralURL) }}>
+                {currentFormData &&
+                    <div>
+                        <div>{currentFormData.get('files').name}</div>
+                        <img src={URL.createObjectURL(currentFormData.get('files'))} />
+                    </div>
+                }
+
+            </div>
+            <br />
+
+            <ReferralList />
+            {
+                purchasedCourses ?
+                    <div>
+                        <div>你擁有的課程: </div>
+                        {
+                            purchasedCourses.map((course, index) => <div key={`courseName-${index}`}>
+                                <div>課程名稱: {course.title}</div>
+                                <div>購買日期: {course.published_at}</div>
+                            </div>)
+                        }
+                    </div>
+                    :
+                    <div>你尚未購買任何課程</div>
             }
         </div>
     )

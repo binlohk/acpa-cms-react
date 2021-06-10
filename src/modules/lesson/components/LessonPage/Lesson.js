@@ -35,7 +35,6 @@ const Lesson = ({ match }) => {
 
     const [lessonData, setLessonData] = useState(null);
     const [courseData, setCourseData] = useState(null);
-    const [video, setVideo] = useState(null)
 
     const { lessonId } = match.params
     const classes = useStyles()
@@ -47,11 +46,7 @@ const Lesson = ({ match }) => {
                 setLessonData(result.data);
                 const courseResult = await httpClient.get(`http://localhost:1337/courses/${result.data.course.id}`)
                 setCourseData(courseResult.data)
-                setVideo(lessonData.videoUrl.substring(31, result.data.videoUrl.length.toString()))
-                console.log(result.data.videoUrl.substring(31, result.data.videoUrl.length).toString(), 'lessonData..length')
-                // console.log(courseResult.data);
             } catch (e) {
-                // history.push(`/user/${user.id}`)
                 console.log(e)
             }
         }
@@ -63,67 +58,40 @@ const Lesson = ({ match }) => {
 
     /**events for lessons progress bar */
     const handleClick = async (event) => {
-        // event.target.disabled = true;
+        event.target.disabled = true;
         await updateLessonProgress(event.target.id);
-        // event.target.disabled = false;
-        console.log(event.target.id, 'event.target.id')
+        event.target.disabled = false;
     }
 
     const updateLessonProgress = async (lessonId) => {
         try {
             if (user.id != "" && user.id != null) {
                 const route = `/user-progresses/${lessonId}/${user.id}`;
-
-                console.log(courseData, 'courseData')
-                if (!lessonData.finished) {
+                const { data: dbIsLessonFinished } = await httpClient.get(route);
+                if (!dbIsLessonFinished) {
                     await httpClient.post(route);
                 } else {
                     await httpClient.delete(route);
                 }
-                await fetchCourseData(courseData.id);
-                console.log(courseData, 'courseData')
+                await fetchLessonData(lessonId);
             }
         } catch (e) {
             console.log(e)
         }
     }
-
-    const fetchCourseData = async (courseId) => {
-        try {
-            const result = await httpClient.get(`http://localhost:1337/courses/${courseId}`)
-            setCourseData(result.data);
-            console.log(result.data, '333')
-        } catch (e) {
-            console.log(e)
-        }
-    };
 
     /**on video end */
     const handleEnd = async () => {
-        await updateLessonProgressByFinishVideo();
+        if (!lessonData.finished) {
+            await updateLessonProgress(lessonId);
+        }
     }
 
-    const updateLessonProgressByFinishVideo = async () => {
-        try {
-            if (!lessonData.finished) {
-                const route = `user-progresses/${lessonId}/${user.id}`;
-                await httpClient.post(route);
-            }
-            const result = await httpClient.get(`http://localhost:1337/lessons/${lessonId}`);
-            setLessonData(result.data);
-            const courseResult = await httpClient.get(`http://localhost:1337/courses/${result.data.course.id}`);
-            setCourseData(courseResult.data);
-            console.log(courseResult.data, 'courseResult.data')
-        } catch (e) {
-            console.log(e)
-        }
-    };
-
     return (
-        <div className='m-6 text-gray-300 '>
+        <div className='m-6 text-gray-300'>
             {lessonData && (
                 <>
-                    <div className='flex flex-col justify-start'>
+                    <div className='flex flex-col justify-start text-white'>
                         <Vimeo
                             video={lessonData.videoUrl}
                             autoplay
