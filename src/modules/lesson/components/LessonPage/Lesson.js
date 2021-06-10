@@ -85,7 +85,9 @@ const Lesson = ({ match }) => {
 
     /**on video end */
     const handleEnd = async () => {
-        await updateLessonProgress(lessonId);
+        if(!lessonData.finished){
+            await updateLessonProgress(lessonId);
+        }
     }
 
     return (
@@ -94,7 +96,7 @@ const Lesson = ({ match }) => {
                 <>
                     <div className='flex flex-col justify-start'>
                         <Vimeo
-                            video="517298823"
+                            video={lessonData.videoUrl}
                             autoplay
                             width='1500'
                             height='600'
