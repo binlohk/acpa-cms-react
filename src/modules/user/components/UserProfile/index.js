@@ -108,6 +108,10 @@ function UserProfile() {
     }
     useEffect(()=>{fetchUserCourses()},[]);
 
+    const handleCopyLink = async () => {
+        await navigator.clipboard.writeText(referralURL);
+    }
+
     return (
         <div className='m-6 text-white'>
             <div className='max-w-5xl' onClick={() => { navigator.clipboard.writeText(referralURL) }}>
@@ -148,13 +152,14 @@ function UserProfile() {
                         <div>注冊日期: {userProfile.created_at}</div>
                         <div>獎賞分數: {userProfile.point}</div>
                         <div>會員階級: {userProfile.Membership}</div>
-                        <FormControl fullWidth className={classes.hoverEffect}>
+                        <FormControl fullWidth className={classes.hoverEffect} >
                             <InputLabel htmlFor="input-with-icon-adornment" className={classes.textColor}>注冊連結</InputLabel>
                             <Input
                                 id="input-with-icon-adornment"
                                 endAdornment={
                                     <InputAdornment position="start">
-                                        <FileCopy className={classes.copyButton} />
+                                        <FileCopy className={classes.copyButton} 
+                                        onClick={handleCopyLink}/>
                                     </InputAdornment>
                                 }
                                 value={referralURL}

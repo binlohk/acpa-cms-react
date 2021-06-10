@@ -11,6 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Divider } from '@material-ui/core';
 import useSidebar from '../../../../hooks/useSidebar';
 import Vimeo from '@u-wave/react-vimeo';
+import LessonStepper from './LessonStepper'
 
 const useStyles = makeStyles(theme => ({
     list: {
@@ -155,6 +156,7 @@ const Lesson = ({ match }) => {
                     })
                 }
             </List>
+            <LessonStepper lessonsDetail={courseData.lessonsDetail} lessonId={lessonId}/>
         </div>
     )
 }
