@@ -1,39 +1,22 @@
 import React, { useContext, useState } from 'react';
-import Lesson from './Lesson'
 import { UserContext } from '../../../../contexts/UserContext';
-import CheckIcon from '@material-ui/icons/Check';
 import ForwardIcon from '@material-ui/icons/Forward';
 import { Link } from 'react-router-dom';
+import CheckIcon from '@material-ui/icons/Check';
+
+
 const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
   const { getUser } = useContext(UserContext);
   const user = getUser();
 
-  const [button, setButton] = useState({})
-
-  const handleClick = async (event) => {
-    // event.target.disabled = true;
-    // event.target.disabled = false;
-    setButton({ ...button })
-    await progressHandler(event.target.value, button);
-    console.log(event.target.value, 'event.target.value', event.target.name, 'event.target.name', button, 'button')
-  }
+  // const handleClick = async (event) => {
+  //   event.target.disabled = true;
+  //   await progressHandler(event.target.id, event.target.checked);
+  //   event.target.disabled = false;
+  // }
 
   return (
     <>
-      {/* {lessonsDetail.map((lesson) =>
-        <div key={`lesson-${lesson.id}`}>
-          <div>
-            {(user.id && user.id != "" && purchased) &&
-              <label className="inline-flex items-center mt-3">
-                <input type="checkbox" className="form-checkbox h-5 w-5 text-green-600" checked={lesson.finished} onChange={handleClick} id={lesson.id} />
-              </label>
-            }
-            {lesson.title}
-          </div>
-        </div>
-      )} */}
-
-      {/*  */}
       <div>
         <div className="rounded-t mb-0 py-3 border-0">
           <div className="flex flex-wrap items-center">
@@ -55,14 +38,15 @@ const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
               <tr>
                 <th
                   className={
-                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 border-blueGray-100"
+                    "pl-4 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 border-blueGray-100"
                   }
                 >
-                  課程名稱
+                  <span>課程進度</span>
+                  <span className='pl-4'>課程名稱</span>
                 </th>
                 <th
                   className={
-                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left "
+                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 border-blueGray-100"
                   }
                 >
                 </th>
@@ -84,15 +68,18 @@ const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
               </tr>
             </thead>
             <tbody>
+              {lessonsDetail.length === 0 && <p className='ml-4 mt-6 text-xs'>此課程暫時沒有資料</p>}
               {
                 lessonsDetail.map((lesson, ind) =>
                   <tr key={ind}>
-                    <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                      {/* course input */}
-                      {(user.id && user.id != "" && purchased) &&
-                        <button type='button' className='w-10 h-10 rounded-full border-2 border-blueGray-50 shadow' onClick={handleClick} value={lesson.id} >
+                    <th className="border-t-0 px-6 py-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap text-left flex items-center">
+                    </th>
+                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap text-left flex items-center">
+                      {/* course status */}
+                      {(user.id && user.id != "") &&
+                        <div type='button' className='w-10 h-10 rounded-full border-2 border-blueGray-50 shadow flex justify-center items-center'>
                           {lesson.finished && <CheckIcon />}
-                        </button>
+                        </div>
                       }
                       {/* course name */}
                       <div className='flex flex-col ml-3 max-w-6xl'>
@@ -103,14 +90,12 @@ const LessonCards = ({ lessonsDetail, progressHandler, purchased }) => {
                         >
                           {lesson.title}
                         </span>
-                        <div>
-                          <p className='max-w-xl'>
+                        <div className='w-12 max-w-full'>
+                          <p className='w-12 max-w-full'>
                             {lesson.text}
                           </p>
                         </div>
                       </div>
-                    </th>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     </td>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     </td>

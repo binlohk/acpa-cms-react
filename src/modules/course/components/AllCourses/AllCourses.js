@@ -10,8 +10,7 @@ import RecommendedCourseCardCarousel from './RecommendedCourseCardCarousel'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { trackPromise } from 'react-promise-tracker'
 import LoadingSpinner from '../../../utilComponents/LoadingSpinner'
-import { getToken } from '../../../../services/authService'
-import jwt from 'jsonwebtoken';
+import axios from 'axios'
 
 function AllCourses() {
     const [courses, setCourses] = useState([])
@@ -36,9 +35,9 @@ function AllCourses() {
 
     useEffect(() => {
         const fetchUserCourses = async () => {
-            const response = await httpClient.get(`/courses`)
+            const response = await axios.get(`http://localhost:1337/courses`)
             const data = response.data
-            // console.log(response.data)
+            console.log(response.data)
             setCourses([...data])
             const featured = data.filter(item => item.featured !== false)
             setFeaturedCourses([...featured])

@@ -67,6 +67,7 @@ const Course = (props) => {
         try {
             const result = await httpClient.get(`http://localhost:1337/courses/${courseId}`)
             setCourseData(result.data);
+            console.log(result.data.lessonsDetail, 'noooooo')
         } catch (e) {
             props.history.push('/courses')
             console.log(e)
@@ -110,7 +111,7 @@ const Course = (props) => {
                             <>
                                 <span className='text-gray-700 font-bold'>你已擁有此課程</span>
                                 <Link
-                                    to="/login"
+                                    to={`/lesson/${courseData.lessonsDetail.length > 0 && courseData.lessonsDetail[0].id}`}
                                     style={{ background: '#235789' }}
                                     className="whitespace-nowrap inline-flex items-center justify-center my-2 px-3 py-2 border border-transparent rounded-3xl shadow-sm text-xs font-bold text-white"
                                 >
@@ -146,7 +147,7 @@ const Course = (props) => {
                                         <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                                             <h3
                                                 className={
-                                                    "font-semibold text-lg "
+                                                    "font-semibold text-lg"
                                                 }
                                             >
                                                 課程概覽
