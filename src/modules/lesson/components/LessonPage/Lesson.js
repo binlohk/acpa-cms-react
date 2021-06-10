@@ -8,6 +8,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import useSidebar from '../../../../hooks/useSidebar';
+import Vimeo from '@u-wave/react-vimeo';
 
 const useStyles = makeStyles(theme => ({
     item: {
@@ -47,18 +48,43 @@ const Lesson = ({ history, match }) => {
         }
     };
 
+    const updateLessonProgress = async () => {
+        try {
+            if (!lessonData.finished) {
+                const route = `user-progresses/${lessonId}/${user.id}`;
+                await httpClient.post(route);
+                const result = await httpClient.get(`http://localhost:1337/lessons/${lessonId}`);
+                setLessonData(result.data);
+                const courseResult = await httpClient.get(`http://localhost:1337/courses/${result.data.course.id}`);
+                setCourseData(courseResult.data.lessonsDetail);
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    };
+
     useEffect(() => {
         fetchLessonData(lessonId);
     }, []);
 
+    const handleEnd = async () => {
+        await updateLessonProgress();
+    }
 
     return (
         <div className='m-6 text-gray-300 '>
             {lessonData && (
                 <>
                     <div className='flex justify-center'>
-                        <Video
-                            videoUrl={lessonData.videoUrl} width='1000' height='600' />
+                        {/* <Video
+                            videoUrl={lessonData.videoUrl} width='1000' height='600' /> */}
+                            <Vimeo 
+                            video="517298823"
+                            autoplay
+                            width='1000' 
+                            height='600'
+                            onEnd={handleEnd}
+                            />
                     </div>
                     <h1 className='text-3xl'>課程內容</h1>
                     <div>{lessonData.lessonDescription}</div>
