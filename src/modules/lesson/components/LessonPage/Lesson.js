@@ -8,6 +8,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
+import { Divider } from '@material-ui/core';
 import useSidebar from '../../../../hooks/useSidebar';
 import Vimeo from '@u-wave/react-vimeo';
 
@@ -21,6 +22,7 @@ const useStyles = makeStyles(theme => ({
         right: '0',
     },
     item: {
+        background: '#4B5563',
         width: '20vw',
         display: 'flex',
         justifyContent: 'center',
@@ -36,7 +38,6 @@ const Lesson = ({ history, match }) => {
 
     const [lessonData, setLessonData] = useState(null);
     const [courseData, setCourseData] = useState(null);
-    const [button, setButton] = useState(null);
 
     const { lessonId } = match.params
     const classes = useStyles()
@@ -48,7 +49,7 @@ const Lesson = ({ history, match }) => {
                 setLessonData(result.data);
                 const courseResult = await httpClient.get(`http://localhost:1337/courses/${result.data.course.id}`)
                 setCourseData(courseResult.data)
-                console.log(courseResult.data.lessonsDetail);
+                // console.log(courseResult.data);
             } catch (e) {
                 // history.push(`/user/${user.id}`)
                 console.log(e)
@@ -62,25 +63,25 @@ const Lesson = ({ history, match }) => {
 
     /**events for lessons progress bar */
     const handleClick = async (event) => {
-        event.target.disabled = true;
-        setButton(!button)
-        await updateLessonProgress(event.target.id, button);
-        event.target.disabled = false;
+        // event.target.disabled = true;
+        await updateLessonProgress(event.target.id);
+        // event.target.disabled = false;
         console.log(event.target.id, 'event.target.id')
     }
 
-    const updateLessonProgress = async (lessonId, isFinished) => {
-        let result;
+    const updateLessonProgress = async (lessonId) => {
         try {
             if (user.id != "" && user.id != null) {
-                const route = `user-progresses/${lessonId}/${user.id}`;
-                if (isFinished) {
-                    result = await httpClient.post(route);
+                const route = `/user-progresses/${lessonId}/${user.id}`;
+                console.log(lessonData.finished, 'lessonData.finished')
+                console.log(courseData, 'courseData')
+                if (!lessonData.finished) {
+                    await httpClient.post(route);
                 } else {
-                    result = await httpClient.delete(route);
+                    await httpClient.delete(route);
                 }
                 await fetchCourseData(courseData.id);
-                console.log(courseData.id, 'courseData.id')
+                console.log(courseData, 'courseData')
             }
         } catch (e) {
             console.log(e)
@@ -91,6 +92,7 @@ const Lesson = ({ history, match }) => {
         try {
             const result = await httpClient.get(`http://localhost:1337/courses/${courseId}`)
             setCourseData(result.data);
+            console.log(result.data, '333')
         } catch (e) {
             console.log(e)
         }
@@ -106,11 +108,12 @@ const Lesson = ({ history, match }) => {
             if (!lessonData.finished) {
                 const route = `user-progresses/${lessonId}/${user.id}`;
                 await httpClient.post(route);
-                const result = await httpClient.get(`http://localhost:1337/lessons/${lessonId}`);
-                setLessonData(result.data);
-                const courseResult = await httpClient.get(`http://localhost:1337/courses/${result.data.course.id}`);
-                setCourseData(courseResult.data.lessonsDetail);
             }
+            const result = await httpClient.get(`http://localhost:1337/lessons/${lessonId}`);
+            setLessonData(result.data);
+            const courseResult = await httpClient.get(`http://localhost:1337/courses/${result.data.course.id}`);
+            setCourseData(courseResult.data);
+            console.log(courseResult.data, 'courseResult.data')
         } catch (e) {
             console.log(e)
         }
@@ -120,19 +123,22 @@ const Lesson = ({ history, match }) => {
         <div className='m-6 text-gray-300 '>
             {lessonData && (
                 <>
-                    <div className='flex justify-center'>
-                        {/* <Video
-                            videoUrl={lessonData.videoUrl} width='1000' height='600' /> */}
+                    <div className='flex flex-col justify-start'>
                         <Vimeo
                             video="517298823"
                             autoplay
-                            width='1000'
+                            width='1500'
                             height='600'
                             onEnd={handleEnd}
                         />
+                        <div className='pt-12'>
+                            <h1 className='text-3xl'>課程內容</h1>
+                            <p>{lessonData.lessonDescription}</p>
+                        </div>
+                        <div>
+
+                        </div>
                     </div>
-                    <h1 className='text-3xl'>課程內容</h1>
-                    <div>{lessonData.lessonDescription}</div>
 
                 </>
             )
@@ -142,35 +148,35 @@ const Lesson = ({ history, match }) => {
                 className={classes.list}
             >
                 {
-                    courseData && courseData.title
+                    <div className='flex justify-center border-b-2'>
+                        <h1 className='p-2 w-48'>{courseData && courseData.title}</h1>
+                    </div>
                 }
                 {
-                    courseData && courseData.lessonsDetail.map((course, ind) => {
+                    courseData && courseData.lessonsDetail.map((lesson, ind) => {
                         return (
                             <>
                                 <ListItem
                                     key={ind}
+                                    style={{ background: '#eee' }}
                                     className={classes.item}
                                 >
 
                                     <ListItemText
                                         primary={
                                             <span>
-                                                {course.title}
+                                                {lesson.title}
                                             </span>
                                         }
                                     />
                                     <ListItemIcon>
                                         <Checkbox
                                             edge="end"
-                                            checked={course.finished}
-                                            // checked='true'
+                                            checked={lesson.finished}
                                             disableRipple
                                             onChange={handleClick}
-                                            id={course.id}
+                                            id={lesson.id}
                                         />
-                                        {/* {course.finished && <CheckIcon />} */}
-
                                     </ListItemIcon>
                                 </ListItem>
                             </>
