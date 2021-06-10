@@ -4,12 +4,9 @@ import { httpClient } from '../../../../services/api/axiosHelper';
 import { UserContext } from '../../../../contexts/UserContext';
 import { Drawer, List, ListItemText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import CheckIcon from '@material-ui/icons/Check';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Divider } from '@material-ui/core';
-import useSidebar from '../../../../hooks/useSidebar';
 import Vimeo from '@u-wave/react-vimeo';
 
 const useStyles = makeStyles(theme => ({
@@ -32,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Lesson = ({ history, match }) => {
+const Lesson = ({ match }) => {
     const { getUser } = useContext(UserContext);
     const user = getUser();
 
@@ -128,7 +125,7 @@ const Lesson = ({ history, match }) => {
                 <>
                     <div className='flex flex-col justify-start'>
                         <Vimeo
-                            video={lessonData.videoUrl.substring(31, lessonData.videoUrl.length)}
+                            video={lessonData.videoUrl}
                             autoplay
                             width='1500'
                             height='600'
