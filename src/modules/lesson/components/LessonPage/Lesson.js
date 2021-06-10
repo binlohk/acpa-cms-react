@@ -38,6 +38,7 @@ const Lesson = ({ history, match }) => {
 
     const [lessonData, setLessonData] = useState(null);
     const [courseData, setCourseData] = useState(null);
+    const [video, setVideo] = useState(null)
 
     const { lessonId } = match.params
     const classes = useStyles()
@@ -49,6 +50,8 @@ const Lesson = ({ history, match }) => {
                 setLessonData(result.data);
                 const courseResult = await httpClient.get(`http://localhost:1337/courses/${result.data.course.id}`)
                 setCourseData(courseResult.data)
+                setVideo(lessonData.videoUrl.substring(31, result.data.videoUrl.length.toString()))
+                console.log(result.data.videoUrl.substring(31, result.data.videoUrl.length).toString(), 'lessonData..length')
                 // console.log(courseResult.data);
             } catch (e) {
                 // history.push(`/user/${user.id}`)
@@ -73,7 +76,7 @@ const Lesson = ({ history, match }) => {
         try {
             if (user.id != "" && user.id != null) {
                 const route = `/user-progresses/${lessonId}/${user.id}`;
-                console.log(lessonData.finished, 'lessonData.finished')
+
                 console.log(courseData, 'courseData')
                 if (!lessonData.finished) {
                     await httpClient.post(route);
@@ -125,7 +128,7 @@ const Lesson = ({ history, match }) => {
                 <>
                     <div className='flex flex-col justify-start'>
                         <Vimeo
-                            video="517298823"
+                            video={lessonData.videoUrl.substring(31, lessonData.videoUrl.length)}
                             autoplay
                             width='1500'
                             height='600'
