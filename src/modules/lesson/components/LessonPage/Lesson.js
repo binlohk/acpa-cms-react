@@ -162,8 +162,6 @@ const Lesson = ({ match }) => {
             <LessonStepper 
             lessonsDetail={courseData.lessonsDetail} 
             lessonId={lessonId} 
-            goToNextPage={()=>{history.push('/lesson/2')}}
-            goToPrevPage={()=>{history.push('/lesson/2')}}
             />}
         </div>
     )
