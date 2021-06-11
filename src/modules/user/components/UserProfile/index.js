@@ -3,7 +3,7 @@ import { httpClient } from '../../../../services/api/axiosHelper'
 import React, { useEffect, useState } from 'react'
 import jwt from 'jsonwebtoken';
 import { storeUser, storeToken, getToken, removeToken } from '../../../../services/authService'
-import { Button, TextField, InputAdornment, Input, InputLabel, FormControl, makeStyles } from '@material-ui/core';
+import { Button, TextField, InputAdornment, Input, InputLabel, FormControl, makeStyles, Divider } from '@material-ui/core';
 import { FileCopy } from '@material-ui/icons';
 import ReferralList from './referralList';
 
@@ -44,23 +44,6 @@ function UserProfile() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const token = getToken()
-                const decodedPayload = jwt.decode(token);
-                const currentTime = Date.now() / 1000
-                if (decodedPayload.exp === currentTime) {
-                    const response = await axios.post(`http://localhost:1337/users-permissions/refreshToken`, {}, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
-                    storeToken(response)
-                    const loginUser = await axios.get(`http://localhost:1337/users/me`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
-                    storeUser(loginUser.data)
-                }
                 const user = await httpClient.get(`/users/me`)
                 setUserProfile(user.data);
             } catch (e) {
@@ -108,27 +91,51 @@ function UserProfile() {
     }
     useEffect(() => { fetchUserCourses() }, []);
 
+    const handleCopyLink = async () => {
+        await navigator.clipboard.writeText(referralURL);
+    }
+
     return (
-        <div className='m-6 bg-gray-200 text-gray-700'>
+        <div className='m-6 bg-gray-200 text-gray-600'>
             {/* user info */}
             <div>
                 {userProfile &&
-                    /** user info */
-                    <div className='flex flex-col justify-center'>
+                    /** user icon */
+                    <div className='flex flex-col items-center'>
                         {userProfile.profilePicture &&
-                            <img className='w-24 h-24' src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`} />
+                            <img className='w-24 h-24 absolute top-20' src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`} />
                         }
-                        <div>用戶名稱: {userProfile.username}</div>
-                        <div>注冊日期: {userProfile.created_at}</div>
-                        <div>獎賞分數: {userProfile.point}</div>
-                        <div>會員階級: {userProfile.Membership}</div>
+                        <div className='pt-24 flex flex-col items-center'>
+                            <div className='flex flex-col'>
+                                <h1 className='text-4xl font-semibold'>
+                                    {userProfile.username}
+                                </h1>
+                                <p className='text-sm text-gray-500'>
+                                    會員名稱
+                                </p>
+                            </div>
+                            <div className='flex gap-x-24 py-12'>
+                                <div className='flex flex-col items-center'>
+                                    <h1> {userProfile.created_at}</h1>
+                                    <p className='text-sm text-gray-500'>
+                                        注冊日期
+                                </p>
+                                </div>
+                                <Divider style={{ width: '3px' }} flexItem orientation='vertical' />
+                                <div>獎賞分數: {userProfile.point}</div>
+                                <Divider style={{ width: '3px' }} flexItem orientation='vertical' />
+                                <div>會員階級: {userProfile.Membership}</div>
+                            </div>
+                        </div>
                         <FormControl fullWidth className={classes.hoverEffect}>
                             <InputLabel htmlFor="input-with-icon-adornment" className={classes.textColor}>注冊連結</InputLabel>
                             <Input
                                 id="input-with-icon-adornment"
                                 endAdornment={
                                     <InputAdornment position="start">
-                                        <FileCopy className={classes.copyButton} />
+                                        <FileCopy
+                                            onClick={handleCopyLink}
+                                            className={classes.copyButton} />
                                     </InputAdornment>
                                 }
                                 value={referralURL}

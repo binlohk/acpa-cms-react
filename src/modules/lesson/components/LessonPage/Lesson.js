@@ -8,6 +8,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
 import Vimeo from '@u-wave/react-vimeo';
+import LessonStepper from './LessonStepper';
+import { Link, Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     list: {
@@ -152,6 +154,8 @@ const Lesson = ({ match }) => {
                     })
                 }
             </List>
+            {/* <LessonStepper lessonsDetail={courseData.lessonsDetail} lessonId={lessonId} /> */}
+            <Redirect to={`${2}`} />123123
         </div>
     )
 }
