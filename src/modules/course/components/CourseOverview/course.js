@@ -31,6 +31,18 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         gap: theme.spacing(1),
     },
+    container: {
+        border: '2px solid #D1D5DB',
+        borderRadius: theme.spacing(0.5),
+    },
+    indicator: {
+        backgroundColor: 'black'
+    },
+    selected: {
+        background: '',
+        color: '',
+        borderBottom: ''
+    }
 }));
 
 const TabPanel = (props) => {
@@ -139,16 +151,18 @@ const Course = (props) => {
                                     <Tabs value={value}
                                         onChange={handleTabChange}
                                         aria-label="simple tabs example"
-                                        indicatorColor="white"
+                                        indicatorColor="primary"
                                         textColor="white"
                                         className={classes.tab}
+                                        classes={{
+                                            flexContainer: classes.container
+                                        }}
                                     >
-                                        <Tab classes={{ wrapper: classes.wrapper }} icon={<LibraryBooksIcon />} label="課堂概覽" {...a11yProps(0)} />
-                                        <Tab classes={{ wrapper: classes.wrapper }} icon={<PermMediaIcon />} label="課堂材料" {...a11yProps(1)} />
+                                        <Tab classes={{ wrapper: classes.wrapper, selected: classes.selected }} icon={<LibraryBooksIcon />} label="課堂概覽" {...a11yProps(0)} />
+                                        <Tab classes={{ wrapper: classes.wrapper, selected: classes.selected }} icon={<PermMediaIcon />} label="課堂材料" {...a11yProps(1)} />
                                     </Tabs>
                                 </div>
                                 <TabPanel value={value} index={0}>
-
                                     <div className="rounded-t py-3  border-b-2">
                                         <div className="flex flex-wrap items-center">
                                             <div className="relative w-full px-4 max-w-full flex-grow flex-1">

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory, Link, withRouter } from "react-router-dom";
 import Video from '../../../utilComponents/video';
 import { httpClient } from '../../../../services/api/axiosHelper';
 import { UserContext } from '../../../../contexts/UserContext';
@@ -9,7 +10,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
 import Vimeo from '@u-wave/react-vimeo';
 import LessonStepper from './LessonStepper';
-import { Link, Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     list: {
@@ -32,6 +32,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Lesson = ({ match }) => {
+    const history = useHistory();
     const { getUser } = useContext(UserContext);
     const user = getUser();
 
@@ -154,10 +155,15 @@ const Lesson = ({ match }) => {
                     })
                 }
             </List>
-            {/* <LessonStepper lessonsDetail={courseData.lessonsDetail} lessonId={lessonId} /> */}
-            <Redirect to={`${2}`} />123123
+            {courseData && courseData.lessonsDetail &&
+                <LessonStepper
+                    lessonsDetail={courseData.lessonsDetail}
+                    lessonId={lessonId}
+                    goToNextPage={() => { history.push('/lesson/2') }}
+                    goToPrevPage={() => { history.push('/lesson/2') }}
+                />}
         </div>
     )
 }
 
-export default Lesson
+export default withRouter(Lesson);
