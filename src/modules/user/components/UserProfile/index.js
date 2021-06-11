@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import { storeUser, storeToken, getToken, removeToken } from '../../../../services/authService'
 import { Button, TextField, InputAdornment, Input, InputLabel, FormControl, makeStyles, Divider } from '@material-ui/core';
 import { FileCopy } from '@material-ui/icons';
+import SettingsIcon from '@material-ui/icons/Settings';
 import ReferralList from './referralList';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
     textColor: {
         color: 'gray',
+        width: '50%',
         "&:hover": {
             cursor: 'pointer'
         }
@@ -23,7 +25,9 @@ const useStyles = makeStyles((theme) => ({
     hoverEffect: {
         "&:hover": {
             cursor: 'pointer'
-        }
+        },
+    },
+    registerLink: {
     },
     copyButton: {
         "&:hover": {
@@ -96,39 +100,79 @@ function UserProfile() {
     }
 
     return (
-        <div className='m-6 bg-gray-200 text-gray-600'>
+        <div className='m-6 h-screen bg-gray-200 text-gray-600'>
             {/* user info */}
             <div>
                 {userProfile &&
                     /** user icon */
                     <div className='flex flex-col items-center'>
                         {userProfile.profilePicture &&
-                            <img className='w-24 h-24 absolute top-20' src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`} />
+                            <div className='rounded-full border-2 border-yellow-700 bg-white p-4 absolute top-20'>
+                                <img className='w-24 h-24 object-contain' src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`} />
+                            </div>
                         }
-                        <div className='pt-24 flex flex-col items-center'>
-                            <div className='flex flex-col'>
-                                <h1 className='text-4xl font-semibold'>
-                                    {userProfile.username}
-                                </h1>
-                                <p className='text-sm text-gray-500'>
-                                    會員名稱
+                        <div className='pt-28 flex flex-col items-center'>
+                            <div className='flex items-center justify-center gap-x-4 ml-16'>
+                                <div className='flex flex-col items-center'>
+                                    <h1 className='text-4xl font-semibold'>
+                                        {userProfile.username}
+                                    </h1>
+                                    <p className='text-sm text-gray-500'>
+                                        會員名稱
                                 </p>
+                                </div>
+                                <button>
+                                    <SettingsIcon />
+                                    {/* upload user icons */}
+                                </button>
+                                <FormControl fullWidth className={`${classes.hoverEffect}`}>
+                                    <input
+                                        accept="image/*"
+                                        className={classes.input}
+                                        id="contained-button-file"
+                                        multiple
+                                        type="file"
+                                        onChange={handlePicSelect}
+                                    />
+                                    <label htmlFor="contained-button-file">
+                                        <Button variant="contained" color="primary" component="span">
+                                            Select
+                        </Button>
+                                    </label>
+                                    <label>
+                                        <Button variant="contained" color="primary" component="span" onClick={uploadPic}>
+                                            Upload
+                        </Button>
+                                    </label>
+                                </FormControl>
                             </div>
                             <div className='flex gap-x-24 py-12'>
                                 <div className='flex flex-col items-center'>
-                                    <h1> {userProfile.created_at}</h1>
+                                    <h1 className='font-semibold text-gray-700 text-lg'>{userProfile.created_at.substring(0, 10)}</h1>
                                     <p className='text-sm text-gray-500'>
-                                        注冊日期
-                                </p>
+                                        註冊日期
+                                 </p>
                                 </div>
                                 <Divider style={{ width: '3px' }} flexItem orientation='vertical' />
-                                <div>獎賞分數: {userProfile.point}</div>
+                                {/*  */}
+                                <div className='flex flex-col items-center'>
+                                    <h1 className='font-semibold text-gray-700 text-lg'> {userProfile.point || 0}</h1>
+                                    <p className='text-sm text-gray-500'>
+                                        獎賞分數
+                                 </p>
+                                </div>
                                 <Divider style={{ width: '3px' }} flexItem orientation='vertical' />
-                                <div>會員階級: {userProfile.Membership}</div>
+                                <div className='flex flex-col items-center'>
+                                    <h1 className='font-semibold text-gray-700 text-lg'> {userProfile.Membership}</h1>
+                                    <p className='text-sm text-gray-500'>
+                                        會員階級
+                                 </p>
+                                </div>
                             </div>
                         </div>
-                        <FormControl fullWidth className={classes.hoverEffect}>
-                            <InputLabel htmlFor="input-with-icon-adornment" className={classes.textColor}>注冊連結</InputLabel>
+                        {/* referral link */}
+                        <FormControl fullWidth className={`${classes.hoverEffect} ${classes.registerLink}`}>
+                            <p className={classes.textColor}>注冊連結</p>
                             <Input
                                 id="input-with-icon-adornment"
                                 endAdornment={
@@ -144,26 +188,7 @@ function UserProfile() {
                         </FormControl>
                     </div>
                 }
-                <FormControl fullWidth className={classes.hoverEffect}>
-                    <input
-                        accept="image/*"
-                        className={classes.input}
-                        id="contained-button-file"
-                        multiple
-                        type="file"
-                        onChange={handlePicSelect}
-                    />
-                    <label htmlFor="contained-button-file">
-                        <Button variant="contained" color="primary" component="span">
-                            Select
-                        </Button>
-                    </label>
-                    <label>
-                        <Button variant="contained" color="primary" component="span" onClick={uploadPic}>
-                            Upload
-                        </Button>
-                    </label>
-                </FormControl>
+
             </div>
             <div className='max-w-5xl' onClick={() => { navigator.clipboard.writeText(referralURL) }}>
                 {currentFormData &&
@@ -175,22 +200,23 @@ function UserProfile() {
 
             </div>
             <br />
-
-            <ReferralList />
-            {
-                purchasedCourses ?
-                    <div>
-                        <div>你擁有的課程: </div>
-                        {
-                            purchasedCourses.map((course, index) => <div key={`courseName-${index}`}>
-                                <div>課程名稱: {course.title}</div>
-                                <div>購買日期: {course.published_at}</div>
-                            </div>)
-                        }
-                    </div>
-                    :
-                    <div>你尚未購買任何課程</div>
-            }
+            <div className='flex'>
+                <ReferralList />
+                {
+                    purchasedCourses ?
+                        <div>
+                            <div>你擁有的課程: </div>
+                            {
+                                purchasedCourses.map((course, index) => <div key={`courseName-${index}`}>
+                                    <div>課程名稱: {course.title}</div>
+                                    <div>購買日期: {course.published_at}</div>
+                                </div>)
+                            }
+                        </div>
+                        :
+                        <div>你尚未購買任何課程</div>
+                }
+            </div>
         </div>
     )
 }

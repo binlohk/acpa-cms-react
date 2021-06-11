@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import { createBrowserHistory } from 'history';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,20 +13,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LessonStepper = ({lessonsDetail, lessonId, goToNextPage, goToPrevPage }) => {
+const LessonStepper = ({lessonsDetail, lessonId }) => {
+  const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const activeStep = lessonsDetail.findIndex((lesson)=>{return lesson.id == lessonId});
+  console.log(activeStep)
   const maxSteps = lessonsDetail.length;
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    goToNextPage();
+    const oneIndexedStep = activeStep + 1;
+    history.push(`/lesson/${oneIndexedStep + 1}`);
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    goToPrevPage();
+    const oneIndexedStep = activeStep + 1;
+    history.push(`/lesson/${oneIndexedStep - 1}`);
   };
 
   return (
