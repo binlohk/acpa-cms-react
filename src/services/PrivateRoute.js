@@ -22,13 +22,15 @@ export default function PrivateRoute(props) {
         ...rest
     } = props;
 
-    if (token && id !== '') {
+    if (token && id !== '' && Component) {
         return (<Route {...rest} render={(props) => (
             <Component {...props} />
-        )} />
-
-        )
-    } else {
+        )} />)
+    } 
+    else if(token && id !== '' && props.render){
+        return (<Route {...rest} render={props.render} />)
+    }
+    else {
         return <Redirect to='/login' />
     }
 

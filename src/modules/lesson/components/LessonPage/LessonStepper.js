@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import { createBrowserHistory } from 'history';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LessonStepper({lessonsDetail, lessonId}) {
+const LessonStepper = ({lessonsDetail, lessonId, goToNextPage, goToPrevPage }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -20,10 +22,12 @@ export default function LessonStepper({lessonsDetail, lessonId}) {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    goToNextPage();
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    goToPrevPage();
   };
 
   return (
@@ -49,3 +53,5 @@ export default function LessonStepper({lessonsDetail, lessonId}) {
     </div>
   );
 }
+
+export default LessonStepper;

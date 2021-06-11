@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useHistory, Link, withRouter } from "react-router-dom";
 import Video from '../../../utilComponents/video';
 import { httpClient } from '../../../../services/api/axiosHelper';
 import { UserContext } from '../../../../contexts/UserContext';
@@ -34,6 +35,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Lesson = ({ match }) => {
+    const history = useHistory();
     const { getUser } = useContext(UserContext);
     const user = getUser();
 
@@ -156,9 +158,15 @@ const Lesson = ({ match }) => {
                     })
                 }
             </List>
-            <LessonStepper lessonsDetail={courseData.lessonsDetail} lessonId={lessonId}/>
+            {courseData && courseData.lessonsDetail && 
+            <LessonStepper 
+            lessonsDetail={courseData.lessonsDetail} 
+            lessonId={lessonId} 
+            goToNextPage={()=>{history.push('/lesson/2')}}
+            goToPrevPage={()=>{history.push('/lesson/2')}}
+            />}
         </div>
     )
 }
 
-export default Lesson
+export default withRouter(Lesson);
