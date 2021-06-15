@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
+import { Divider } from '@material-ui/core';
 import Vimeo from '@u-wave/react-vimeo';
 import LessonStepper from './LessonStepper';
 
@@ -15,19 +16,22 @@ const useStyles = makeStyles(theme => ({
     list: {
         background: '#fff',
         color: '#4B5563',
-        position: 'fixed',
-        height: '100%',
-        top: '10%',
-        right: '0',
+        marginRight: '3rem',
+        borderRadius: '0.75rem',
+        height: '1200px',
+        overflow: 'scroll'
     },
     item: {
-        background: '#4B5563',
-        width: '20vw',
+        width: '15vw',
+        fontWeight: '700',
         display: 'flex',
         justifyContent: 'center',
-        padding: '20px',
-        borderBottomWidth: '2px',
-        background: 'transparent'
+        padding: '1.5rem 0 1.5rem 1.5rem',
+        background: 'transparent',
+    },
+    divider: {
+        width: '90%',
+        margin: '0 5%',
     },
 }));
 
@@ -57,6 +61,18 @@ const Lesson = ({ match }) => {
     useEffect(() => {
         fetchLessonData(lessonId);
     }, []);
+
+    /**grabbing video length */
+    // useEffect(() => {
+
+    //     Vimeo.getDuration().then(function (duration) {
+    //         // duration = the duration of the video in seconds
+    //         console.log(duration, 'duration')
+    //     }).catch(function (error) {
+    //         // an error occurred
+    //         console.log(error)
+    //     });
+    // }, [lessonData])
 
     /**events for lessons progress bar */
     const handleClick = async (event) => {
@@ -90,55 +106,78 @@ const Lesson = ({ match }) => {
     }
 
     return (
-        <div className='bg-gray-200 h-full'>
+        <div className='flex justify-center pb-6 w-full'>
             {lessonData && (
                 <>
-                    <div className='flex flex-col justify-start'>
-                        <Vimeo
-                            video={lessonData.videoUrl}
-                            autoplay
-                            width='1500'
-                            height='600'
-                            onEnd={handleEnd}
-                        />
-                        <div className='pt-12'>
-                            <h1 className='text-3xl'>課程內容</h1>
-                            <p>{lessonData.lessonDescription}</p>
+                    <div className='bg-white mx-6 w-4/5 rounded-xl'>
+                        <div className='flex flex-col items-center'>
+                            <div className='flex flex-col justify-items-stetch items-center w-full bg-black flex justify-center rounded-t-xl'>
+                                <h1 className='text-white text-3xl py-12'>{courseData && courseData.title}</h1>
+                                <Vimeo
+                                    video={lessonData.videoUrl}
+                                    playerOptions
+                                    autoplay
+                                    style={{ display: 'flex', flexBasis: '100%' }}
+                                    width='1500'
+                                    height='800'
+                                    onEnd={handleEnd}
+                                />
+                            </div>
+                            {courseData && courseData.lessonsDetail &&
+                                <div className='w-full px-4'>
+                                    <LessonStepper
+                                        lessonsDetail={courseData.lessonsDetail}
+                                        lessonId={lessonId}
+                                    />
+                                </div>
+                            }
                         </div>
-                        <div>
-
+                        <div className='pb-9 pl-24'>
+                            <h2>簡介</h2>
+                            <p className='pr-12 mr-6 max-h-48 overflow-scroll'>{lessonData.lessonDescription}</p>
                         </div>
                     </div>
 
                 </>
             )
             }
-
             <List
-                className={classes.list}
+                className={`${classes.list}`}
             >
-                <div className='flex justify-center border-b-2'>
-                    <h1 className='p-2 w-48'>{courseData && courseData.title}</h1>
-                </div>
                 {
-                    courseData && courseData.lessonsDetail.map((lesson, ind) => {
+                    courseData && [...courseData.lessonsDetail, ...courseData.lessonsDetail, ...courseData.lessonsDetail].map((lesson, ind) => {
                         return (
                             <>
                                 <ListItem
                                     key={ind}
-                                    style={{ background: '#eee' }}
                                     className={classes.item}
                                 >
 
                                     <ListItemText
                                         primary={
-                                            <span>
-                                                {lesson.title}
+                                            <>
+                                                <div className='flex'>
+                                                    <div style={{ background: 'rgba(81,54,84,1)' }} className='flex items-center px-4 text-white text-xl rounded-lg font-semibold'>
+                                                        {ind + 1}
+                                                    </div>
+                                                    <div className='flex flex-col pl-4'>
+                                                        <span className='text-lg'>
+                                                            <Link to={`/lesson/${lesson.id}`}>
+                                                                {lesson.title}
+                                                            </Link>
+                                                        </span>
+                                                        <span className='text-gray-400 text-sm'>
+                                                            05:00
                                             </span>
+                                                    </div>
+                                                </div>
+
+                                            </>
                                         }
                                     />
                                     <ListItemIcon>
                                         <Checkbox
+                                            color='default'
                                             edge="end"
                                             checked={lesson.finished}
                                             disableRipple
@@ -147,16 +186,16 @@ const Lesson = ({ match }) => {
                                         />
                                     </ListItemIcon>
                                 </ListItem>
+                                <Divider
+                                    classes={{
+                                        root: classes.divider
+                                    }}
+                                />
                             </>
                         )
                     })
                 }
             </List>
-            {courseData && courseData.lessonsDetail &&
-                <LessonStepper
-                    lessonsDetail={courseData.lessonsDetail}
-                    lessonId={lessonId}
-                />}
         </div>
     )
 }

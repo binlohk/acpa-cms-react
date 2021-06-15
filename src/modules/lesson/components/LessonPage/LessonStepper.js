@@ -6,18 +6,10 @@ import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 400,
-    flexGrow: 1,
-  },
-}));
-
-const LessonStepper = ({lessonsDetail, lessonId }) => {
+const LessonStepper = ({ lessonsDetail, lessonId }) => {
   const history = useHistory();
-  const classes = useStyles();
   const theme = useTheme();
-  const activeStep = lessonsDetail.findIndex((lesson)=>{return lesson.id == lessonId});
+  const activeStep = lessonsDetail.findIndex((lesson) => { return lesson.id == lessonId });
   console.log(activeStep)
   const maxSteps = lessonsDetail.length;
 
@@ -32,7 +24,7 @@ const LessonStepper = ({lessonsDetail, lessonId }) => {
   };
 
   return (
-    <div className={classes.root}>
+    <div className='pt-4'>
       <MobileStepper
         steps={maxSteps}
         position="static"

@@ -17,7 +17,7 @@ const CourseMaterials = ({ courseMaterials, purchased }) => {
 
   return (
     <div>
-      <div className="rounded-t py-3  border-b-2">
+      <div className="rounded-t py-3 border-b-2">
         <div className="flex flex-wrap items-center">
           <div className="flex items-center gap-x-2 relative w-full px-4 max-w-full">
             <h3 className="font-semibold text-lg">
