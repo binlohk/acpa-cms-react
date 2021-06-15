@@ -15,6 +15,7 @@ import Box from '@material-ui/core/Box';
 
 import CourseMaterials from '../courseMaterials'
 import BuyButton from '../../../utilComponents/BuyButton'
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -88,7 +89,6 @@ const Course = (props) => {
         try {
             const result = await httpClient.get(`http://localhost:1337/courses/${courseId}`)
             setCourseData(result.data);
-            console.log(result.data.lessonsDetail, 'noooooo')
         } catch (e) {
             props.history.push('/courses')
             console.log(e)

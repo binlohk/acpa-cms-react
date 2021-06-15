@@ -32,7 +32,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Lesson = ({ match }) => {
-    const history = useHistory();
     const { getUser } = useContext(UserContext);
     const user = getUser();
 
@@ -91,10 +90,10 @@ const Lesson = ({ match }) => {
     }
 
     return (
-        <div className='m-6 text-gray-300'>
+        <div className='bg-gray-200 h-full'>
             {lessonData && (
                 <>
-                    <div className='flex flex-col justify-start text-white'>
+                    <div className='flex flex-col justify-start'>
                         <Vimeo
                             video={lessonData.videoUrl}
                             autoplay
@@ -118,11 +117,9 @@ const Lesson = ({ match }) => {
             <List
                 className={classes.list}
             >
-                {
-                    <div className='flex justify-center border-b-2'>
-                        <h1 className='p-2 w-48'>{courseData && courseData.title}</h1>
-                    </div>
-                }
+                <div className='flex justify-center border-b-2'>
+                    <h1 className='p-2 w-48'>{courseData && courseData.title}</h1>
+                </div>
                 {
                     courseData && courseData.lessonsDetail.map((lesson, ind) => {
                         return (
