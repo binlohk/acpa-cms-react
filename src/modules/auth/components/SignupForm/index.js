@@ -11,8 +11,8 @@ function SignupForm(props) {
     const [signupError, setSignupError] = useState(false)
     const formik = useFormik({
         initialValues: {
-            username: 'winnie',
-            email: 'wongw859@gmail.com',
+            username: 'winnie02',
+            email: 'intelshare4@gmail.com',
             password: 'strapiPassword',
         },
         validationSchema: Yup.object({
@@ -31,7 +31,7 @@ function SignupForm(props) {
             try {
                 if (Object.keys(formik.errors).length === 0) {
                     let result = null;
-                    if(referralToken){
+                    if (referralToken) {
                         result = await axios.post(`http://localhost:1337/auth/local/register/${referralToken}`, {
                             username: username,
                             email: email,
@@ -64,7 +64,7 @@ function SignupForm(props) {
                 <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>
                     <div className='bg-white px-6 py-8 rounded shadow-md text-black w-full'>
                         <h1 className='mb-8 text-3xl text-center'>用戶注冊</h1>
-                        {signupError && <p class="text-red-500 text-xs italic">Email is taken, please try again.</p>}
+                        {signupError && <p class="text-red-500 text-xs italic">用戶名稱或電郵已經被注冊</p>}
                         {formik.errors.username && formik.touched.username && <p class="text-red-500 text-xs italic">{formik.errors.username}</p>}
                         <input
                             type='text'

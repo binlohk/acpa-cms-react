@@ -44,7 +44,6 @@ function LoginForm() {
             }
         }
     });
-
     return (
         <div>
             <form
@@ -81,8 +80,10 @@ function LoginForm() {
                             登入
                                 </Button>
                         <div className='flex justify-center w-full h-auto pt-8'>
-                            忘記密碼
-                            </div>
+                            <Link to='/forgot-password'>
+                                忘記密碼
+                            </Link>
+                        </div>
                     </div>
                     <div className='text-white mt-6'>
                         尚未註冊?

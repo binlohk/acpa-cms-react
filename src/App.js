@@ -22,6 +22,8 @@ import UserLayout from './modules/layout/UserLayout'
 import PaymentSuccess from './modules/course/components/Payment/PaymentSuccess'
 import PaymentFailure from './modules/course/components/Payment/PaymentFailure'
 import PageNotFound from './modules/404/components/404page'
+import ResetPassword from './modules/auth/components/ResetPassword'
+import ForgotPassword from './modules/auth/components/ForgotPassword'
 
 
 function App() {
@@ -38,8 +40,10 @@ function App() {
               <AuthRoute exact path='/signup/:referralToken' component={SignupForm} />
               <Route exact path='/courses' component={AllCourses} />
               <Route exact path='/course/:courseId' component={Course} />
+              <Route exact path='/forgot-password' component={ForgotPassword} />
+              <Route exact path='/reset-password/:resetPasswordToken' component={ResetPassword} />
               <PrivateRoute exact path='/my-courses' component={MyCourses} />
-              <PrivateRoute exact path='/lesson/:lessonId'  render={props => <Lesson key={props.match.params.lessonId} /> }/>
+              <PrivateRoute exact path='/lesson/:lessonId' render={props => <Lesson key={props.match.params.lessonId} />} />
               <PrivateRoute exact path='/user/:userId' component={UserProfile} />
               <PrivateRoute exact path='/payment-success/:courseId' component={PaymentSuccess} />
               <PrivateRoute exact path='/payment-failure/:courseId' component={PaymentFailure} />
