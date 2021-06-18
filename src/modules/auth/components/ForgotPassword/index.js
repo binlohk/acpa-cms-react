@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import ErrorAlert from '../../../utilComponents/ErrorAlert';
 
 function ForgotPassword() {
-    const [backendError, setBackendError] = useState(false)
     const [emailAlert, setEmailAlert] = useState(false)
     const formik = useFormik({
         initialValues: {
@@ -32,21 +30,17 @@ function ForgotPassword() {
                 console.log('data posted')
 
             } catch (e) {
-                const message = e.response.data.message[0].messages[0].message
-                if (message === '此電郵並未確認') {
-                    setBackendError(true)
-                }
+                console.log(e)
             }
         }
     });
 
     const handleFocus = () => {
         setEmailAlert(false)
-        setBackendError(false)
     }
 
     return (
-        <div className=''>
+        <div>
             <div className="relative z-10 flex-auto flex items-center justify-center text-lg text-center text-white py-16 px-4 sm:px-6 lg:px-8" >
                 <div className="w-full max-w-lg">
                     <h1 className="text-center mb-2 text-gray-300 text-xl font-semibold">重新設定密碼</h1>
@@ -63,7 +57,6 @@ function ForgotPassword() {
                                 onFocus={handleFocus}
                                 className="text-gray-900 ring-gray-900 ring-opacity-5 placeholder-gray-400 appearance-none bg-white rounded-md block w-full px-3 py-2 border border-transparent shadow ring-1 sm:text-sm focus:border-teal-500 focus:ring-teal-500 focus:outline-none"
                                 placeholder="Email address" />
-                            {backendError && <ErrorAlert className="text-red-500 text-xs italic">電郵並未確認，請檢查您的郵件</ErrorAlert>}
                             {
                                 emailAlert && <div className="mt-4 flex items-center bg-blue-500 text-white text-sm font-bold px-4 py-3" role="alert" >
                                     <p>我們發送了電郵到以上地址，請檢查您的郵件</p>
