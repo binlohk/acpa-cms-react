@@ -92,7 +92,7 @@ function UserProfile() {
     }
 
     return (
-        <div className=' text-gray-600'>
+        <div className='text-gray-600 '>
             {/* user info */}
             <div>
                 {userProfile &&
@@ -114,32 +114,32 @@ function UserProfile() {
                             </>
                         }
                         {/* username */}
-                        <div className='pt-48 flex flex-col items-center '>
+                        <div className='flex flex-col items-center pt-48 '>
                             <div className='flex flex-col items-center'>
-                                <h1 className='text-4xl text-white font-semibold'>
+                                <h1 className='text-4xl font-semibold text-white'>
                                     {userProfile.username}
                                 </h1>
                                 <p className='text-sm text-gray-300'>
                                     會員名稱
                                 </p>
                             </div>
-                            <div className='flex gap-x-24 py-12'>
+                            <div className='flex py-12 gap-x-24'>
                                 <div className='flex flex-col items-center'>
-                                    <h1 className='font-semibold text-white text-lg'>{userProfile.created_at.substring(0, 10)}</h1>
+                                    <h1 className='text-lg font-semibold text-white'>{userProfile.created_at.substring(0, 10)}</h1>
                                     <p className='text-sm text-gray-300'>
                                         註冊日期
                                  </p>
                                 </div>
                                 <Divider style={{ width: '3px', background: 'white' }} flexItem orientation='vertical' />
                                 <div className='flex flex-col items-center'>
-                                    <h1 className='font-semibold text-white text-lg'> {userProfile.point || 0}</h1>
+                                    <h1 className='text-lg font-semibold text-white'> {userProfile.point || 0}</h1>
                                     <p className='text-sm text-gray-300'>
                                         獎賞分數
                                  </p>
                                 </div>
                                 <Divider style={{ width: '3px', background: 'white' }} flexItem orientation='vertical' />
                                 <div className='flex flex-col items-center'>
-                                    <h1 className='font-semibold text-white text-lg'> {userProfile.Membership}</h1>
+                                    <h1 className='text-lg font-semibold text-white'> {userProfile.Membership}</h1>
                                     <p className='text-sm text-gray-300'>
                                         會員階級
                                  </p>
@@ -150,21 +150,21 @@ function UserProfile() {
 
                         {/* referral link */}
                         <FormControl className={`${classes.hoverEffect} ${classes.registerLink}`}>
-                            <p className='text-white font-semibold'>注冊連結</p>
-                            <div className='flex items-center justify-between bg-white rounded-md mt-2 p-2 w-192'>
+                            <p className='font-semibold text-white'>注冊連結</p>
+                            <div className='flex items-center justify-between p-2 mt-2 bg-white rounded-md w-192'>
                                 {/* icon */}
                                 <div className='flex items-center justify-center'>
-                                    <div className='flex items-center justify-center border-r-2 border-gray-400 px-2 '>
+                                    <div className='flex items-center justify-center px-2 border-r-2 border-gray-400 '>
                                         <FileCopy
                                             className={classes.copyButton} />
                                     </div>
                                     {/* link */}
-                                    <p className='text-gray-400 max-w-sm overflow-hidden p-2'>
+                                    <p className='max-w-lg p-2 overflow-x-scroll text-gray-400'>
                                         {referralURL}
                                     </p>
                                 </div>
                                 {/* copy btn */}
-                                <button className='bg-blue-500 text-white rounded-xl p-2' onClick={handleCopyLink}>
+                                <button className='p-2 text-white bg-blue-500 rounded-xl' onClick={handleCopyLink}>
                                     複製連結
                                 </button>
                             </div>
@@ -175,7 +175,7 @@ function UserProfile() {
             <Divider
                 className={classes.divider}
             />
-            <div className='flex items-start justify-center gap-x-8 pb-48'>
+            <div className='flex items-start justify-center pb-48 gap-x-8'>
                 <OwnedCourse
                     purchasedCourses={purchasedCourses}
                 />

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory, Link, withRouter } from "react-router-dom";
 import Video from '../../../utilComponents/video';
 import { httpClient } from '../../../../services/api/axiosHelper';
+import axios from 'axios';
 import { UserContext } from '../../../../contexts/UserContext';
 import { Drawer, List, ListItemText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,6 +30,15 @@ const useStyles = makeStyles(theme => ({
         padding: '1.5rem 0 1.5rem 1.5rem',
         background: 'transparent',
     },
+    itemRed: {
+        width: '15vw',
+        fontWeight: '700',
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '1.5rem 0 1.5rem 1.5rem',
+        color: 'white',
+        background: '#A5924B',
+    },
     divider: {
         width: '90%',
         margin: '0 5%',
@@ -52,6 +62,7 @@ const Lesson = ({ match }) => {
                 setLessonData(result.data);
                 const courseResult = await httpClient.get(`http://localhost:1337/courses/${result.data.course.id}`)
                 setCourseData(courseResult.data)
+                console.log(result.data, 'huiiiii')
             } catch (e) {
                 console.log(e)
             }
@@ -61,18 +72,6 @@ const Lesson = ({ match }) => {
     useEffect(() => {
         fetchLessonData(lessonId);
     }, []);
-
-    /**grabbing video length */
-    // useEffect(() => {
-
-    //     Vimeo.getDuration().then(function (duration) {
-    //         // duration = the duration of the video in seconds
-    //         console.log(duration, 'duration')
-    //     }).catch(function (error) {
-    //         // an error occurred
-    //         console.log(error)
-    //     });
-    // }, [lessonData])
 
     /**events for lessons progress bar */
     const handleClick = async (event) => {
@@ -86,9 +85,12 @@ const Lesson = ({ match }) => {
             if (user.id != "" && user.id != null) {
                 const route = `/user-progresses/${lessonId}/${user.id}`;
                 const { data: dbIsLessonFinished } = await httpClient.get(route);
+                console.log(dbIsLessonFinished, 'dataaaa')
                 if (!dbIsLessonFinished) {
+                    console.log('post progress')
                     await httpClient.post(route);
                 } else {
+                    console.log('del progress')
                     await httpClient.delete(route);
                 }
                 await fetchLessonData(lessonId);
@@ -106,22 +108,30 @@ const Lesson = ({ match }) => {
     }
 
     return (
-        <div className='flex justify-center pb-6 w-full'>
+        <div className='flex justify-center w-full pb-6'>
             {lessonData && (
                 <>
-                    <div className='bg-white mx-6 w-4/5 rounded-xl'>
+                    <div className='w-4/5 mx-6 bg-white rounded-xl'>
                         <div className='flex flex-col items-center'>
-                            <div className='flex flex-col justify-items-stetch items-center w-full bg-black flex justify-center rounded-t-xl'>
-                                <h1 className='text-white text-3xl py-12'>{courseData && courseData.title}</h1>
-                                <Vimeo
-                                    video={lessonData.videoUrl}
-                                    playerOptions
-                                    autoplay
-                                    style={{ display: 'flex', flexBasis: '100%' }}
-                                    width='1500'
-                                    height='800'
-                                    onEnd={handleEnd}
-                                />
+                            <div className='flex flex-col items-center justify-center w-full bg-black justify-items-stetch rounded-t-xl'>
+                                <h1 className='py-12 text-3xl text-white'>{courseData && courseData.title}</h1>
+                                {
+                                    lessonData.videoUrl !== '' ? (
+                                        <Vimeo
+                                            video={lessonData.videoUrl}
+                                            playerOptions
+                                            autoplay
+                                            style={{ display: 'flex', flexBasis: '100%' }}
+                                            width='1500'
+                                            height='800'
+                                            onEnd={handleEnd}
+                                        />
+                                    ) : (
+                                        <div>
+                                            <h1 className="mb-10 text-3xl font-black text-yellow-500 lg:text-5xl">暫無影片資料</h1>
+                                        </div>
+                                    )
+                                }
                             </div>
                             {courseData && courseData.lessonsDetail &&
                                 <div className='w-full px-4'>
@@ -132,9 +142,9 @@ const Lesson = ({ match }) => {
                                 </div>
                             }
                         </div>
-                        <div className='pb-9 pl-24'>
+                        <div className='pl-24 pb-9'>
                             <h2>簡介</h2>
-                            <p className='pr-12 mr-6 max-h-48 overflow-scroll'>{lessonData.lessonDescription}</p>
+                            <p className='pr-12 mr-6 overflow-scroll max-h-48'>{lessonData.lessonDescription}</p>
                         </div>
                     </div>
 
@@ -145,30 +155,33 @@ const Lesson = ({ match }) => {
                 className={`${classes.list}`}
             >
                 {
-                    courseData && [...courseData.lessonsDetail, ...courseData.lessonsDetail, ...courseData.lessonsDetail].map((lesson, ind) => {
+                    courseData && courseData.lessonsDetail.map((lesson, ind) => {
                         return (
                             <>
                                 <ListItem
                                     key={ind}
-                                    className={classes.item}
+                                    className={lessonId == lesson.id ? classes.itemRed : classes.item}
                                 >
 
                                     <ListItemText
+                                        className={lessonId == lesson.id ? classes.listActive : null}
                                         primary={
                                             <>
                                                 <div className='flex'>
-                                                    <div style={{ background: 'rgba(81,54,84,1)' }} className='flex items-center px-4 text-white text-xl rounded-lg font-semibold'>
+                                                    <div style={{ background: 'rgba(81,54,84,1)' }} className='flex items-center px-4 text-xl font-semibold text-white rounded-lg'>
                                                         {ind + 1}
                                                     </div>
                                                     <div className='flex flex-col pl-4'>
-                                                        <span className='text-lg'>
+                                                        <span className={`text-lg`}>
                                                             <Link to={`/lesson/${lesson.id}`}>
                                                                 {lesson.title}
                                                             </Link>
                                                         </span>
-                                                        <span className='text-gray-400 text-sm'>
-                                                            05:00
-                                            </span>
+                                                        <span
+                                                            className={lessonId == lesson.id ? 'text-sm text-white' : 'text-sm text-gray-400'}
+                                                        >
+                                                            {lesson.videoDuration}
+                                                        </span>
                                                     </div>
                                                 </div>
 
