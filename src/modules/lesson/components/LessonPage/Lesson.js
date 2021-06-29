@@ -58,9 +58,9 @@ const Lesson = ({ match }) => {
     const fetchLessonData = async (lessonId) => {
         if (user && user.id !== "" && user.id !== null) {
             try {
-                const result = await httpClient.get(`process.env.REACT_APP_BACKEND/lessons/${lessonId}`)
+                const result = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/lessons/${lessonId}`)
                 setLessonData(result.data);
-                const courseResult = await httpClient.get(`process.env.REACT_APP_BACKEND/courses/${result.data.course.id}`)
+                const courseResult = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${result.data.course.id}`)
                 setCourseData(courseResult.data)
                 console.log(result.data, 'huiiiii')
             } catch (e) {

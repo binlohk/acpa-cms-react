@@ -32,13 +32,13 @@ function SignupForm(props) {
                 if (Object.keys(formik.errors).length === 0) {
                     let result = null;
                     if (referralToken) {
-                        result = await axios.post(`process.env.REACT_APP_BACKEND/auth/local/register/${referralToken}`, {
+                        result = await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/auth/local/register/${referralToken}`, {
                             username: username,
                             email: email,
                             password: password
                         });
                     } else {
-                        result = await axios.post(`process.env.REACT_APP_BACKEND/auth/local/register`, {
+                        result = await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/auth/local/register`, {
                             username: username,
                             email: email,
                             password: password

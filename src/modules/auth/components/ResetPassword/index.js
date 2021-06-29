@@ -23,7 +23,7 @@ function ResetPassword(props) {
             const { password } = formik.values
             try {
                 if (Object.keys(formik.errors).length === 0) {
-                    const result = await axios.post(`process.env.REACT_APP_BACKEND/auth/reset-password`, {
+                    const result = await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/auth/reset-password`, {
                         password,
                         code: resetPasswordToken,
                     });

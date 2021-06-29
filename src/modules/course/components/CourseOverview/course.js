@@ -86,8 +86,9 @@ const Course = (props) => {
     const [value, setValue] = useState(0);
 
     const fetchCourseData = async (courseId) => {
+        console.log(process.env.REACT_APP_BACKEND, 'process.env.REACT_APP_BACKEND')
         try {
-            const result = await httpClient.get(`process.env.REACT_APP_BACKEND/courses/${courseId}`)
+            const result = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}`)
             setCourseData(result.data);
         } catch (e) {
             props.history.push('/courses')
@@ -122,35 +123,35 @@ const Course = (props) => {
         setValue(newValue);
     };
     return (
-        <div className='relative bg-gray-100 text-gray-600 flex flex-col min-w-0 w-full shadow-lg rounded'>
+        <div className='relative flex flex-col w-full min-w-0 text-gray-600 bg-gray-100 rounded shadow-lg'>
             <div className='flex flex-col items-center'>
                 {courseData &&
                     <>
                         <h1 className="py-12 text-3xl">{courseData.title}</h1>
-                        <div className="rounded p-2 w-40 bg-gray-400 flex flex-col items-center">
+                        <div className="flex flex-col items-center w-40 p-2 bg-gray-400 rounded">
                             {courseData.purchased ?
                                 <>
                                     {
                                         courseData.lessonsDetail.length > 0 ?
                                             <>
-                                                <span className='text-gray-700 font-bold'>你已擁有此課程</span>
+                                                <span className='font-bold text-gray-700'>你已擁有此課程</span>
                                                 <Link
                                                     to={`/lesson/${courseData.lessonsDetail[0].id}`}
                                                     style={{ background: '#235789' }}
-                                                    className="whitespace-nowrap inline-flex items-center justify-center my-2 px-3 py-2 border border-transparent rounded-3xl shadow-sm text-xs font-bold text-white"
+                                                    className="inline-flex items-center justify-center px-3 py-2 my-2 text-xs font-bold text-white border border-transparent shadow-sm whitespace-nowrap rounded-3xl"
                                                 >
                                                     開始課程
                                             </Link>
                                             </>
                                             :
-                                            <span className='text-gray-700 font-bold'>你已擁有此課程</span>
+                                            <span className='font-bold text-gray-700'>你已擁有此課程</span>
 
                                     }
 
                                 </>
                                 :
                                 <>
-                                    <span className='text-gray-700 font-bold'>你尚未擁有此課程</span>
+                                    <span className='font-bold text-gray-700'>你尚未擁有此課程</span>
                                     <BuyButton courseId={courseId}>購買課程</BuyButton>
                                 </>}
                         </div>
@@ -179,9 +180,9 @@ const Course = (props) => {
                                     </Tabs>
                                 </div>
                                 <TabPanel value={value} index={0}>
-                                    <div className="rounded-t py-3  border-b-2">
+                                    <div className="py-3 border-b-2 rounded-t">
                                         <div className="flex flex-wrap items-center">
-                                            <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+                                            <div className="relative flex-1 flex-grow w-full max-w-full px-4">
                                                 <h3
                                                     className={
                                                         "font-semibold text-lg"
@@ -193,9 +194,9 @@ const Course = (props) => {
                                         </div>
                                     </div>
                                     <p className='py-6 pl-4'>{courseData.description}</p>
-                                    <div className="rounded-t py-3  border-b-2">
+                                    <div className="py-3 border-b-2 rounded-t">
                                         <div className="flex flex-wrap items-center">
-                                            <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+                                            <div className="relative flex-1 flex-grow w-full max-w-full px-4">
                                                 <h3
                                                     className={
                                                         "font-semibold text-lg "

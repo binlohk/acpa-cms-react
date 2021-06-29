@@ -35,7 +35,7 @@ function AllCourses() {
 
     useEffect(() => {
         const fetchUserCourses = async () => {
-            const response = await axios.get(`process.env.REACT_APP_BACKEND/courses`)
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses`)
             const data = response.data
             console.log(response.data)
             setCourses([...data])
@@ -106,7 +106,7 @@ function AllCourses() {
                                                     price={item.price}
                                                     description={item.description}
                                                     courseId={item.id}
-                                                    image={item.image && `process.env.REACT_APP_BACKEND${item.image.url}`}
+                                                    image={item.image && `${process.env.REACT_APP_BACKEND_SERVER}${item.image.url}`}
                                                     filteredCourseLength={filteredCourses.length}
                                                 />
                                             </>
@@ -153,7 +153,7 @@ function AllCourses() {
                                                             price={item.price}
                                                             description={item.description}
                                                             courseId={item.id}
-                                                            image={item.image && `process.env.REACT_APP_BACKEND${item.image.url}`}
+                                                            image={item.image && `${process.env.REACT_APP_BACKEND_SERVER}${item.image.url}`}
                                                         />
                                                     </SwiperSlide>
                                                 </>
@@ -173,7 +173,7 @@ function AllCourses() {
                                                     title={item.title}
                                                     price={item.price}
                                                     courseId={item.id}
-                                                    image={item.image && `process.env.REACT_APP_BACKEND${item.image.url}`}
+                                                    image={item.image && `${process.env.REACT_APP_BACKEND_SERVER}${item.image.url}`}
                                                     featured={item.featured}
                                                 />
 

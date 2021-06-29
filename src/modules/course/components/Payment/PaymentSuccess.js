@@ -22,7 +22,7 @@ function PaymentSuccess(props) {
         } catch (e) {
             setIfSessionIdValid(false);
         }
-        const result = await httpClient.get(`process.env.REACT_APP_BACKEND/courses/${params.courseId}`);
+        const result = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${params.courseId}`);
         setData(result.data);
     }
 
