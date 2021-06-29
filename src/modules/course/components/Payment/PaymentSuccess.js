@@ -19,17 +19,17 @@ function PaymentSuccess(props) {
         try {
             await httpClient.get(`/user-payments/${session_id}`);
             setIfSessionIdValid(true);
-        } catch(e) {
+        } catch (e) {
             setIfSessionIdValid(false);
         }
-        const result = await httpClient.get(`http://localhost:1337/courses/${params.courseId}`);
+        const result = await httpClient.get(`process.env.REACT_APP_BACKEND/courses/${params.courseId}`);
         setData(result.data);
     }
-        
+
     useEffect(() => {
         fetchPaidCourse()
     }, [])
-    if(ifSessionIdValid){
+    if (ifSessionIdValid) {
         return (
             <div className='p-24'>
                 <div className="m-auto bg-white w-full md:max-w-4xl rounded-lg shadow">
@@ -61,8 +61,8 @@ function PaymentSuccess(props) {
             </div>
         )
     } else {
-        return(
-            <PageNotFound/>
+        return (
+            <PageNotFound />
         )
     }
 }

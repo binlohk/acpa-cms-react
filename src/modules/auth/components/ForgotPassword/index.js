@@ -19,7 +19,7 @@ function ForgotPassword() {
             const { email } = formik.values
             try {
                 if (Object.keys(formik.errors).length === 0) {
-                    const result = await axios.post(`http://localhost:1337/auth/forgot-password`, {
+                    const result = await axios.post(`process.env.REACT_APP_BACKEND/auth/forgot-password`, {
                         email,
                     });
                     console.log(result, 'result')

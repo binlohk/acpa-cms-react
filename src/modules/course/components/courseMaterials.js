@@ -9,7 +9,7 @@ const CourseMaterials = ({ courseMaterials, purchased }) => {
 
   const handleClick = async (event, courseMaterial) => {
     if (courseMaterial.material) {
-      window.open(`http://localhost:1337${courseMaterial.material.url}`);
+      window.open(`process.env.REACT_APP_BACKEND${courseMaterial.material.url}`);
     } else if (courseMaterial.materialUrl) {
       window.open(courseMaterial.materialUrl);
     }

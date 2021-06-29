@@ -79,7 +79,7 @@ function UserProfile() {
 
     // courses
     const fetchUserCourses = async () => {
-        const response = await httpClient.get(`http://localhost:1337/courses`)
+        const response = await httpClient.get(`process.env.REACT_APP_BACKEND/courses`)
         const data = response.data
         const purchased = data.filter(item => item.purchased !== false)
         setPurchasedCourses([...purchased])

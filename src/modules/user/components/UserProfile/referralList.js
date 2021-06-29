@@ -13,7 +13,7 @@ const ReferralList = () => {
 
     const fetchReferralData = async () => {
         try {
-            const result = await httpClient.get(`http://localhost:1337/user-referrals`);
+            const result = await httpClient.get(`process.env.REACT_APP_BACKEND/user-referrals`);
             const referrees = result.data.filter(data => data.referral_referree.id != user.id);
             setReferreeData(referrees);
             const referrers = result.data.filter(data => data.referral_referree.id == user.id);

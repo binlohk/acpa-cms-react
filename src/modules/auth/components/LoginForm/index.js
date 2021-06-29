@@ -29,7 +29,7 @@ function LoginForm() {
             const { email, password } = formik.values
             try {
                 if (Object.keys(formik.errors).length === 0) {
-                    const response = await axios.post(`http://localhost:1337/auth/local`, {
+                    const response = await axios.post(`process.env.REACT_APP_BACKEND/auth/local`, {
                         identifier: email,
                         password: password
                     })

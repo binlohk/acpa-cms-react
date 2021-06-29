@@ -12,7 +12,7 @@ function MyCourses() {
 
     useEffect(() => {
         const fetchUserCourses = async () => {
-            const response = await httpClient.get(`http://localhost:1337/courses`)
+            const response = await httpClient.get(`process.env.REACT_APP_BACKEND/courses`)
             const data = response.data
             console.log(response.data)
             const purchased = data.filter(item => item.purchased !== false)
@@ -53,7 +53,7 @@ function MyCourses() {
                                         price={item.price}
                                         description={item.description}
                                         courseId={item.id}
-                                        image={item.image && `http://localhost:1337${item.image.url}`}
+                                        image={item.image && `process.env.REACT_APP_BACKEND${item.image.url}`}
                                     />
                                 )
                             })}

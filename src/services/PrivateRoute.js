@@ -9,7 +9,7 @@ export default function PrivateRoute(props) {
     const token = localStorage.getItem('accessToken')
     const { id } = getUser()
     useEffect(() => {
-        axios.get(`http://localhost:1337/users/me`, {
+        axios.get(`process.env.REACT_APP_BACKEND/users/me`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -26,8 +26,8 @@ export default function PrivateRoute(props) {
         return (<Route {...rest} render={(props) => (
             <Component {...props} />
         )} />)
-    } 
-    else if(token && id !== '' && props.render){
+    }
+    else if (token && id !== '' && props.render) {
         return (<Route {...rest} render={props.render} />)
     }
     else {
