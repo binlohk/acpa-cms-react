@@ -101,7 +101,7 @@ function AllCourses() {
                                         return (
                                             <>
                                                 <RecommendedCourseCard
-                                                    key-={ind}
+                                                    key={ind}
                                                     title={item.title}
                                                     price={item.price}
                                                     description={item.description}
@@ -114,7 +114,7 @@ function AllCourses() {
                                     })
                                 }
                             </div>
-                            <div className='flex justify-center items-center z-0 rounded-md shadow-sm'>
+                            <div className='z-0 flex items-center justify-center rounded-md shadow-sm'>
                                 <Pagination
                                     currentPage={currentFilteredPage}
                                     setCurrentPage={setCurrentFilteredPage}
@@ -128,7 +128,7 @@ function AllCourses() {
                 {
                     currentFilteredPageData.length === 0 && searchfield !== '' &&
                     (
-                        <h1 className='min-h-screen text-white text-center text-3xl'>沒有搜尋結果</h1>
+                        <h1 className='min-h-screen text-3xl text-center text-white'>沒有搜尋結果</h1>
                     )
                 }
                 {
@@ -182,7 +182,7 @@ function AllCourses() {
                                     })
                                 }
                             </div>
-                            <div className='flex justify-center items-center z-0 rounded-md shadow-sm -space-x-px'>
+                            <div className='z-0 flex items-center justify-center -space-x-px rounded-md shadow-sm'>
                                 <Pagination
                                     currentPage={currentPage}
                                     setCurrentPage={setCurrentPage}

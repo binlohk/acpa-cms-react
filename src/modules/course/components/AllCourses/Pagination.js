@@ -12,9 +12,11 @@ function Pagination({
     return (
         <>
             <ReactPaginate
+                pageRangeDisplayed={1}
                 previousLabel={'← 上一頁'}
                 nextLabel={'下一頁 →'}
-                pageCount={pageCount === 0 ? pageFilteredCount : pageCount}
+                pageCount={1}
+                pageCount={pageCount === 0 ? 1 : pageCount}
                 onPageChange={pageCount === 0 ? handleFilteredPageClick : handlePageClick}
                 containerClassName={'flex justify-center items-center z-0 rounded-md shadow-sm pb-4'}
                 previousLinkClassName={'relative items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50'}

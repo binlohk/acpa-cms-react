@@ -5,15 +5,18 @@ import { Link } from 'react-router-dom';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+
 function SignupForm(props) {
     const { referralToken } = props.match.params;
 
     const [signupError, setSignupError] = useState(false)
+    const [openSnackbar, setOpenSnackbar] = useState(false)
     const formik = useFormik({
         initialValues: {
-            username: 'winnie02',
-            email: 'intelshare4@gmail.com',
-            password: 'strapiPassword',
+            username: '',
+            email: '',
+            password: '',
         },
         validationSchema: Yup.object({
             username: Yup.string()
@@ -46,7 +49,9 @@ function SignupForm(props) {
                     }
                     console.log('data posted')
                     if (result) {
-                        window.location.href = '/login'
+                        //notification for email sent
+                        setSignupError(false)
+                        setOpenSnackbar(true);
                     }
                 }
             } catch (e) {
@@ -60,44 +65,53 @@ function SignupForm(props) {
         <div>
             <form
                 style={{ background: 'rgba(81,58,84, 0.75)' }}
-                className='bg-grey-lighter min-h-screen flex flex-col'>
-                <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>
-                    <div className='bg-white px-6 py-8 rounded shadow-md text-black w-full'>
+                className='flex flex-col min-h-screen bg-grey-lighter'>
+                <div className='container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto'>
+                    <div className='w-full px-6 py-8 text-black bg-white rounded shadow-md'>
                         <h1 className='mb-8 text-3xl text-center'>用戶注冊</h1>
+                        {openSnackbar &&
+                            <div className='mb-2'>
+                                <SnackbarContent
+                                    message={
+                                        `我們已經發送了到以下電郵地址，請查看您的電子郵件箱。`
+                                    }
+                                />
+                            </div>
+                        }
                         {signupError && <p class="text-red-500 text-xs italic">用戶名稱或電郵已經被注冊</p>}
                         {formik.errors.username && formik.touched.username && <p class="text-red-500 text-xs italic">{formik.errors.username}</p>}
                         <input
                             type='text'
-                            className='block border border-grey-light w-full p-3 rounded mb-4'
+                            className='block w-full p-3 mb-4 border rounded border-grey-light'
                             name='username'
-                            placeholder='username'
+                            placeholder='用戶名稱'
                             value={formik.values.username}
                             onChange={formik.handleChange}
                         />
                         {formik.errors.email && formik.touched.email && <p class="text-red-500 text-xs italic">{formik.errors.email}</p>}
                         <input
                             type='text'
-                            className='block border border-grey-light w-full p-3 rounded mb-4'
+                            className='block w-full p-3 mb-4 border rounded border-grey-light'
                             name='email'
-                            placeholder='Email'
+                            placeholder='電郵'
                             value={formik.values.email}
                             onChange={formik.handleChange}
                         />
                         {formik.errors.password && formik.touched.password && <p class="text-red-500 text-xs italic">{formik.errors.password}</p>}
                         <input
                             type='password'
-                            className='block border border-grey-light w-full p-3 rounded mb-4'
+                            className='block w-full p-3 mb-4 border rounded border-grey-light'
                             name='password'
-                            placeholder='Password'
+                            placeholder='密碼'
                             value={formik.values.password}
                             onChange={formik.handleChange}
                         />
                         <button
                             onClick={formik.handleSubmit}
                             type='submit'
-                            className='bg-indigo-700 hover:bg-blue-dark text-white font-bold w-full h-12 pt-2 px-4  rounded focus:outline-none focus:shadow-outline'
+                            className='w-full h-12 px-4 pt-2 font-bold text-white bg-indigo-700 rounded hover:bg-blue-dark focus:outline-none focus:shadow-outline'
                         >開戶</button>
-                        <div className='text-center text-sm text-grey-dark mt-8'>
+                        <div className='mt-8 text-sm text-center text-grey-dark'>
                             By signing up, you agree to the
                         <Link className='no-underline border-b border-grey-dark text-grey-dark' to='#'>
                                 <span> Terms of Service</span>
@@ -108,7 +122,7 @@ function SignupForm(props) {
                         </div>
                     </div>
 
-                    <div className='text-white mt-6'>
+                    <div className='mt-6 text-white'>
                         我已經有帳戶
                     <Link className='ml-2 border-b-4s' to='./login'>
                             (按此登入)

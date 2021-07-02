@@ -13,8 +13,8 @@ function LoginForm() {
 
     const formik = useFormik({
         initialValues: {
-            email: 'wongw859@gmail.com',
-            password: 'strapiPassword',
+            email: '',
+            password: '',
         },
         validationSchema: Yup.object({
             email: Yup.string()
@@ -48,26 +48,26 @@ function LoginForm() {
         <div>
             <form
                 style={{ background: 'rgba(81,58,84, 0.75)' }}
-                className='bg-grey-lighter w-full min-h-screen flex flex-col'>
-                <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>
-                    <div className='bg-white px-6 py-8 rounded shadow-md text-black w-full'>
+                className='flex flex-col w-full min-h-screen bg-grey-lighter'>
+                <div className='container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto'>
+                    <div className='w-full px-6 py-8 text-black bg-white rounded shadow-md'>
                         {loginError && <p class="text-center text-red-500 text-xs italic">電郵或名稱不正確，請重新輸入</p>}
-                        <h1 className='mb-8 text-gray-700 text-3xl text-center'>歡迎回來</h1>
+                        <h1 className='mb-8 text-3xl text-center text-gray-700'>歡迎回來</h1>
                         <input
                             type='text'
-                            className='shadow appearance-none border rounded w-full h-12 py-2 mb-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline'
+                            className='w-full h-12 px-3 py-2 mb-2 leading-tight border rounded shadow appearance-none text-grey-darker focus:outline-none focus:shadow-outline'
                             name='email'
-                            placeholder='Email'
+                            placeholder='電郵'
                             value={formik.values.email}
                             onChange={formik.handleChange}
                         />
                         {formik.errors.email && formik.touched.email && <p class="text-red-500 mb-4 text-xs italic">{formik.errors.email}</p>}
                         <input
                             type='password'
-                            className='shadow appearance-none border rounded w-full h-12 py-2 mb-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline'
+                            className='w-full h-12 px-3 py-2 mb-2 leading-tight border rounded shadow appearance-none text-grey-darker focus:outline-none focus:shadow-outline'
                             name='password'
+                            placeholder='密碼'
                             value={formik.values.password}
-                            placeholder='Password'
                             onChange={formik.handleChange}
                         />
                         {formik.errors.password && formik.touched.password && <p class="text-red-500 mb-4 text-xs italic">{formik.errors.password}</p>}
@@ -85,7 +85,7 @@ function LoginForm() {
                             </Link>
                         </div>
                     </div>
-                    <div className='text-white mt-6'>
+                    <div className='mt-6 text-white'>
                         尚未註冊?
                     <Link className='ml-2 no-underline border-b-4s' to='./signup'>
                             按此

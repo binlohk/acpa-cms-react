@@ -61,7 +61,7 @@ function MyCourses() {
                     </>
                 )
             }
-            <div className='flex justify-center items-center z-0 rounded-md shadow-sm -space-x-px'>
+            <div className='z-0 flex items-center justify-center -space-x-px rounded-md shadow-sm'>
                 <Pagination
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}

@@ -34,11 +34,10 @@ function App() {
         <UserContext.Provider value={{ storeToken, getUser }}>
           <UserLayout>
             <Switch>
-              <Route exact path='/' component={Home} />
+              <Route exact path='/' component={AllCourses} />
               <AuthRoute exact path='/login' component={LoginForm} />
               <AuthRoute exact path='/signup' component={SignupForm} />
               <AuthRoute exact path='/signup/:referralToken' component={SignupForm} />
-              <Route exact path='/courses' component={AllCourses} />
               <Route exact path='/course/:courseId' component={Course} />
               <Route exact path='/forgot-password' component={ForgotPassword} />
               <Route exact path='/reset-password/:resetPasswordToken' component={ResetPassword} />
