@@ -22,13 +22,16 @@ function ResetPassword(props) {
         onSubmit: async () => {
             const { password } = formik.values
             try {
-                if (Object.keys(formik.errors).length === 0) {
+                if (Object.keys(formik.errors).length === 0) {  
                     const result = await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/auth/reset-password`, {
                         password,
                         code: resetPasswordToken,
                     });
                     console.log(result, 'result')
                     console.log('data posted')
+                    if (result) {
+                        window.location.href = '/login'
+                    }
                 }
             } catch (e) {
                 const message = e.response.data.message[0].messages[0].message
@@ -46,14 +49,14 @@ function ResetPassword(props) {
 
     return (
         <div>
-            <div className="relative z-10 flex-auto flex items-center justify-center text-lg text-center text-white py-16 px-4 sm:px-6 lg:px-8" >
+            <div className="relative z-10 flex items-center justify-center flex-auto px-4 py-16 text-lg text-center text-white sm:px-6 lg:px-8" >
                 <div className="w-full max-w-lg">
-                    <h1 className="text-center mb-2 text-gray-300 text-xl font-semibold">請輸入新密碼</h1>
+                    <h1 className="mb-2 text-xl font-semibold text-center text-gray-300">請輸入新密碼</h1>
                     <form>
                         <div className="relative">
                             <input
                                 type='password'
-                                className='text-gray-900 ring-gray-900 ring-opacity-5 placeholder-gray-400 appearance-none bg-white rounded-md block w-full px-3 py-2 border border-transparent shadow ring-1 sm:text-sm focus:border-teal-500 focus:ring-teal-500 focus:outline-none'
+                                className='block w-full px-3 py-2 text-gray-900 placeholder-gray-400 bg-white border border-transparent rounded-md shadow appearance-none ring-gray-900 ring-opacity-5 ring-1 sm:text-sm focus:border-teal-500 focus:ring-teal-500 focus:outline-none'
                                 name='password'
                                 placeholder='Password'
                                 value={formik.values.password}

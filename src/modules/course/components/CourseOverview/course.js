@@ -87,7 +87,7 @@ const Course = (props) => {
 
     const fetchCourseData = async (courseId) => {
         try {
-            const result = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}`)
+            const result = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}`)
             setCourseData(result.data);
         } catch (e) {
             props.history.push('/')

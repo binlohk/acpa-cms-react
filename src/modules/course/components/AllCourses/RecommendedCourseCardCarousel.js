@@ -22,7 +22,7 @@ function RecommendedCourseCardCarousel({ children, slidesPerView, slidesPerGroup
                 slidesPerView={slidesPerView}
                 spaceBetween={0}
                 slidesPerGroup={slidesPerGroup}
-                loop={true}
+                loop={false}
                 loopFillGroupWithBlank={true}
                 navigation={true}
             >

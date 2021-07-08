@@ -36,6 +36,7 @@ function App() {
             <Switch>
               <Route exact path='/' component={AllCourses} />
               <AuthRoute exact path='/login' component={LoginForm} />
+              <AuthRoute exact path='/login/:referralToken' component={LoginForm} />
               <AuthRoute exact path='/signup' component={SignupForm} />
               <AuthRoute exact path='/signup/:referralToken' component={SignupForm} />
               <Route exact path='/course/:courseId' component={Course} />

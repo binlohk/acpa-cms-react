@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -7,9 +7,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { storeToken, storeUser } from '../../../../services/authService'
 import Button from '../../../utilComponents/Button'
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 
-function LoginForm() {
+function LoginForm(props) {
     const [loginError, setLoginError] = useState(false)
+    const [snackbarContent, setSnackbarContent] = useState(null)
+    const { referralToken } = props.match.params;
 
     const formik = useFormik({
         initialValues: {
@@ -44,6 +47,22 @@ function LoginForm() {
             }
         }
     });
+
+    const checkReferrer = async () => {
+        try {
+            const result = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/users-referrer/${referralToken}`)
+            console.log(result.data, 'result.data')
+            console.log(result.data.referrerData.email, 'result.data')
+            setSnackbarContent(`歡迎加入！您成功被${result.data.referrerData.email}推薦`)
+        } catch (e) {
+            console.log(e.response)
+        }
+    };
+
+    useEffect(() => {
+        checkReferrer()
+    }, [referralToken])
+
     return (
         <div>
             <form
@@ -52,6 +71,15 @@ function LoginForm() {
                 <div className='container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto'>
                     <div className='w-full px-6 py-8 text-black bg-white rounded shadow-md'>
                         {loginError && <p class="text-center text-red-500 text-xs italic">電郵或名稱不正確，請重新輸入</p>}
+                        {snackbarContent &&
+                            <div className='mb-2'>
+                                <SnackbarContent
+                                    message={
+                                        snackbarContent
+                                    }
+                                />
+                            </div>
+                        }
                         <h1 className='mb-8 text-3xl text-center text-gray-700'>歡迎回來</h1>
                         <input
                             type='text'
