@@ -206,7 +206,7 @@ const Course = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <p className='py-6 pl-4'>${courseData.price}</p>
+                                    <p className='py-6 pl-4'>{(courseData.price == 0) ? 'Free' : { courseData }}</p>
                                     <LessonCards lessonsDetail={courseData.lessonsDetail} progressHandler={updateLessonProgress} purchased={courseData.purchased} />
                                 </TabPanel>
                                 <TabPanel value={value} index={1}>

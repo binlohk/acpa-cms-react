@@ -5,17 +5,17 @@ function RecommendedCourseCard({ title, price, description, courseId, image, ind
 
     return (
         <>
-            <div className='max-w-md sm:w-1/2 lg:w-full py-6 px-3'>
-                <div className='bg-gray-700 shadow-xl rounded-lg overflow-hidden'>
+            <div className='max-w-md px-3 py-6 sm:w-1/2 lg:w-full'>
+                <div className='overflow-hidden bg-gray-700 rounded-lg shadow-xl'>
                     <Link to={`/course/${courseId}`}>
-                        <div className='rounded overflow-hidden'>
-                            <img className='w-full h-60 object-contain px-2 py-2' src={image} alt={image} />
+                        <div className='overflow-hidden rounded'>
+                            <img className='object-contain w-full px-2 py-2 h-60' src={image} alt={image} />
                             <div className='h-40 overflow-hidden'>
                                 <div className={`px-6`}>
                                     <div
-                                        className='font-bold text-gray-200 text-lg my-2'>{title}</div>
+                                        className='my-2 text-lg font-bold text-gray-200'>{title}</div>
                                     <p
-                                        className='text-gray-200 text-sm'>
+                                        className='text-sm text-gray-200'>
                                         {
                                             description && description.length > 55 ? (
                                                 <>
@@ -29,8 +29,9 @@ function RecommendedCourseCard({ title, price, description, courseId, image, ind
                                     </p>
                                 </div>
                             </div>
-                            <div className='px-6 py-4 bg-gray-600 text-white text-xl font-bold flex justify-center items-center'>
-                                $ {price}
+                            <div className='flex items-center justify-center px-6 py-4 text-xl font-bold text-white bg-gray-600'>
+                                {/* $ {price} */}
+                                {(price == 0) ? 'Free' : { price }}
                             </div>
                         </div>
                     </Link>
