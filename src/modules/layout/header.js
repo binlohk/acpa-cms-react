@@ -43,7 +43,7 @@ const Header = () => {
     <Popover className='fixed z-50 w-full' style={customStyles(offset)}>
       {({ open }) => (
         <>
-          <div className='max-w-full py-4 mx-auto sm:px-6'>
+          <div className='max-w-full py-4 mx-2 sm:px-6'>
             <div className='flex items-center justify-between py-1 border-b-2 border-transparent md:justify-start md:space-x-10'>
               <div className='flex items-center justify-start lg:w-0 lg:flex-1'>
                 <Link to='/' className='flex items-center'>
