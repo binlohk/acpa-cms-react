@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
+var currencyFormatter = require('currency-formatter');
+
 function AllCourseCard({ title, price, description, courseId, image, filteredCourseLength }) {
 
     return (
@@ -35,7 +37,7 @@ function AllCourseCard({ title, price, description, courseId, image, filteredCou
                                     </>
                                     :
                                     <>
-                                        {price}
+                                        {currencyFormatter.format(price, { code: 'HKD' })}
                                     </>
 
                                 }

@@ -17,6 +17,8 @@ import CourseMaterials from '../courseMaterials'
 import BuyButton from '../../../utilComponents/BuyButton'
 import axios from 'axios';
 
+var currencyFormatter = require('currency-formatter');
+
 const useStyles = makeStyles(theme => ({
     paper: {
         width: '100%',
@@ -215,7 +217,8 @@ const Course = (props) => {
                                             </>
                                             :
                                             <>
-                                                <p className='py-6 pl-4'>{courseData.price}</p>
+                                                <p className='py-6 pl-4'>{currencyFormatter.format(courseData.price, { code: 'HKD' })}</p>
+                                                {/* <p className='py-6 pl-4'>{courseData.price}</p> */}
                                             </>
                                         }
                                     </div>
