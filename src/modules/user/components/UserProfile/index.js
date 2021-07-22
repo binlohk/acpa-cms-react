@@ -113,20 +113,22 @@ function UserProfile() {
                                 </div>
                             </>
                         ) : (
-                                <>
-                                    <div className={`${classes.imgDiv} group rounded-full border-2 border-yellow-700 bg-white p-4 absolute top-36 left-50`}>
-                                        <p className={`z-50 w-24 h-24 object-contain opacity-100 group-hover:opacity-0`}>上載圖片</p>
-                                        <input
-                                            accept="image/*"
-                                            className={`upload-image text-sm absolute top-10 z-50 w-24 h-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}
-                                            id="contained-button-file"
-                                            multiple
-                                            type="file"
-                                            onChange={handlePicSelect}
-                                        />
+                            <>
+                                <div className={`${classes.imgDiv} group rounded-full border-2 border-yellow-700 bg-white p-4 absolute top-36 left-50`}>
+                                    <div className={`w-24 h-24 justify-center items-center object-contain`}>
+                                        <p className={'z-50 top-12 absolute self-center opacity-100 group-hover:opacity-0'}>上載圖片</p>
                                     </div>
-                                </>
-                            )
+                                    <input
+                                        accept="image/*"
+                                        className={`upload-image text-sm absolute top-10 z-50 w-24 h-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}
+                                        id="contained-button-file"
+                                        multiple
+                                        type="file"
+                                        onChange={handlePicSelect}
+                                    />
+                                </div>
+                            </>
+                        )
                         }
                         {/* username */}
                         <div className='flex flex-col items-center pt-48 '>

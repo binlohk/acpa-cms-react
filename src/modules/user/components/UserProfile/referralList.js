@@ -32,11 +32,11 @@ const ReferralList = () => {
     return (
         <div>
             {referrerData.length > 0 ?
-                <><div className='text-white font-semibold'>你的邀請人</div>
+                <><div className='font-semibold text-white'>你的邀請人</div>
                     {
                         referrerData.map((referral, key) => {
                             return (
-                                <div className='flex items-center justify-start gap-x-2 bg-white rounded-lg my-4 p-4 pr-6 w-156' key={`referree-${key}`}>
+                                <div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg gap-x-2 w-156' key={`referree-${key}`}>
                                     <Avatar alt="U">
                                         <AccountCircleIcon />
                                     </Avatar>
@@ -53,14 +53,14 @@ const ReferralList = () => {
                 null
             }
             {referreeData.length > 0 ?
-                <><div className='text-white font-semibold'>被你邀請的用戶</div>
+                <><div className='font-semibold text-white'>被你邀請的用戶</div>
                     {referreeData.map((referral, key) => {
-                        return (<div className='flex items-center justify-start gap-x-2 bg-white rounded-lg my-4 p-4 pr-6 w-156' key={`referree-${key}`}>
+                        return (<div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg gap-x-2 w-156' key={`referree-${key}`}>
                             <Avatar alt="U">
                                 <AccountCircleIcon />
                             </Avatar>
                             <div>
-                                <div>用戶名稱: {referral.referral_referree.username}</div>
+                                <div><p>用戶名稱: {referral.referral_referree.username}</p></div>
                                 <div>用戶電郵: {referral.referral_referree.email}</div>
                                 <div>日期: {referral.referral_referree.updated_at.substring(0, 10)}</div>
                             </div>
