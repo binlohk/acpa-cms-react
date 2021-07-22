@@ -6,27 +6,23 @@ name: Node.js CI
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
     
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2 # Thrid party action that helps with install the ssh key on the CD machine
-      with:
-          key: ${{ secrets.ACPA_SSH_PRIVATE_KEY }}
-          known_hosts: ${{ secrets.ACPA_SSH_KNOWN_HOSTS }}
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2 # Thrid party action that helps with install the ssh key on the CD machine
+        with:
+            key: ${{ secrets.ACPA_SSH_PRIVATE_KEY }}
+            known_hosts: ${{ secrets.ACPA_SSH_KNOWN_HOSTS }}
     
-    - name: Upload to Ubuntu
-      run: rsync -avzr . ubuntu@174.138.20.136:~/acpa-cms-react 
-      
-      
+      - name: Upload to Ubuntu
+        run: rsync -avzr . ubuntu@174.138.20.136:~/acpa-cms-react 
