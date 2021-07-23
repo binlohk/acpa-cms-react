@@ -34,7 +34,7 @@ function RecommendedCourseCard({ title, price, description, courseId, image, ind
                             <div className='flex items-center justify-center px-6 py-4 text-xl font-bold text-white bg-gray-600'>
                                 {price == 0 ?
                                     <>
-                                        "Free"
+                                        Free
                                     </>
                                     :
                                     <>
