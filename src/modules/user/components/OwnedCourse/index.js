@@ -25,15 +25,15 @@ export default function OwnedCourse({ purchasedCourses }) {
             {
                 purchasedCourses ?
                     <div>
-                        <div className='text-white font-semibold'>你擁有的課程 </div>
+                        <div className='font-semibold text-white'>你擁有的課程 </div>
                         {
                             purchasedCourses.map((course, index) =>
                                 <>
-                                    <div className='flex items-center justify-start bg-white rounded-lg my-4 p-4 pr-6 w-156' key={`courseName-${index}`}>
+                                    <div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg w-156' key={`courseName-${index}`}>
                                         <SchoolIcon className={classes.schoolIcon} />
                                         <div>
-                                            <div className='text-black font-semibold py-2'><Link to={`/course/${course.id}`}>課程名稱: {course.title}</Link></div>
-                                            <div className='flex items-center justify-start'><DateRangeIcon className={classes.dateIcon} />購買日期: {course.published_at.substring(0, 10)}</div>
+                                            <div className='py-2 font-semibold text-black'><Link to={`/course/${course.id}`}>課程名稱: {course.title}</Link></div>
+                                            <div className='flex items-center justify-start -ml-2'><DateRangeIcon className={classes.dateIcon} />購買日期: {course.published_at.substring(0, 10)}</div>
                                         </div>
                                     </div>
 

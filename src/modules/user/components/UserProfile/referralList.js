@@ -3,8 +3,25 @@ import { httpClient } from '../../../../services/api/axiosHelper';
 import { UserContext } from '../../../../contexts/UserContext';
 import Avatar from '@material-ui/core/Avatar';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+    accountCircleIcon: {
+        width: theme.spacing(5),
+        height: 'auto',
+        margin: theme.spacing(0, 2, 0, 0),
+        color: '#A5924B'
+    },
+    dateIcon: {
+        width: theme.spacing(2),
+        height: 'auto',
+        margin: theme.spacing(0, 1, 0, 1),
+    }
+}));
 
 const ReferralList = () => {
+    const classes = useStyles();
     const { getUser } = useContext(UserContext);
     const user = getUser();
 
@@ -37,12 +54,9 @@ const ReferralList = () => {
                         referrerData.map((referral, key) => {
                             return (
                                 <div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg gap-x-2 w-156' key={`referree-${key}`}>
-                                    <Avatar alt="U">
-                                        <AccountCircleIcon />
-                                    </Avatar>
+                                    <AccountCircleIcon className={classes.accountCircleIcon} />
                                     <div>
                                         <div>用戶名稱: {referral.referral_referrer.username}</div>
-                                        <div>用戶電郵: {referral.referral_referrer.email}</div>
                                         <div>邀請日期: {referral.referral_referrer.updated_at.substring(0, 10)}</div>
                                     </div>
                                 </div>
@@ -56,13 +70,10 @@ const ReferralList = () => {
                 <><div className='font-semibold text-white'>被你邀請的用戶</div>
                     {referreeData.map((referral, key) => {
                         return (<div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg gap-x-2 w-156' key={`referree-${key}`}>
-                            <Avatar alt="U">
-                                <AccountCircleIcon />
-                            </Avatar>
+                            <AccountCircleIcon className={classes.accountCircleIcon} />
                             <div>
-                                <div><p>用戶名稱: {referral.referral_referree.username}</p></div>
-                                <div>用戶電郵: {referral.referral_referree.email}</div>
-                                <div>日期: {referral.referral_referree.updated_at.substring(0, 10)}</div>
+                                <div className='py-2 font-semibold text-black'>用戶名稱: {referral.referral_referree.username}</div>
+                                <div className='flex items-center justify-start -ml-2'><DateRangeIcon className={classes.dateIcon} />日期: {referral.referral_referree.updated_at.substring(0, 10)}</div>
                             </div>
                         </div>)
                     })}</>

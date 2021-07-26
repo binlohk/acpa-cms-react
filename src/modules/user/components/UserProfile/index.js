@@ -104,7 +104,7 @@ function UserProfile() {
                                     <img className={`z-50 w-24 h-24 object-contain opacity-100 group-hover:opacity-0`} src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`} />
                                     <input
                                         accept="image/*"
-                                        className={`upload-image text-sm absolute top-10 z-50 w-24 h-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}
+                                        className={`upload-image text-sm absolute top-12 z-50 w-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}
                                         id="contained-button-file"
                                         multiple
                                         type="file"
@@ -120,7 +120,7 @@ function UserProfile() {
                                     </div>
                                     <input
                                         accept="image/*"
-                                        className={`upload-image text-sm absolute top-10 z-50 w-24 h-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}
+                                        className={`upload-image text-sm absolute top-12 z-50 w-24 h-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}
                                         id="contained-button-file"
                                         multiple
                                         type="file"
@@ -198,7 +198,7 @@ function UserProfile() {
                 />
                 <ReferralList />
             </div>
-        </div>
+        </div >
     )
 }
 
