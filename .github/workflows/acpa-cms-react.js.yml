@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      # - uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '14'
-      #     cache: 'npm'
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'npm'
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2 # Thrid party action that helps with install the ssh key on the CD machine
@@ -24,14 +24,14 @@ jobs:
             key: ${{ secrets.ACPA_SSH_PRIVATE_KEY }}
             known_hosts: ${{ secrets.ACPA_SSH_KNOWN_HOSTS }}
       
-      # - name: Install dependencies
-      #   run: npm install
+      - name: Install dependencies
+        run: npm install
 
-      # - name: Install craco 
-      #   run: npm install -g @craco/craco
+      - name: Install craco 
+        run: npm install -g @craco/craco
 
-      # - name: Creating React files
-      #   run: npm run build 
+      - name: Creating React files
+        run: npm run build 
             
       - name: Upload to Ubuntu
         run: rsync -avzr . ubuntu@174.138.20.136:~/acpa-cms-react 
