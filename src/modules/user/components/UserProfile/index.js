@@ -100,7 +100,7 @@ function UserProfile() {
                     <div className='flex flex-col items-center'>
                         {userProfile.profilePicture ? (
                             <>
-                                <div className={`${classes.imgDiv} group rounded-full border-2 border-yellow-700 bg-white p-4 absolute top-36 left-50`}>
+                                <div className={`${classes.imgDiv} -mr-10 group rounded-full border-2 border-yellow-700 bg-white p-4 absolute top-36 left-50`}>
                                     <img className={`z-50 w-24 h-24 object-contain opacity-100 group-hover:opacity-0`} src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`} />
                                     <input
                                         accept="image/*"
@@ -131,12 +131,12 @@ function UserProfile() {
                         )
                         }
                         {/* username */}
-                        <div className='flex flex-col items-center pt-48 '>
+                        <div className='flex flex-col pt-48 '>
                             <div className='flex flex-col items-center'>
-                                <h1 className='text-4xl font-semibold text-white'>
+                                <h1 className='-mr-10 text-4xl font-semibold text-white'>
                                     {userProfile.username}
                                 </h1>
-                                <p className='text-sm text-gray-300'>
+                                <p className='-mr-10 text-sm text-gray-300'>
                                     會員名稱
                                 </p>
                             </div>
@@ -171,12 +171,12 @@ function UserProfile() {
                             <div className='flex items-center justify-between p-2 mt-2 bg-white rounded-md w-192'>
                                 {/* icon */}
                                 <div className='flex items-center justify-center'>
-                                    <div className='flex items-center justify-center px-2 border-r-2 border-gray-400 '>
+                                    <div className='flex items-center justify-center px-2 border-r-2 border-gray-900'>
                                         <FileCopy
                                             className={classes.copyButton} />
                                     </div>
                                     {/* link */}
-                                    <p className='max-w-lg p-2 overflow-x-scroll text-gray-400'>
+                                    <p className='max-w-lg p-2 overflow-x-scroll text-gray-600'>
                                         {referralURL}
                                     </p>
                                 </div>
