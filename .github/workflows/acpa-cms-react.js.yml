@@ -24,6 +24,9 @@ jobs:
             key: ${{ secrets.ACPA_SSH_PRIVATE_KEY }}
             known_hosts: ${{ secrets.ACPA_SSH_KNOWN_HOSTS }}
       
+      - name: Install dependencies
+        run: npm install
+
       - name: Creating React files
         run: npm run build 
             
