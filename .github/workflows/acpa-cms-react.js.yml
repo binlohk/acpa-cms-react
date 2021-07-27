@@ -31,7 +31,7 @@ jobs:
         run: npm install -g @craco/craco
 
       - name: Creating React files
-        run: npm run build 
+        run: REACT_APP_BACKEND_SERVER=${{ secrets.ACPA_REACT_APP_BACKEND_SERVER }} && REACT_APP_FRONTEND_SERVER=${{ secrets.ACPA_REACT_APP_FRONTEND_SERVER }} && REACT_APP_STRIPE_PK=${{ secrets.ACPA_REACT_APP_STRIPE_PK }} && NODE_ENV=production && npm run build
             
       - name: Upload to Ubuntu
         run: rsync -avzr . ubuntu@174.138.20.136:~/acpa-cms-react 
