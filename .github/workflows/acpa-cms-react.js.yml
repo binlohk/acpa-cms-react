@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: '14'
           cache: 'npm'
+      
+      # - name: Install rsync
+      #   run: apt-get update -y && apt-get -y install rsync
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2 # Thrid party action that helps with install the ssh key on the CD machine
@@ -40,7 +43,7 @@ jobs:
           cat .env
 
       - name: Check files
-        run: ls
+        run: ls -a
 
       - name: Creating React files
         run: npm run build
@@ -49,7 +52,7 @@ jobs:
         run: rm -rf .env
       
       - name: Check files
-        run: ls
+        run: ls -a
 
       - name: Upload to Ubuntu
         run: rsync -avzr . ubuntu@174.138.20.136:~/acpa-cms-react 
