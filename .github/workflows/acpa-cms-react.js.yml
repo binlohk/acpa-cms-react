@@ -34,7 +34,10 @@ jobs:
         run: echo "ACPA_REACT_APP_BACKEND_SERVER=${{ secrets.ACPA_REACT_APP_BACKEND_SERVER }}" >> $GITHUB_ENV 
              echo "REACT_APP_FRONTEND_SERVER=${{ secrets.ACPA_REACT_APP_FRONTEND_SERVER }}" >> $GITHUB_ENV 
              echo "REACT_APP_STRIPE_PK=${{ secrets.ACPA_REACT_APP_STRIPE_PK }}" >> $GITHUB_ENV 
-
+      
+      - name: Check github env file
+        run: cat $GITHUB_ENV
+        
       - name: Creating React files
         run: npm run build
             
