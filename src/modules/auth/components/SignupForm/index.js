@@ -66,9 +66,21 @@ function SignupForm(props) {
             <form
                 style={{ background: 'rgba(81,58,84, 0.75)' }}
                 className='flex flex-col min-h-screen bg-grey-lighter'>
-                <div className='container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto'>
-                    <div className='w-full px-6 py-8 text-black bg-white rounded shadow-md'>
-                        <h1 className='mb-8 text-3xl text-center'>用戶注冊</h1>
+                {/* <div className='container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto'> */}
+                <div className='container flex flex-row items-center justify-center flex-1 max-w-sm px-2 mx-auto'>
+                    <div className='w-full px-6 py-8 text-black bg-gray-200 rounded-l-lg shadow-md' style={{ minHeight: '60vh', minWidth: 370 }}>
+                        <h1 className='mt-5 mb-8 text-3xl text-center'>SignInNews</h1>
+                        <div>
+                            <h3>Title: </h3>
+                            <p>用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊</p>
+                        </div>
+                        <div>
+                            <h3>Desc:</h3>
+                            <p>用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊</p>
+                        </div>
+                    </div>
+                    <div className='w-full px-6 py-8 text-black bg-white rounded-r-lg shadow-md' style={{ minHeight: '60vh', minWidth: 350 }}>
+                        <h1 className='mt-5 mb-8 text-3xl text-center'>用戶注冊</h1>
                         {openSnackbar &&
                             <div className='mb-2'>
                                 <SnackbarContent
@@ -120,13 +132,12 @@ function SignupForm(props) {
                                 <span> Privacy Policy </span>
                             </Link>
                         </div>
-                    </div>
-
-                    <div className='mt-6 text-white'>
-                        我已經有帳戶
-                    <Link className='ml-2 border-b-4s' to='./login'>
-                            (按此登入)
-                    </Link>
+                        <div className='mt-6 text-center text-purple'>
+                            我已經有帳戶
+                        <Link className='ml-2 border-b-4s' to='./login'>
+                                (按此登入)
+                        </Link>
+                        </div>
                     </div>
                 </div>
             </form>
