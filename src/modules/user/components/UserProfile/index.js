@@ -11,6 +11,12 @@ import ReferralList from './referralList';
 import OwnedCourse from '../OwnedCourse';
 
 const useStyles = makeStyles((theme) => ({
+    publishIcon: {
+        color: "#513654",
+        marginTop: -5,
+        marginRight: -3
+    },
+
     margin: {
         margin: theme.spacing(1),
     },
@@ -102,14 +108,38 @@ function UserProfile() {
                             <>
                                 <div className={`${classes.imgDiv} -mr-10 group rounded-full border-2 border-yellow-700 bg-white p-4 absolute top-36 left-50`}>
                                     <img className={`z-50 w-24 h-24 object-contain opacity-100 group-hover:opacity-0`} src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`} />
-                                    <input
-                                        accept="image/*"
-                                        className={`upload-image text-sm absolute top-12 z-50 w-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}
-                                        id="contained-button-file"
-                                        multiple
-                                        type="file"
-                                        onChange={handlePicSelect}
-                                    />
+                                    <div className={`mt-2 upload-image text-sm absolute top-12 z-50 w-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}>
+                                        <label
+                                            htmlFor="contained-button-file"
+                                            style={{
+                                                paddingTop: 6,
+                                                paddingBottom: 6,
+                                                paddingLeft: 3,
+                                                paddingRight: 3,
+                                                borderWidth: 2,
+                                                borderColor: "#A5924B",
+                                                cursor: "pointer"
+                                            }}>
+                                            <PublishIcon className={classes.publishIcon} /> <span style={{ color: "#513654" }}>上載圖片</span>
+                                        </label>
+                                        <input
+                                            accept="image/*"
+                                            id="contained-button-file"
+                                            multiple
+                                            type="file"
+                                            onChange={handlePicSelect}
+                                            style={{
+                                                position: "absolute",
+                                                width: "1px",
+                                                height: "1px",
+                                                padding: 0,
+                                                margin: "-1px",
+                                                overflow: "hidden",
+                                                clip: "rect(0, 0, 0, 0)",
+                                                border: 0
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </>
                         ) : (
@@ -118,14 +148,46 @@ function UserProfile() {
                                     <div className={`w-24 h-24 justify-center items-center object-contain`}>
                                         <p className={'z-50 top-12 absolute self-center opacity-100 group-hover:opacity-0'}>上載圖片</p>
                                     </div>
-                                    <input
+                                    <div className={`mt-2 upload-image text-sm absolute top-12 z-50 w-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}>
+                                        <label
+                                            htmlFor="contained-button-file"
+                                            style={{
+                                                paddingTop: 6,
+                                                paddingBottom: 6,
+                                                paddingLeft: 3,
+                                                paddingRight: 3,
+                                                borderWidth: 2,
+                                                borderColor: "#A5924B",
+                                                cursor: "pointer"
+                                            }}>
+                                            <PublishIcon className={classes.publishIcon} /> <span style={{ color: "#513654" }}>上載圖片</span>
+                                        </label>
+                                        <input
+                                            accept="image/*"
+                                            id="contained-button-file"
+                                            multiple
+                                            type="file"
+                                            onChange={handlePicSelect}
+                                            style={{
+                                                position: "absolute",
+                                                width: "1px",
+                                                height: "1px",
+                                                padding: 0,
+                                                margin: "-1px",
+                                                overflow: "hidden",
+                                                clip: "rect(0, 0, 0, 0)",
+                                                border: 0
+                                            }}
+                                        />
+                                    </div>
+                                    {/* <input
                                         accept="image/*"
                                         className={`upload-image text-sm absolute top-12 z-50 w-24 h-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}
                                         id="contained-button-file"
                                         multiple
                                         type="file"
                                         onChange={handlePicSelect}
-                                    />
+                                    /> */}
                                 </div>
                             </>
                         )
