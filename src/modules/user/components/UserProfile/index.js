@@ -220,7 +220,7 @@ function UserProfile() {
                                 <div className='flex flex-col items-center'>
                                     <h1 className='text-lg font-semibold text-white'> {userProfile.Membership}</h1>
                                     <p className='text-sm text-gray-300'>
-                                        "會員階級"
+                                        會員階級
                                  </p>
                                 </div>
                             </div>
