@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -6,12 +6,35 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 import SnackbarContent from '@material-ui/core/SnackbarContent';
+import LoadingSpinner from '../../../utilComponents/LoadingSpinner'
+
 
 function SignupForm(props) {
     const { referralToken } = props.match.params;
 
     const [signupError, setSignupError] = useState(false)
     const [openSnackbar, setOpenSnackbar] = useState(false)
+    const [api, ApiReply] = React.useState("");
+    const [num, NumReply] = React.useState("");
+
+    useEffect(function effectFuncton() {
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        async function fetchData() {
+            var requestOptions = {
+                method: "GET"
+            }
+            const apiResponse = await fetch(`${process.env.REACT_APP_BACKEND_SERVER}/latest-news`, requestOptions)
+            const parserAPI = await (apiResponse.text())
+            const jsonAPI = await (JSON.parse(parserAPI))
+            const num = await getRandomInt(jsonAPI.length)
+            await NumReply(num)
+            await ApiReply(jsonAPI[num])
+        }
+        fetchData();
+    }, [])
+
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -64,22 +87,30 @@ function SignupForm(props) {
     return (
         <div>
             <form
-                style={{ background: 'rgba(81,58,84, 0.75)' }}
+                style={{ background: 'rgba(81,58,84, 0.75)', minHeight: '90vh' }}
                 className='flex flex-col min-h-screen bg-grey-lighter'>
                 {/* <div className='container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto'> */}
                 <div className='container flex flex-row items-center justify-center flex-1 max-w-sm px-2 mx-auto'>
-                    <div className='w-full px-6 py-8 text-black bg-gray-200 rounded-l-lg shadow-md' style={{ minHeight: '60vh', minWidth: 370 }}>
-                        <h1 className='mt-5 mb-8 text-3xl text-center'>SignInNews</h1>
-                        <div>
-                            <h3>Title: </h3>
-                            <p>用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊</p>
-                        </div>
-                        <div>
-                            <h3>Desc:</h3>
-                            <p>用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊用戶注冊</p>
-                        </div>
+                    <div className='w-full px-6 py-8 text-black bg-gray-200 rounded-l-lg shadow-md' style={{ minHeight: 600, minWidth: 370 }}>
+                        <h1 className='mt-5 mb-8 text-3xl text-center'>嘉林消息</h1>
+                        {api ? (
+                            <div>
+                                <div>
+                                    <h1>Title: </h1>
+                                    <p>{api.title}</p>
+                                    <h1>created date</h1>
+                                    <p>{api.created_at.substring(0, 10).replaceAll("-", "/")}</p>
+                                </div>
+                                <div>
+                                    <h1>Desc:</h1>
+                                    <p>{api.description}</p>
+                                </div>
+                            </div>
+                        ) : (
+                            <div>Loading</div>
+                        )}
                     </div>
-                    <div className='w-full px-6 py-8 text-black bg-white rounded-r-lg shadow-md' style={{ minHeight: '60vh', minWidth: 350 }}>
+                    <div className='w-full px-6 py-8 text-black bg-white rounded-r-lg shadow-md' style={{ minHeight: 600, minWidth: 350 }}>
                         <h1 className='mt-5 mb-8 text-3xl text-center'>用戶注冊</h1>
                         {openSnackbar &&
                             <div className='mb-2'>
