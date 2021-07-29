@@ -91,19 +91,15 @@ function SignupForm(props) {
                 className='flex flex-col min-h-screen bg-grey-lighter'>
                 {/* <div className='container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto'> */}
                 <div className='container flex flex-row items-center justify-center flex-1 max-w-sm px-2 mx-auto'>
-                    <div className='w-full px-6 py-8 text-black bg-gray-200 rounded-l-lg shadow-md' style={{ minHeight: 600, minWidth: 370 }}>
+                    <div className='w-full px-6 py-8 text-black bg-gray-200 rounded-l-lg shadow-md' style={{ color: "rgba(81,54,84,1)", minHeight: 600, minWidth: 370 }}>
                         <h1 className='mt-5 mb-8 text-3xl text-center'>嘉林消息</h1>
                         {api ? (
                             <div>
                                 <div>
-                                    <h1>Title: </h1>
-                                    <p>{api.title}</p>
-                                    <h1>created date</h1>
-                                    <p>{api.created_at.substring(0, 10).replaceAll("-", "/")}</p>
+                                    <p className='font-bold text-center'>{api.title}</p>
                                 </div>
                                 <div>
-                                    <h1>Desc:</h1>
-                                    <p>{api.description}</p>
+                                    <p className="mt-7">{api.description}</p>
                                 </div>
                             </div>
                         ) : (
