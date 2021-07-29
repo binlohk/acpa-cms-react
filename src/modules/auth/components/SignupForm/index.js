@@ -15,7 +15,6 @@ function SignupForm(props) {
     const [signupError, setSignupError] = useState(false)
     const [openSnackbar, setOpenSnackbar] = useState(false)
     const [api, ApiReply] = React.useState("");
-    const [num, NumReply] = React.useState("");
 
     useEffect(function effectFuncton() {
         function getRandomInt(max) {
@@ -29,7 +28,6 @@ function SignupForm(props) {
             const parserAPI = await (apiResponse.text())
             const jsonAPI = await (JSON.parse(parserAPI))
             const num = await getRandomInt(jsonAPI.length)
-            await NumReply(num)
             await ApiReply(jsonAPI[num])
         }
         fetchData();

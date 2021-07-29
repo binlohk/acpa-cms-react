@@ -14,6 +14,25 @@ function LoginForm(props) {
     const [snackbarContent, setSnackbarContent] = useState(null)
     const { referralToken } = props.match.params;
 
+    const [api, ApiReply] = React.useState("");
+
+    useEffect(function effectFuncton() {
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        async function fetchData() {
+            var requestOptions = {
+                method: "GET"
+            }
+            const apiResponse = await fetch(`${process.env.REACT_APP_BACKEND_SERVER}/latest-news`, requestOptions)
+            const parserAPI = await (apiResponse.text())
+            const jsonAPI = await (JSON.parse(parserAPI))
+            const num = await getRandomInt(jsonAPI.length)
+            await ApiReply(jsonAPI[num])
+        }
+        fetchData();
+    }, [])
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -66,10 +85,25 @@ function LoginForm(props) {
     return (
         <div>
             <form
-                style={{ background: 'rgba(81,58,84, 0.75)' }}
+                style={{ background: 'rgba(81,58,84, 0.75)', minHeight: '90vh' }}
                 className='flex flex-col w-full min-h-screen bg-grey-lighter'>
-                <div className='container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto'>
-                    <div className='w-full px-6 py-8 text-black bg-white rounded shadow-md'>
+                <div className='container flex flex-row items-center justify-center flex-1 max-w-sm px-2 mx-auto'>
+                    <div className='w-full px-6 py-8 text-black bg-gray-200 rounded-l-lg shadow-md' style={{ color: "rgba(81,54,84,1)", minHeight: 600, minWidth: 370 }}>
+                        <h1 className='mt-5 mb-8 text-3xl text-center'>嘉林消息</h1>
+                        {api ? (
+                            <div>
+                                <div>
+                                    <p className='font-bold text-center'>{api.title}</p>
+                                </div>
+                                <div>
+                                    <p className="mt-7">{api.description}</p>
+                                </div>
+                            </div>
+                        ) : (
+                            <div>Loading</div>
+                        )}
+                    </div>
+                    <div className='w-full px-6 py-8 text-black bg-white rounded-r-lg shadow-md' style={{ minHeight: 600, minWidth: 350 }}>
                         {loginError && <p class="text-center text-red-500 text-xs italic">電郵或名稱不正確，請重新輸入</p>}
                         {snackbarContent &&
                             <div className='mb-2'>
@@ -80,10 +114,10 @@ function LoginForm(props) {
                                 />
                             </div>
                         }
-                        <h1 className='mb-8 text-3xl text-center text-gray-700'>歡迎回來</h1>
+                        <h1 className='mt-5 mb-8 text-3xl text-center text-gray-700'>歡迎回來</h1>
                         <input
                             type='text'
-                            className='w-full h-12 px-3 py-2 mb-2 leading-tight border rounded shadow appearance-none text-grey-darker focus:outline-none focus:shadow-outline'
+                            className='w-full h-12 px-3 py-2 mt-5 mb-2 leading-tight border rounded shadow appearance-none text-grey-darker focus:outline-none focus:shadow-outline'
                             name='email'
                             placeholder='電郵'
                             value={formik.values.email}
@@ -92,7 +126,7 @@ function LoginForm(props) {
                         {formik.errors.email && formik.touched.email && <p class="text-red-500 mb-4 text-xs italic">{formik.errors.email}</p>}
                         <input
                             type='password'
-                            className='w-full h-12 px-3 py-2 mb-2 leading-tight border rounded shadow appearance-none text-grey-darker focus:outline-none focus:shadow-outline'
+                            className='w-full h-12 px-3 py-2 mt-2 mb-2 leading-tight border rounded shadow appearance-none text-grey-darker focus:outline-none focus:shadow-outline'
                             name='password'
                             placeholder='密碼'
                             value={formik.values.password}
@@ -107,17 +141,17 @@ function LoginForm(props) {
                         >
                             登入
                                 </Button>
-                        <div className='flex justify-center w-full h-auto pt-8'>
+                        <div className='flex justify-center w-full h-auto pt-8 mt-3'>
                             <Link to='/forgot-password'>
                                 忘記密碼
                             </Link>
                         </div>
-                    </div>
-                    <div className='mt-6 text-white'>
-                        尚未註冊?
-                    <Link className='ml-2 no-underline border-b-4s' to='./signup'>
-                            按此
-                    </Link>
+                        <div className='mt-6 text-center text-black'>
+                            尚未註冊?
+                            <Link className='ml-2 no-underline border-b-4s' to='./signup'>
+                                按此
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </form>
