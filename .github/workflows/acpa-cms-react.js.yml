@@ -38,7 +38,7 @@ jobs:
           touch .env
           echo REACT_APP_BACKEND_SERVER=${{ secrets.ACPA_REACT_APP_BACKEND_SERVER }} >> .env
           echo REACT_APP_FRONTEND_SERVER=${{ secrets.ACPA_REACT_APP_FRONTEND_SERVER }} >> .env
-          echo REACT_APP_STRIPE_PK=${{ secrets.ACPA_REACT_APP_STRIPE_PK }} >> .env
+          echo ACPA_REACT_APP_STRIPE_PK=${{ secrets.ACPA_REACT_APP_STRIPE_PK }} >> .env
           echo NODE_ENV=production 
           cat .env
 
