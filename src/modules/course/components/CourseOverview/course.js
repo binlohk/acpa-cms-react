@@ -12,6 +12,7 @@ import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import ReactMarkdown from 'react-markdown'
 
 import CourseMaterials from '../courseMaterials'
 import BuyButton from '../../../utilComponents/BuyButton'
@@ -192,11 +193,13 @@ const Course = (props) => {
                                                     }
                                                 >
                                                     課程概覽
-                                    </h3>
+                                                </h3>
                                             </div>
                                         </div>
                                     </div>
-                                    <p className='py-6 pl-4'>{courseData.description}</p>
+                                    <div className='py-6 pl-4'>
+                                        <ReactMarkdown>{courseData.description.replaceAll("\n", "  \n")}</ReactMarkdown>
+                                    </div>
                                     <div className="py-3 border-b-2 rounded-t">
                                         <div className="flex flex-wrap items-center">
                                             <div className="relative flex-1 flex-grow w-full max-w-full px-4">
