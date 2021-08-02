@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { storeToken, storeUser } from '../../../../services/authService'
 import Button from '../../../utilComponents/Button'
 import SnackbarContent from '@material-ui/core/SnackbarContent';
+import ReactMarkdown from 'react-markdown'
 
 function LoginForm(props) {
     const [loginError, setLoginError] = useState(false)
@@ -96,7 +97,7 @@ function LoginForm(props) {
                                     <p className='font-bold text-center'>{api.title}</p>
                                 </div>
                                 <div>
-                                    <p className="mt-7">{api.description}</p>
+                                    <ReactMarkdown>{api.description.replaceAll("\n", "  \n")}</ReactMarkdown>
                                 </div>
                             </div>
                         ) : (

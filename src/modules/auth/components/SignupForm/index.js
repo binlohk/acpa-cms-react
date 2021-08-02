@@ -7,6 +7,7 @@ import * as Yup from "yup";
 
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import LoadingSpinner from '../../../utilComponents/LoadingSpinner'
+import ReactMarkdown from 'react-markdown'
 
 
 function SignupForm(props) {
@@ -97,7 +98,7 @@ function SignupForm(props) {
                                     <p className='font-bold text-center'>{api.title}</p>
                                 </div>
                                 <div>
-                                    <p className="mt-7">{api.description}</p>
+                                    <ReactMarkdown>{api.description.replaceAll("\n", "  \n")}</ReactMarkdown>
                                 </div>
                             </div>
                         ) : (
