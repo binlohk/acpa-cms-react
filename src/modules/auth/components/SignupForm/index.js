@@ -90,7 +90,7 @@ function SignupForm(props) {
                 className='flex flex-col min-h-screen bg-grey-lighter'>
                 {/* <div className='container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto'> */}
                 <div className='container flex flex-row items-center justify-center flex-1 max-w-sm px-2 mx-auto'>
-                    <div className='w-full px-6 py-8 text-black bg-gray-200 rounded-l-lg shadow-md' style={{ color: "rgba(81,54,84,1)", minHeight: 600, minWidth: 370 }}>
+                    <div className='w-full px-6 py-8 text-black bg-gray-200 rounded-l-lg shadow-md' style={{ color: "rgba(81,54,84,1)", maxHeight: 600, overflow: 'scroll', minHeight: 600, minWidth: 370 }}>
                         <h1 className='mt-5 mb-8 text-3xl text-center'>嘉林消息</h1>
                         {api ? (
                             <div>
