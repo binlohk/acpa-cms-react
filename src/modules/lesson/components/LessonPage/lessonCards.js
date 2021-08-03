@@ -43,7 +43,7 @@ const LessonCards = ({ lessonsDetail }) => {
               lessonsDetail.map((lesson, ind) =>
                 <div className='m-4 border-2 border-gray-300 rounded-md' key={ind}>
                   <div className="flex items-center justify-between px-6 py-4 text-xs text-left whitespace-nowrap">
-                    <div className='flex'>
+                    <div className='flex flex-grow'>
                       {/* lesson status */}
                       {(user.id && user.id != "") &&
                         <div type='button' className='flex items-center justify-center w-10 h-10 border-2 rounded-full shadow border-blueGray-50'>
@@ -51,14 +51,14 @@ const LessonCards = ({ lessonsDetail }) => {
                         </div>
                       }
                       {/* lesson name */}
-                      <div className='flex flex-col ml-3 w-96'>
+                      <div className='flex flex-col ml-3 w-96 flex-grow'>
                         <span
                           className="text-lg font-bold">
                           {lesson.title}
                         </span>
                         {/* lesson text */}
-                        <div className='overflow-x-scroll'>
-                          {lesson.text}
+                        <div className='overflow-y-auto'>
+                            {lesson.text}
                         </div>
                       </div>
                     </div>
