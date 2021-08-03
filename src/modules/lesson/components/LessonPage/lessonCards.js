@@ -58,7 +58,7 @@ const LessonCards = ({ lessonsDetail }) => {
                         </span>
                         {/* lesson text */}
                         <div className='overflow-x-scroll'>
-                            {lesson.text}
+                          {lesson.text}
                         </div>
                       </div>
                     </div>

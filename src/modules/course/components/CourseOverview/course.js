@@ -160,8 +160,8 @@ const Course = (props) => {
                                 </>}
                         </div>
 
-                        <div className='w-1/2'>
-                            <div>
+                        <div className="overflow-x-scroll" style={{ minWidth: 650 }}>
+                            <div className="min-w-full">
                                 <div className={classes.paper}>
                                     <Tabs value={value}
                                         onChange={handleTabChange}
