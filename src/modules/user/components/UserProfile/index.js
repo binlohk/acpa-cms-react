@@ -106,9 +106,9 @@ function UserProfile() {
                     <div className='flex flex-col items-center'>
                         {userProfile.profilePicture ? (
                             <>
-                                <div className={`${classes.imgDiv} -mr-10 group rounded-full border-2 border-yellow-700 bg-white p-4 absolute top-36 left-50`}>
-                                    <img className={`z-50 w-24 h-24 object-contain opacity-100 group-hover:opacity-0`} src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`} />
-                                    <div className={`mt-2 upload-image text-sm absolute top-12 z-50 w-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}>
+                                <div className={`${classes.imgDiv} -mr-10 w-32 h-32 group justify-center rounded-full border-2 border-yellow-700 bg-white absolute overflow-hidden top-36 left-50`}>
+                                    <img className={`-mt-2 opacity-100 group-hover:opacity-0`} style={{ height: '110%', width: '100%' }} src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`} />
+                                    <div className={`ml-4 mt-2 upload-image text-sm absolute top-12 z-50 w-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}>
                                         <label
                                             htmlFor="contained-button-file"
                                             style={{
@@ -118,7 +118,8 @@ function UserProfile() {
                                                 paddingRight: 3,
                                                 borderWidth: 2,
                                                 borderColor: "#A5924B",
-                                                cursor: "pointer"
+                                                cursor: "pointer",
+                                                marginLeft: -3
                                             }}>
                                             <PublishIcon className={classes.publishIcon} /> <span style={{ color: "#513654" }}>上載圖片</span>
                                         </label>
@@ -180,14 +181,6 @@ function UserProfile() {
                                             }}
                                         />
                                     </div>
-                                    {/* <input
-                                        accept="image/*"
-                                        className={`upload-image text-sm absolute top-12 z-50 w-24 h-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}
-                                        id="contained-button-file"
-                                        multiple
-                                        type="file"
-                                        onChange={handlePicSelect}
-                                    /> */}
                                 </div>
                             </>
                         )
