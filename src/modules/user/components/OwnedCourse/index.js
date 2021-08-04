@@ -24,17 +24,16 @@ export default function OwnedCourse({ purchasedCourses }) {
         <>
             {
                 // 你尚未購買任何課程
-                // (purchasedCourses !== null) ?
-                // <div>你尚未購買任何課程123
-                //         <div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg w-156'>
-                //         <SchoolIcon className={classes.schoolIcon} />
-                //         <div>
-                //             <div className='py-2 font-semibold text-black'><Link >課程名稱: </Link></div>
-                //             <div className='flex items-center justify-start -ml-2'><DateRangeIcon className={classes.dateIcon} />購買日期: </div>
-                //         </div>
-                //     </div>
-                // </div>
-                (Object.keys(purchasedCourses).length !== 0) ?
+                (purchasedCourses && Object.keys(purchasedCourses).length !== 0) ?
+                    // <div>你尚未購買任何課程123
+                    //         <div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg w-156'>
+                    //         <SchoolIcon className={classes.schoolIcon} />
+                    //         <div>
+                    //             <div className='py-2 font-semibold text-black'><Link >課程名稱: </Link></div>
+                    //             <div className='flex items-center justify-start -ml-2'><DateRangeIcon className={classes.dateIcon} />購買日期: </div>
+                    //         </div>
+                    //     </div>
+                    // </div>
                     <div>
                         <div className='font-semibold text-white'>你擁有的課程 </div>
                         {
