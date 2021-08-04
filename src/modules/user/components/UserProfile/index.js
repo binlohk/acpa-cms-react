@@ -106,7 +106,7 @@ function UserProfile() {
                     <div className='flex flex-col items-center'>
                         {userProfile.profilePicture ? (
                             <>
-                                <div className={`${classes.imgDiv} -mr-10 w-32 h-32 group justify-center rounded-full border-2 border-yellow-700 bg-white absolute overflow-hidden top-36 left-50`}>
+                                <div className={`${classes.imgDiv} -mr-10 w-32 h-32 group justify-center rounded-full border-2 border-white bg-white absolute overflow-hidden top-36 left-50`}>
                                     <img className={`-mt-2 opacity-100 group-hover:opacity-0`} style={{ height: '110%', width: '100%' }} src={`${process.env.REACT_APP_BACKEND_SERVER}${userProfile.profilePicture.url}`} />
                                     <div className={`ml-4 mt-2 upload-image text-sm absolute top-12 z-50 w-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}>
                                         <label
@@ -145,11 +145,11 @@ function UserProfile() {
                             </>
                         ) : (
                             <>
-                                <div className={`${classes.imgDiv} group rounded-full border-2 border-yellow-700 bg-white p-4 absolute top-36 left-50`}>
+                                <div className={`${classes.imgDiv} -mr-10 w-32 h-32 group justify-center rounded-full border-2 border-white bg-white absolute overflow-hidden top-36 left-50`}>
                                     <div className={`w-24 h-24 justify-center items-center object-contain`}>
                                         <p className={'z-50 top-12 absolute self-center opacity-100 group-hover:opacity-0'}>上載圖片</p>
                                     </div>
-                                    <div className={`mt-2 upload-image text-sm absolute top-12 z-50 w-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}>
+                                    <div className={`ml-4 mt-2 upload-image text-sm absolute top-12 z-50 w-24 object-scale-down opacity-0 focus:outline-none group-hover:opacity-100`}>
                                         <label
                                             htmlFor="contained-button-file"
                                             style={{
