@@ -23,7 +23,18 @@ export default function OwnedCourse({ purchasedCourses }) {
     return (
         <>
             {
-                purchasedCourses ?
+                // 你尚未購買任何課程
+                // (purchasedCourses !== null) ?
+                // <div>你尚未購買任何課程123
+                //         <div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg w-156'>
+                //         <SchoolIcon className={classes.schoolIcon} />
+                //         <div>
+                //             <div className='py-2 font-semibold text-black'><Link >課程名稱: </Link></div>
+                //             <div className='flex items-center justify-start -ml-2'><DateRangeIcon className={classes.dateIcon} />購買日期: </div>
+                //         </div>
+                //     </div>
+                // </div>
+                (Object.keys(purchasedCourses).length !== 0) ?
                     <div>
                         <div className='font-semibold text-white'>你擁有的課程 </div>
                         {
@@ -36,13 +47,20 @@ export default function OwnedCourse({ purchasedCourses }) {
                                             <div className='flex items-center justify-start -ml-2'><DateRangeIcon className={classes.dateIcon} />購買日期: {course.published_at.substring(0, 10)}</div>
                                         </div>
                                     </div>
-
                                 </>
                             )
                         }
                     </div>
                     :
-                    <div>你尚未購買任何課程</div>
+                    <div>
+                        <div className='font-semibold text-white'>你擁有的課程 </div>
+                        <div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg w-156'>
+                            <SchoolIcon className={classes.schoolIcon} />
+                            <div>
+                                <div className='py-2 font-semibold text-black'>你尚未購買任何課程</div>
+                            </div>
+                        </div>
+                    </div>
             }
         </>
     )
