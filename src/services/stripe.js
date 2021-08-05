@@ -17,3 +17,16 @@ export const handleBuy = async (courseId) => {
         window.location.href = '/login'
     }
 }
+
+export const handleFreeApply = async (courseId) => {
+    const user = getUser();
+    if (user.id != "" && user.id != null) {
+        const reqObj = {
+            courseId
+        };
+        console.log(reqObj);
+        const session = await httpClient.post('/free-course-applies', reqObj);
+    } else {
+        window.location.href = '/login'
+    }
+}

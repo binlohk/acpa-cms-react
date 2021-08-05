@@ -153,10 +153,8 @@ const Course = (props) => {
                                 </>
                                 :
                                 <>
-                                    {/* <span className='font-bold text-gray-700'>你尚未擁有此課程</span> */}
                                     <span className='font-bold text-gray-700'>{(courseData.price == 0) ? '你尚未報讀此課程' : "你尚未擁有此課程"}</span>
-                                    {/* <BuyButton courseId={courseId}>購買課程</BuyButton> */}
-                                    <BuyButton courseId={courseId}>{(courseData.price == 0) ? "報名" : '購買課程'}</BuyButton>
+                                    <BuyButton courseId={courseId} coursePrice={courseData.price} >{(courseData.price == 0) ? "報名" : '購買課程'}</BuyButton>
                                 </>}
                         </div>
 
