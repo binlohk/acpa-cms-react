@@ -19,7 +19,7 @@ const BuyButton = ({ courseId, coursePrice, children }) => {
                     </button>
                 )
             }
-        </div >
+        </div>
     )
 }
 
