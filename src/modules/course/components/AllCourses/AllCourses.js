@@ -137,8 +137,8 @@ function AllCourses() {
                             <CourseTitle> 推介課程</CourseTitle>
                             <LoadingSpinner />
                             <RecommendedCourseCardCarousel
-                                slidesPerView={5}
-                                slidesPerGroup={5}
+                                slidesPerView={4}
+                                slidesPerGroup={4}
                             >
                                 <div class="flex flex-wrap px-12">
                                     {

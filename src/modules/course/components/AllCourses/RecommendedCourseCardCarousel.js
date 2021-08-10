@@ -20,7 +20,6 @@ function RecommendedCourseCardCarousel({ children, slidesPerView, slidesPerGroup
         <>
             <Swiper
                 slidesPerView={slidesPerView}
-                spaceBetween={0}
                 slidesPerGroup={slidesPerGroup}
                 loop={false}
                 loopFillGroupWithBlank={true}
