@@ -51,14 +51,14 @@ const LessonCards = ({ lessonsDetail }) => {
                         </div>
                       }
                       {/* lesson name */}
-                      <div className='flex flex-col ml-3 w-96 flex-grow'>
+                      <div className='flex flex-col flex-grow ml-3 w-96'>
                         <span
                           className="text-lg font-bold">
                           {lesson.title}
                         </span>
                         {/* lesson text */}
                         <div className='overflow-y-auto'>
-                            {lesson.text}
+                          {lesson.text}
                         </div>
                       </div>
                     </div>
