@@ -9,6 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 
+
 const UserLayout = ({ children }) => {
 
     const [showMobileWarning, setShowMobileWarning] = useState(false)
@@ -39,7 +40,7 @@ const UserLayout = ({ children }) => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button autoFocus onClick={"location.href = 'https://app.acpa.training/';"} color="primary">
+                        <Button autoFocus onClick={(e) => window.location.href = 'https://zh.wikipedia.org/wiki/Wiki'} color="primary">
                             Android
                         </Button>
                         <Button onClick={"location.href = 'https://app.acpa.training/';"} color="primary" autoFocus>
