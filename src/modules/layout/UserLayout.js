@@ -31,11 +31,10 @@ const UserLayout = ({ children }) => {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"此頁面僅支持電腦用戶"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            Let Google help apps determine location. This means sending anonymous location data to
-                            Google, even when no apps are running.
+                            手機用戶請下載我們的手機應用程序使用我們的服務
                         </DialogContentText>
                     </DialogContent>
                 </Dialog>
