@@ -40,10 +40,10 @@ const UserLayout = ({ children }) => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={(e) => window.location.href = 'https://zh.wikipedia.org/wiki/Wiki'} color="primary">
+                        <Button onClick={(e) => window.location.href = 'https://app.acpa.training/'} color="primary">
                             Android
                         </Button>
-                        <Button onClick={(e) => window.location.href = 'https://zh.wikipedia.org/wiki/Wiki'} color="primary">
+                        <Button onClick={(e) => window.location.href = 'https://app.acpa.training/'} color="primary">
                             Apple IOS
                         </Button>
                     </DialogActions>
