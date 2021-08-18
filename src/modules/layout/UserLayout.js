@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../layout/header'
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -37,6 +38,14 @@ const UserLayout = ({ children }) => {
                             手機用戶請下載我們的手機應用程序使用我們的服務
                         </DialogContentText>
                     </DialogContent>
+                    <DialogActions>
+                        <Button autoFocus color="primary">
+                            Disagree
+                        </Button>
+                        <Button color="primary" autoFocus>
+                            Agree
+                        </Button>
+                    </DialogActions>
                 </Dialog>
             </main>
 
