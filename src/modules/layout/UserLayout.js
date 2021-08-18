@@ -39,11 +39,11 @@ const UserLayout = ({ children }) => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button autoFocus color="primary">
-                            Disagree
+                        <Button autoFocus onClick={"location.href = 'https://app.acpa.training/';"} color="primary">
+                            Android
                         </Button>
-                        <Button color="primary" autoFocus>
-                            Agree
+                        <Button onClick={"location.href = 'https://app.acpa.training/';"} color="primary" autoFocus>
+                            Apple IOS
                         </Button>
                     </DialogActions>
                 </Dialog>
