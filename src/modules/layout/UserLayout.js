@@ -19,38 +19,49 @@ const UserLayout = ({ children }) => {
             setShowMobileWarning(true)
     }, [])
 
-    return (
-        <>
-            <main
-                style={{ background: 'linear-gradient(0deg, rgba(81,54,84,1) 0%, rgba(2,0,36,1) 43%, rgba(81,54,84,1) 100%)' }}
-                className={`min-h-screen`}>
-                <Header />
-                <div className={`pt-24 h-full`}>
-                    {children}
-                </div>
-                <Dialog
-                    open={showMobileWarning}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">{"此頁面僅支持電腦用戶"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            手機用戶請下載我們的手機應用程序使用我們的服務
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={(e) => window.location.href = 'https://app.acpa.training/'} color="primary">
-                            Android
-                        </Button>
-                        <Button onClick={(e) => window.location.href = 'https://app.acpa.training/'} color="primary">
-                            Apple IOS
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </main>
+    return ( <
+        >
+        <
+        main style = {
+            { background: 'linear-gradient(0deg, rgba(81,54,84,1) 0%, rgba(2,0,36,1) 43%, rgba(81,54,84,1) 100%)' }
+        }
+        className = { `min-h-screen` } >
+        <
+        Header / >
+        <
+        div className = { `pt-24 h-full` } > { children } <
+        /div> <
+        Dialog open = { showMobileWarning }
+        aria - labelledby = "alert-dialog-title"
+        aria - describedby = "alert-dialog-description" >
+        <
+        DialogTitle id = "alert-dialog-title" > { "此頁面僅支持電腦用戶" } < /DialogTitle> <
+        DialogContent >
+        <
+        DialogContentText id = "alert-dialog-description" >
+        手機用戶請下載我們的手機應用程序使用我們的服務 <
+        /DialogContentText> < /
+        DialogContent > <
+        DialogActions >
+        <
+        Button onClick = {
+            (e) => window.location.href = 'https://app.acpa.training/'
+        }
+        color = "primary" >
+        Android <
+        /Button> <
+        Button onClick = {
+            (e) => window.location.href = 'https://apps.apple.com/app/%E5%98%89%E6%9E%97%E8%B2%A1%E4%BF%8A/id1578998582'
+        }
+        color = "primary" >
+        iOS <
+        /Button> < /
+        DialogActions > <
+        /Dialog> < /
+        main >
 
-        </>
+        <
+        />
     )
 }
 
