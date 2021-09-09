@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../../../contexts/UserContext'
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { storeToken, storeUser } from '../../../../services/authService'
@@ -18,18 +17,12 @@ function LoginForm(props) {
     const [api, ApiReply] = React.useState("");
 
     useEffect(function effectFuncton() {
-        function getRandomInt(max) {
-            return Math.floor(Math.random() * max);
-        }
         async function fetchData() {
             var requestOptions = {
                 method: "GET"
             }
             const apiResponse = await fetch(`${process.env.REACT_APP_BACKEND_SERVER}/latest-news`, requestOptions)
-            const parserAPI = await (apiResponse.text())
-            const jsonAPI = await (JSON.parse(parserAPI))
-            const num = await getRandomInt(jsonAPI.length)
-            await ApiReply(jsonAPI[num])
+            await ApiReply(apiResponse[0])
         }
         fetchData();
     }, [])

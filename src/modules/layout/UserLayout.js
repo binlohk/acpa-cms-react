@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import Header from '../layout/header'
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -14,10 +15,13 @@ const UserLayout = ({ children }) => {
 
     const [showMobileWarning, setShowMobileWarning] = useState(false)
 
+    const location = useLocation();
+
     useEffect(() => {
-        if (window.innerWidth <= 1280)
+        const { pathname } = location;
+        if (window.innerWidth <= 1280 && pathname != "/signup")
             setShowMobileWarning(true)
-    }, [])
+    }, [location.pathname])
 
     return (
         <>
