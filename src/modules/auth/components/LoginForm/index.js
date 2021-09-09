@@ -22,7 +22,7 @@ function LoginForm(props) {
                 method: "GET"
             }
             const apiResponse = await fetch(`${process.env.REACT_APP_BACKEND_SERVER}/latest-news`, requestOptions)
-            await ApiReply(apiResponse[0])
+            ApiReply(JSON.stringify(apiResponse[0]));
         }
         fetchData();
     }, [])
