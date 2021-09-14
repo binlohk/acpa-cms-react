@@ -15,18 +15,16 @@ function SignupForm(props) {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [api, ApiReply] = React.useState("");
 
-  useEffect(function effectFuncton() {
-    async function fetchData() {
-      var requestOptions = {
-        method: "GET",
-      };
-      const apiResponse = await fetch(
-        `${process.env.REACT_APP_BACKEND_SERVER}/latest-news`,
-        requestOptions
-      );
+  useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+    };
+    fetch(
+      `api/latest-news`,
+      requestOptions
+    ).then(apiResponse => {
       ApiReply(JSON.stringify(apiResponse[0]));
-    }
-    fetchData();
+    });
   }, []);
 
   const formik = useFormik({
