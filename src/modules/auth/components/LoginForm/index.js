@@ -24,7 +24,9 @@ function LoginForm(props) {
       `api/latest-news`,
       requestOptions
     ).then(apiResponse => {
-      ApiReply(JSON.stringify(apiResponse[0]));
+      apiResponse.text().then(resTxt => {
+        ApiReply(JSON.parse(resTxt)[0]);
+      })
     });
   }, []);
 

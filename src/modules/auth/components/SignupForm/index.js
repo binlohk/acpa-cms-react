@@ -13,7 +13,7 @@ function SignupForm(props) {
 
   const [signupError, setSignupError] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [api, ApiReply] = React.useState("");
+  const [api, ApiReply] = useState("");
 
   useEffect(() => {
     var requestOptions = {
@@ -23,7 +23,9 @@ function SignupForm(props) {
       `api/latest-news`,
       requestOptions
     ).then(apiResponse => {
-      ApiReply(JSON.stringify(apiResponse[0]));
+      apiResponse.text().then(resTxt => {
+        ApiReply(JSON.parse(resTxt)[0]);
+      })
     });
   }, []);
 
