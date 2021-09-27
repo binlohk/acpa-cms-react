@@ -44,7 +44,7 @@ const UserLayout = ({ children }) => {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={(e) => window.location.href = 'https://app.acpa.training/'} color="primary">
+                        <Button onClick={(e) => window.location.href = 'https://play.google.com/store/apps/details?id=training.acpa.mobile'} color="primary">
                             Android
                         </Button>
                         <Button onClick={(e) => window.location.href = 'https://apps.apple.com/app/%E5%98%89%E6%9E%97%E8%B2%A1%E4%BF%8A/id1578998582/'} color="primary">
