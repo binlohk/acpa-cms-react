@@ -107,19 +107,19 @@ const PublicEnrollForm = (props) => {
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                                     姓名
                                 </label>
-                                <input class="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b border-grey-900" type="text" aria-label="Full name" />
+                                <input class="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b border-grey-900" type="text" aria-label="Full name" required />
                             </div>
                             <div>
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                                     電話號碼
                                 </label>
-                                <input class="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b border-grey-900" type="text" aria-label="Full name" />
+                                <input class="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b border-grey-900" type="text" aria-label="Full name" required />
                             </div>
                             <div>
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                                     電郵地址
                                 </label>
-                                <input class="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b border-grey-900" type="text" aria-label="Full name" />
+                                <input class="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b border-grey-900" type="text" aria-label="Full name" required />
                             </div>
                         </>
                     )
