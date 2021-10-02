@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken'
-import { httpClient } from './api/axiosHelper'
 import axios from 'axios'
 
 export const storeToken = (token) => {

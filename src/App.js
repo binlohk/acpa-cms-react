@@ -24,6 +24,7 @@ import PaymentFailure from './modules/course/components/Payment/PaymentFailure'
 import PageNotFound from './modules/404/components/404page'
 import ResetPassword from './modules/auth/components/ResetPassword'
 import ForgotPassword from './modules/auth/components/ForgotPassword'
+import PublicEnrollForm from './modules/publicEnrollForm/publicEnrollForm';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
               <Route exact path='/course/:courseId' component={Course} />
               <Route exact path='/forgot-password' component={ForgotPassword} />
               <Route exact path='/reset-password/:resetPasswordToken' component={ResetPassword} />
+              <Route exact path='/enrollForm/:enrollFormId/:referrerToken?' component={PublicEnrollForm} />
               <PrivateRoute exact path='/my-courses' component={MyCourses} />
               <PrivateRoute exact path='/lesson/:lessonId' render={props => <Lesson key={props.match.params.lessonId} />} />
               <PrivateRoute exact path='/user/:userId' component={UserProfile} />

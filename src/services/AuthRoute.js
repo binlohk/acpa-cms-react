@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../contexts/UserContext'
 import { Route, Redirect } from 'react-router-dom'
 import { getUser } from '../services/authService'
-import UserLayout from '../modules/layout/UserLayout';
 
 export default function AuthRoute(props) {
     const token = localStorage.getItem('accessToken')
@@ -22,7 +20,3 @@ export default function AuthRoute(props) {
         )
     }
 }
-
-
-
-

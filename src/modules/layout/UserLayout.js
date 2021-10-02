@@ -19,7 +19,7 @@ const UserLayout = ({ children }) => {
 
     useEffect(() => {
         const { pathname } = location;
-        if (window.innerWidth <= 1280 && !pathname.includes("signup"))
+        if (window.innerWidth <= 1280 && !pathname.includes("signup") && !pathname.includes("enrollForm"))
             setShowMobileWarning(true)
     }, [location.pathname])
 
