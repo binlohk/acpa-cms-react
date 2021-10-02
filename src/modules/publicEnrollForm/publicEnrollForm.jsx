@@ -1,6 +1,23 @@
-import Button from "../utilComponents/Button";
+import { useState } from 'react';
+import { getUser, storeUser } from '../../services/authService';
+import axios from 'axios'
 
 const PublicEnrollForm = (props) => {
+
+    const [isLoggedIn, login] = useState(false);
+    const referrerToken = "ey/cws98h3489fhjseoijfseesfse";
+
+    const handleLogin = () => {
+        const token = localStorage.getItem('accessToken')
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/users/me`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(loginUser => {
+            storeUser(loginUser.data)
+        })
+    }
+
     return (
         <div class="p-5 grid grid-cols-1 gap-4">
             <div class="bg-white p-6 rounded-lg shadow-lg lg:w-1/2 divide-y">
@@ -32,17 +49,30 @@ const PublicEnrollForm = (props) => {
                     </p>
                 </div>
                 <div class="p-4 grid grid-cols-1 gap-2">
-                    <h2 class="text-sm text-gray-600">是會員嗎？</h2>
-                    <Button
-                        // onClickMethod={formik.handleSubmit}
-                        color={"bg-indigo-700"}
-                        hoverColor={"bg-indigo-100"}
-                        textColor={"text-white"}
-                    >
-                        登入
-                    </Button>
-                    <p class="text-xs text-gray-600">登入後可取得推薦連結</p>
-
+                    {
+                        getUser?.id ? (
+                            <>
+                                <p class="text-sm text-gray-600">分享以下連結成為推薦人：</p>
+                                <button class="truncate">
+                                    <div class="inline-flex item-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
+                                            <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
+                                        </svg>
+                                        <p class="text-sm text-gray-600" href={`https://app.acpa.training/publicEnroll/${props.match.params.enrollFormId}/${referrerToken}`}>https://app.acpa.training/publicEnroll/${props.match.params.enrollFormId}/${referrerToken}</p>
+                                    </div>
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <p class="text-sm text-gray-600">是會員嗎？</p>
+                                <button class="bg-indigo-700 text-white rounded-md py-2" onClick={handleLogin}>
+                                    登入
+                                </button>
+                                <p class="text-xs text-gray-600">登入後可取得推薦連結</p>
+                            </>
+                        )
+                    }
                 </div>
             </div>
             <div class="bg-white p-6 rounded-lg shadow-lg lg:w-1/2">
@@ -94,18 +124,13 @@ const PublicEnrollForm = (props) => {
                         </>
                     )
                 }
-                <Button
-                    // onClickMethod={formik.handleSubmit}
-                    color={"bg-indigo-700"}
-                    hoverColor={"bg-indigo-100"}
-                    textColor={"text-white"}
-                >
+                <button class="bg-indigo-700 text-white rounded-md py-2" onClick={handleLogin}>
                     報名
-                </Button>
+                </button>
 
             </form>
         </div>
     )
 }
 
-export default EnrollForm
+export default PublicEnrollForm
