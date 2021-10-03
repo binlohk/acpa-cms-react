@@ -1,6 +1,6 @@
 import { getUser, storeUser } from '../../services/authService';
 import axios from 'axios'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PublicEnrollFormPromotion from './publicEnrollFormPromotion';
 import PublicEnrollReferral from './publicEnrollReferral';
 import PublicEnrollFormLessonSelection from './publicEnrollFormLessonSelection';
@@ -16,12 +16,29 @@ import {
 } from './mockData'
 import PublicEnrollFormLoginDialog from './publicEnrollFormLoginDialog';
 
+const ContentLoader = () => {
+    return (
+        <div class="animate-pulse flex space-x-4">
+            <div class="rounded-full bg-blue-400 h-12 w-12"></div>
+            <div class="flex-1 space-y-4 py-1">
+                <div class="h-4 bg-blue-400 rounded w-3/4"></div>
+                <div class="space-y-2">
+                    <div class="h-4 bg-blue-400 rounded"></div>
+                    <div class="h-4 bg-blue-400 rounded w-5/6"></div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 const PublicEnrollForm = (props) => {
 
-    const basicCardTailWindClasses = "bg-white p-6 rounded-lg shadow-lg lg:w-1/2";
+    const basicCardTailWindClasses = "bg-white p-6 rounded-lg shadow-lg md:max-w-screen-sm w-full";
     const [isShowLoginDialog, showLoginDialog] = useState(false);
     const [enteredUserInfo, updateUserInfo] = useState();
     const [selectedLessonId, selectLessonWithId] = useState(null);
+
+    const [enrollFormData, setEnrollFormData] = useState(null);
 
     const handleLogin = () => {
         const token = localStorage.getItem('accessToken')
@@ -34,6 +51,16 @@ const PublicEnrollForm = (props) => {
             // Get referr token from API
         })
     }
+
+    useEffect(() => {
+        const { enrollFormId } = props.match.params;
+        // fetch from server
+        if (true) {
+            setEnrollFormData({})
+        } else {
+            // redirect to 4040
+        }
+    })
 
     const handleEnrollment = () => {
         try {
@@ -48,26 +75,32 @@ const PublicEnrollForm = (props) => {
     }
 
     return (
-        <div className="p-5 grid grid-cols-1 gap-4">
+        <div className="p-5 grid grid-cols-1 gap-4 justify-items-center">
 
             {/* Card 1 */}
             <div className={`${basicCardTailWindClasses} divide-y`}>
-                <PublicEnrollFormPromotion
-                    promoTitle={tempPromoTitle}
-                    promoContent={tempPromoText} />
-                <PublicEnrollReferral
-                    isLoggedIn={getUser()?.id}
-                    showLoginDialog={showLoginDialog}
-                    enrollFormId={props.match.params.enrollFormId}
-                    referrerToken={referrerToken}
-                />
+                {
+                    enrollFormData ? <>
+                        <PublicEnrollFormPromotion
+                            promoTitle={tempPromoTitle}
+                            promoContent={tempPromoText} />
+                        <PublicEnrollReferral
+                            isLoggedIn={getUser()?.id}
+                            showLoginDialog={showLoginDialog}
+                            enrollFormId={props.match.params.enrollFormId}
+                            referrerToken={referrerToken}
+                        />
+                    </> : <ContentLoader />
+                }
             </div>
 
             {/* Card 2 */}
             <div className={basicCardTailWindClasses}>
-                <PublicEnrollFormPromotion
-                    promoTitle={tempLessonTitle}
-                    promoContent={tempLessonText} />
+                {
+                    enrollFormData ? <PublicEnrollFormPromotion
+                        promoTitle={tempLessonTitle}
+                        promoContent={tempLessonText} /> : <ContentLoader />
+                }
             </div>
 
             {/* Card 3 */}
@@ -76,15 +109,16 @@ const PublicEnrollForm = (props) => {
             </div>
 
             {/* Card 4 */}
-            <form className={`${basicCardTailWindClasses} grid grid-cols-1 gap-5`} onSubmit={(e) => { e.preventDefault() }}>
-                <PublicEnrollFormLessonSelection lessons={tempLessons} lessonSelectionCallback={selectLessonWithId} />
-                <PublicEnrollFormContact isLoggedIn={getUser()?.id} updateUserInfo={updateUserInfo} />
-                <input type="submit" className="bg-indigo-700 text-white rounded-md py-2" onClick={handleEnrollment} value="報名" />
-            </form>
-
+            <div className={`${basicCardTailWindClasses}`}>
+                <form className="grid grid-cols-1 gap-6" onSubmit={(e) => { e.preventDefault() }}>
+                    {enrollFormData ? <PublicEnrollFormLessonSelection lessons={tempLessons} lessonSelectionCallback={selectLessonWithId} /> : <ContentLoader />}
+                    <PublicEnrollFormContact isLoggedIn={getUser()?.id} updateUserInfo={updateUserInfo} />
+                    <input type="submit" className="bg-indigo-700 text-white rounded-md py-2" onClick={handleEnrollment} value="報名" />
+                </form>
+            </div>
             {/* Login Dialog */}
             <PublicEnrollFormLoginDialog showLoginDialog={showLoginDialog} isShowLoginDialog={isShowLoginDialog} storeUser={storeUser} />
-        </div>
+        </div >
     )
 }
 
