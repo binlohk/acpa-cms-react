@@ -3,10 +3,10 @@ export default function PublicEnrollReferral({ isLoggedIn, showLoginDialog, enro
     const referralLink = `https://app.acpa.training/publicEnroll/${enrollFormId}/${referrerToken}`
 
     return (
-        <div className="pt-4 grid grid-cols-1 gap-2">
+        <>
             {
                 isLoggedIn ? (
-                    <>
+                    <div className="pt-4 grid grid-cols-1 gap-2">
                         <p className="text-sm text-gray-600">分享以下連結成為推薦人：</p>
                         <button className="truncate rounded-full border-2 border-gray-700 bg-gray-700 text-white">
                             <div className="inline-flex item-center gap-2 p-2">
@@ -17,17 +17,13 @@ export default function PublicEnrollReferral({ isLoggedIn, showLoginDialog, enro
                                 <p className="text-sm text-white" href={referralLink}>{referralLink}</p>
                             </div>
                         </button>
-                    </>
+                    </div >
                 ) : (
-                    <>
-                        <p className="text-sm text-gray-600">是會員嗎？</p>
-                        <button className="bg-indigo-700 text-white rounded-md py-2" onClick={showLoginDialog}>
-                            登入
-                        </button>
-                        <p className="text-xs text-gray-600">登入後可取得推薦連結</p>
-                    </>
+                    <div className="pt-4 grid grid-cols-1 justify-items-center">
+                        <p className="text-sm text-gray-600">會員請<button className="text-blue-800 font-bold underline" onClick={showLoginDialog}>按此</button>登入，以取得推薦人連結並跳過輸入個人資料。</p>
+                    </div>
                 )
             }
-        </div>
+        </>
     )
 }

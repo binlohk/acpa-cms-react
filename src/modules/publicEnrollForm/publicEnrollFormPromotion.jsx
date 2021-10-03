@@ -2,7 +2,7 @@ import ReactMarkdown from "react-markdown"
 
 export default function PublicEnrollFormPromotion(props) {
     return (
-        <div>
+        <div className="pb-4">
             <h2 className="text-xl font-bold mb-2 text-gray-800 p-2">
                 { props.promoTitle }
             </h2>
