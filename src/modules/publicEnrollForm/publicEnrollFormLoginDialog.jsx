@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle, DialogActions } from '@material-ui/core';
 
-export default function PublicEnrollFormLoginDialog({ isShowLoginDialog, showLoginDialog, loginCallback }) {
+export default function PublicEnrollFormLoginDialog({ isShowLoginDialog, showLoginDialog, storeUser }) {
 
     const handleLogin = () => {
         alert("loggedin!")
@@ -12,7 +12,7 @@ export default function PublicEnrollFormLoginDialog({ isShowLoginDialog, showLog
         >
             <DialogTitle id="alert-dialog-title">歡迎回來</DialogTitle>
             <DialogContent>
-                <form class="grid grid-cols-1 gap-5">
+                <div class="grid grid-cols-1 gap-5">
                     <div>
                         <label className="block text-gray-700 text-sm font-bold mb-2" for="username">
                             電郵
@@ -30,7 +30,7 @@ export default function PublicEnrollFormLoginDialog({ isShowLoginDialog, showLog
                         <button className="rounded-md py-2 px-4" onClick={() => { showLoginDialog(false) }}>取消</button>
                     </DialogActions>
 
-                </form>
+                </div>
             </DialogContent>
         </Dialog>
     )

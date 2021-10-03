@@ -1,12 +1,8 @@
-import axios from 'axios'
 import { httpClient } from '../../../../services/api/axiosHelper'
 import React, { useEffect, useState } from 'react'
-import jwt from 'jsonwebtoken';
-import { storeUser, storeToken, getToken, removeToken } from '../../../../services/authService'
-import { Button, TextField, InputAdornment, Input, InputLabel, FormControl, makeStyles, Divider } from '@material-ui/core';
+import { FormControl, makeStyles, Divider } from '@material-ui/core';
 import { FileCopy } from '@material-ui/icons';
 import PublishIcon from '@material-ui/icons/Publish';
-import SettingsIcon from '@material-ui/icons/Settings';
 import ReferralList from './referralList';
 import OwnedCourse from '../OwnedCourse';
 

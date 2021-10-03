@@ -4,6 +4,7 @@ import { useState } from 'react';
 import PublicEnrollFormPromotion from './publicEnrollFormPromotion';
 import PublicEnrollReferral from './publicEnrollReferral';
 import PublicEnrollFormLessonSelection from './publicEnrollFormLessonSelection';
+import PublicEnrollFormContact from './publicEnrollFormContact';
 import {
     tempPromoTitle,
     tempPromoText,
@@ -17,9 +18,9 @@ import PublicEnrollFormLoginDialog from './publicEnrollFormLoginDialog';
 
 const PublicEnrollForm = (props) => {
 
-    const [isLoggedIn, login] = useState(false);
+    const basicCardTailWindClasses = "bg-white p-6 rounded-lg shadow-lg lg:w-1/2";
     const [isShowLoginDialog, showLoginDialog] = useState(false);
-
+    const [enteredUserInfo, updateUserInfo] = useState();
     const [selectedLessonId, selectLessonWithId] = useState(null);
 
     const handleLogin = () => {
@@ -30,64 +31,59 @@ const PublicEnrollForm = (props) => {
             }
         }).then(loginUser => {
             storeUser(loginUser.data)
+            // Get referr token from API
         })
+    }
+
+    const handleEnrollment = () => {
+        try {
+            const { name, email, phone } = enteredUserInfo;
+        } catch (e) {
+            alert("請輸入所需資料或登入")
+        }
+        // Call the all in one API
+        // Pass in: Name, Email, Phone, Referral Token
+        console.log(selectedLessonId)
+        console.log(enteredUserInfo)
     }
 
     return (
         <div className="p-5 grid grid-cols-1 gap-4">
-            <div className="bg-white p-6 rounded-lg shadow-lg lg:w-1/2 divide-y">
+
+            {/* Card 1 */}
+            <div className={`${basicCardTailWindClasses} divide-y`}>
                 <PublicEnrollFormPromotion
                     promoTitle={tempPromoTitle}
                     promoContent={tempPromoText} />
                 <PublicEnrollReferral
-                    isLoggedIn={isLoggedIn}
+                    isLoggedIn={getUser()?.id}
                     showLoginDialog={showLoginDialog}
                     enrollFormId={props.match.params.enrollFormId}
                     referrerToken={referrerToken}
                 />
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-lg lg:w-1/2">
+            {/* Card 2 */}
+            <div className={basicCardTailWindClasses}>
                 <PublicEnrollFormPromotion
-                    promoTitle={
-                        tempLessonTitle
-                    }
+                    promoTitle={tempLessonTitle}
                     promoContent={tempLessonText} />
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-lg lg:w-1/2">
+            {/* Card 3 */}
+            <div className={basicCardTailWindClasses}>
                 <img src={poster}></img>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-lg lg:w-1/2 grid grid-cols-1 gap-5">
+            {/* Card 4 */}
+            <form className={`${basicCardTailWindClasses} grid grid-cols-1 gap-5`} onSubmit={(e) => { e.preventDefault() }}>
                 <PublicEnrollFormLessonSelection lessons={tempLessons} lessonSelectionCallback={selectLessonWithId} />
-                {
-                    !isLoggedIn && (
-                        <>
-                            <div>
-                                <label className="block text-gray-700 text-sm font-bold mb-2" for="username">
-                                    姓名
-                                </label>
-                                <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b border-grey-900" type="text" required />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 text-sm font-bold mb-2" for="username">
-                                    電話號碼
-                                </label>
-                                <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b border-grey-900" type="text" required />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700 text-sm font-bold mb-2" for="username">
-                                    電郵地址
-                                </label>
-                                <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b border-grey-900" type="text" required />
-                            </div>
-                        </>
-                    )
-                }
-                <button className="bg-indigo-700 text-white rounded-md py-2" onClick={showLoginDialog}>報名</button>
-            </div>
-            <PublicEnrollFormLoginDialog showLoginDialog={showLoginDialog} isShowLoginDialog={isShowLoginDialog} loginCallback={login} />
+                <PublicEnrollFormContact isLoggedIn={getUser()?.id} updateUserInfo={updateUserInfo} />
+                <input type="submit" className="bg-indigo-700 text-white rounded-md py-2" onClick={handleEnrollment} value="報名" />
+            </form>
+
+            {/* Login Dialog */}
+            <PublicEnrollFormLoginDialog showLoginDialog={showLoginDialog} isShowLoginDialog={isShowLoginDialog} storeUser={storeUser} />
         </div>
     )
 }
