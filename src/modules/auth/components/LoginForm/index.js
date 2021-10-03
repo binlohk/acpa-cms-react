@@ -12,7 +12,7 @@ import ReactMarkdown from "react-markdown";
 function LoginForm(props) {
   const [loginError, setLoginError] = useState(false);
   const [snackbarContent, setSnackbarContent] = useState(null);
-  const { referralToken } = props.match.params;
+  const referralToken = props?.match?.params?.referralToken;
 
   const [api, ApiReply] = React.useState("");
 
