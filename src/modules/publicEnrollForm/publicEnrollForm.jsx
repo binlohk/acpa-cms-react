@@ -5,15 +5,6 @@ import PublicEnrollFormPromotion from './publicEnrollFormPromotion';
 import PublicEnrollReferral from './publicEnrollReferral';
 import PublicEnrollFormLessonSelection from './publicEnrollFormLessonSelection';
 import PublicEnrollFormContact from './publicEnrollFormContact';
-import {
-    tempPromoTitle,
-    tempPromoText,
-    tempLessonTitle,
-    tempLessonText,
-    poster,
-    tempLessons,
-    referrerToken,
-} from './mockData'
 import PublicEnrollFormLoginDialog from './publicEnrollFormLoginDialog';
 
 const ContentLoader = () => {
@@ -54,13 +45,16 @@ const PublicEnrollForm = (props) => {
 
     useEffect(() => {
         const { enrollFormId } = props.match.params;
-        // fetch from server
-        if (true) {
-            setEnrollFormData({})
-        } else {
-            // redirect to 4040
-        }
-    })
+        axios.get(
+            `${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms/${enrollFormId}`
+        ).then((res) => {
+            if (res) {
+                setEnrollFormData(res.data)
+            } else {
+                // Redirect to 404
+            }
+        });
+    }, [])
 
     const handleEnrollment = () => {
         try {
@@ -82,13 +76,13 @@ const PublicEnrollForm = (props) => {
                 {
                     enrollFormData ? <>
                         <PublicEnrollFormPromotion
-                            promoTitle={tempPromoTitle}
-                            promoContent={tempPromoText} />
+                            promoTitle={enrollFormData.promoTitle}
+                            promoContent={enrollFormData.promoContent} />
                         <PublicEnrollReferral
                             isLoggedIn={getUser()?.id}
                             showLoginDialog={showLoginDialog}
                             enrollFormId={props.match.params.enrollFormId}
-                            referrerToken={referrerToken}
+                            referrerToken={""}
                         />
                     </> : <ContentLoader />
                 }
@@ -98,20 +92,22 @@ const PublicEnrollForm = (props) => {
             <div className={basicCardTailWindClasses}>
                 {
                     enrollFormData ? <PublicEnrollFormPromotion
-                        promoTitle={tempLessonTitle}
-                        promoContent={tempLessonText} /> : <ContentLoader />
+                        promoTitle={enrollFormData.lessonTitle}
+                        promoContent={enrollFormData.lessonContent} /> : <ContentLoader />
                 }
             </div>
 
             {/* Card 3 */}
-            <div className={basicCardTailWindClasses}>
-                <img src={poster}></img>
-            </div>
+            {
+                enrollFormData && <div className={basicCardTailWindClasses}>
+                    <img src={`${process.env.REACT_APP_BACKEND_SERVER}${enrollFormData.poster.url}`}></img>
+                </div>
+            }
 
             {/* Card 4 */}
             <div className={`${basicCardTailWindClasses}`}>
                 <form className="grid grid-cols-1 gap-6" onSubmit={(e) => { e.preventDefault() }}>
-                    {enrollFormData ? <PublicEnrollFormLessonSelection lessons={tempLessons} lessonSelectionCallback={selectLessonWithId} /> : <ContentLoader />}
+                    {enrollFormData ? <PublicEnrollFormLessonSelection lessons={enrollFormData.courses} lessonSelectionCallback={selectLessonWithId} /> : <ContentLoader />}
                     <PublicEnrollFormContact isLoggedIn={getUser()?.id} updateUserInfo={updateUserInfo} />
                     <input type="submit" className="bg-indigo-700 text-white rounded-md py-2" onClick={handleEnrollment} value="報名" />
                 </form>
