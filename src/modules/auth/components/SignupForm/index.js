@@ -24,8 +24,14 @@ function SignupForm(props) {
       requestOptions
     ).then(apiResponse => {
       apiResponse.text().then(resTxt => {
-        ApiReply(JSON.parse(resTxt)[0]);
+        try {
+          ApiReply(JSON.parse(resTxt)[0]);
+        } catch {
+          
+        }
       })
+    }).catch((err) => {
+      console.error(err);
     });
   }, []);
 

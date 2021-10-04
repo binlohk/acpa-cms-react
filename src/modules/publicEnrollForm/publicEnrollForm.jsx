@@ -31,6 +31,8 @@ const PublicEnrollForm = (props) => {
     const [enteredUserInfo, updateUserInfo] = useState();
     const [selectedLessonId, selectLessonWithId] = useState(null);
 
+    const [isLoggedIn, login] = useState(getUser()?.id != null);
+
     const [enrollFormData, setEnrollFormData] = useState(null);
 
     const handleEnrollment = () => {
@@ -60,7 +62,7 @@ const PublicEnrollForm = (props) => {
     return (
         <div className="p-5 grid grid-cols-1 gap-4 justify-items-center">
             {
-                enrollFormData && <div className={basicCardTailWindClasses}>
+                enrollFormData?.poster && <div className={basicCardTailWindClasses}>
                     <img src={`${process.env.REACT_APP_BACKEND_SERVER ?? "http://localhost:1337"}${enrollFormData.poster.url}`}></img>
                 </div>
             }
@@ -72,10 +74,8 @@ const PublicEnrollForm = (props) => {
                             promoTitle={enrollFormData.promoTitle}
                             promoContent={enrollFormData.promoContent} />
                         <PublicEnrollReferral
-                            isLoggedIn={getUser()?.id}
+                            isLoggedIn={isLoggedIn}
                             showLoginDialog={showLoginDialog}
-                            enrollFormId={props.match.params.enrollFormId}
-                            referrerToken={""}
                         />
                     </> : <ContentLoader />
                 }
@@ -97,7 +97,7 @@ const PublicEnrollForm = (props) => {
                 </form>
             </div>
             {/* Login Dialog */}
-            <PublicEnrollFormLoginDialog showLoginDialog={showLoginDialog} isShowLoginDialog={isShowLoginDialog} storeUser={storeUser} />
+            <PublicEnrollFormLoginDialog showLoginDialog={showLoginDialog} isShowLoginDialog={isShowLoginDialog} login={login} />
         </div >
     )
 }
