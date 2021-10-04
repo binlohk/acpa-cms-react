@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ReactMarkdown from 'react-markdown'
+import { getToken } from '../../../../services/authService'
 
 import CourseMaterials from '../courseMaterials'
 import BuyButton from '../../../utilComponents/BuyButton'
@@ -90,7 +91,12 @@ const Course = (props) => {
 
     const fetchCourseData = async (courseId) => {
         try {
-            const result = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}`)
+            var result;
+            if (user.id != "" && user.id != null) {
+                result = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}`)
+            } else {
+                result = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}`)
+            }
             setCourseData(result.data);
         } catch (e) {
             props.history.push('/')
