@@ -6,8 +6,7 @@ import PublicEnrollReferral from './publicEnrollReferral';
 import PublicEnrollFormLessonSelection from './publicEnrollFormLessonSelection';
 import PublicEnrollFormContact from './publicEnrollFormContact';
 import PublicEnrollFormLoginDialog from './publicEnrollFormLoginDialog';
-import { Route } from 'react-router-dom';
-import PageNotFound from '../404/components/404page';
+import { httpClient } from '../../services/api/axiosHelper'
 
 const ContentLoader = () => {
     return (
@@ -30,22 +29,23 @@ const PublicEnrollForm = (props) => {
     const [isShowLoginDialog, showLoginDialog] = useState(false);
     const [enteredUserInfo, updateUserInfo] = useState();
     const [selectedLessonId, selectLessonWithId] = useState(null);
-
+    const [referralToken, setReferralToken] = useState("");
     const [isLoggedIn, login] = useState(getUser()?.id != null);
-
     const [enrollFormData, setEnrollFormData] = useState(null);
 
     const handleEnrollment = () => {
         try {
+            console.log(props.referrerToken);
             const { name, email, phone } = enteredUserInfo;
             const lessonId = selectedLessonId;
         } catch (e) {
-            alert("請輸入所需資料或登入")
+            alert("請輸入所需資料或登入。")
         }
         // Call the all in one API
         // Pass in: Name, Email, Phone, Referral Token
         console.log(selectedLessonId)
         console.log(enteredUserInfo)
+        console.log(props.match.params.referrerToken)
     }
 
     useEffect(() => {
@@ -54,10 +54,15 @@ const PublicEnrollForm = (props) => {
         ).then((res) => {
             setEnrollFormData(res.data[0])
         }).catch((err) => {
-            <Route component={PageNotFound} />
             console.log(err);
         });
-    }, [])
+
+        if (getUser().id) {
+            httpClient.get(`http://localhost:1337/users/me`).then((user) => {
+                setReferralToken(user.data.referralToken)
+            })
+        }
+    }, [isLoggedIn])
 
     return (
         <div className="p-5 grid grid-cols-1 gap-4 justify-items-center">
@@ -76,6 +81,7 @@ const PublicEnrollForm = (props) => {
                         <PublicEnrollReferral
                             isLoggedIn={isLoggedIn}
                             showLoginDialog={showLoginDialog}
+                            referralToken={referralToken}
                         />
                     </> : <ContentLoader />
                 }
@@ -97,7 +103,7 @@ const PublicEnrollForm = (props) => {
                 </form>
             </div>
             {/* Login Dialog */}
-            <PublicEnrollFormLoginDialog showLoginDialog={showLoginDialog} isShowLoginDialog={isShowLoginDialog} login={login} />
+            <PublicEnrollFormLoginDialog showLoginDialog={showLoginDialog} isShowLoginDialog={isShowLoginDialog} login={login} setReferralToken={setReferralToken} />
         </div >
     )
 }

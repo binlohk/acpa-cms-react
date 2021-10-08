@@ -3,19 +3,15 @@ import axios from 'axios';
 import { storeUser, storeToken, getUser } from '../../services/authService';
 import { useState } from 'react';
 
-export default function PublicEnrollFormLoginDialog({ isShowLoginDialog, showLoginDialog, login }) {
+export default function PublicEnrollFormLoginDialog({ isShowLoginDialog, showLoginDialog, login, setReferralToken }) {
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
 
     const handleLogin = () => {
-        console.log(username)
-        console.log(password)
         axios.post(
             `${process.env.REACT_APP_BACKEND_SERVER ?? "http://localhost:1337"}/auth/local`,
             {
-                // identifier: "abcbinlo@gmail.com",
-                // password: "12345678",
                 identifier: username,
                 password: password,
             }
