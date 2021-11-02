@@ -120,7 +120,7 @@ const PublicEnrollForm = ({
         });
 
         if (getUser().id) {
-            httpClient.get(`http://localhost:1337/users/me`).then((user) => {
+            httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/users/me`).then((user) => {
                 setReferralToken(user.data.referralToken)
             })
         }
