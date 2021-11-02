@@ -10,7 +10,7 @@ export default function PublicEnrollFormLoginDialog({ isShowLoginDialog, showLog
 
     const handleLogin = () => {
         axios.post(
-            `${process.env.REACT_APP_BACKEND_SERVER ?? "http://localhost:1337"}/auth/local`,
+            `${process.env.REACT_APP_BACKEND_SERVER}/auth/local`,
             {
                 identifier: username,
                 password: password,

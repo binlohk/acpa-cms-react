@@ -1,4 +1,4 @@
-import { getUser, storeUser } from '../../services/authService';
+import { getUser, storeToken, storeUser } from '../../services/authService';
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import PublicEnrollFormPromotion from './publicEnrollFormPromotion';
@@ -6,7 +6,7 @@ import PublicEnrollReferral from './publicEnrollReferral';
 import PublicEnrollFormLessonSelection from './publicEnrollFormLessonSelection';
 import PublicEnrollFormContact from './publicEnrollFormContact';
 import PublicEnrollFormLoginDialog from './publicEnrollFormLoginDialog';
-import { httpClient } from '../../services/api/axiosHelper'
+import { httpClient } from '../../services/api/axiosHelper';
 
 const ContentLoader = () => {
     return (
@@ -23,9 +23,16 @@ const ContentLoader = () => {
     )
 }
 
-const PublicEnrollForm = (props) => {
+const PublicEnrollForm = ({
+    match: {
+        params: {
+            referrerToken
+        }
+    }
+}) => {
 
     const basicCardTailWindClasses = "bg-white p-6 rounded-lg shadow-lg md:max-w-screen-sm w-full";
+    const [isLoading, setIsLoading] = useState(false);
     const [isShowLoginDialog, showLoginDialog] = useState(false);
     const [enteredUserInfo, updateUserInfo] = useState();
     const [selectedLessonId, selectLessonWithId] = useState(null);
@@ -34,23 +41,78 @@ const PublicEnrollForm = (props) => {
     const [enrollFormData, setEnrollFormData] = useState(null);
 
     const handleEnrollment = () => {
+        setIsLoading(true);
         try {
-            console.log(props.referrerToken);
-            const { name, email, phone } = enteredUserInfo;
-            const lessonId = selectedLessonId;
+            // 1. Check if lesson is selected.
+            // 2. Check if user is logged In.
+            // 3. Check if new user filled in contact.
+            // 4. 
+
+            if (!selectedLessonId) throw new Error("請選擇課程。");
+            if (isLoggedIn) {
+                // Enroll the course
+                const user = getUser();
+                if (user.id != "" && user.id != null) {
+                    const reqObj = {
+                        courseId: selectedLessonId
+                    };
+                    httpClient.post('/user-payments', reqObj)
+                        .then(() => {
+                            alert("成功報名。")
+                        })
+                        .catch(err => {
+                            alert("已經報名。");
+                        })
+                        .finally(() => setIsLoading(false));
+                }
+            } else {
+                if (!enteredUserInfo) throw new Error("請輸入個人信息或登錄。");
+                // Create account
+                axios.post(
+                    `${process.env.REACT_APP_BACKEND_SERVER}/registerAndEnroll/${referrerToken ?? ""}`,
+                    {
+                        username: enteredUserInfo.name,
+                        email: enteredUserInfo.email,
+                        password: enteredUserInfo.phone,
+                        phone: enteredUserInfo.phone,
+                    }
+                ).then((response) => {
+                    storeUser(response.data.user);
+                    storeToken(response.data.jwt);
+
+                    // Enroll the course
+                    const user = getUser();
+                    if (user.id != "" && user.id != null) {
+                        const reqObj = {
+                            courseId: selectedLessonId
+                        };
+                        httpClient.post('/user-payments', reqObj)
+                            .then(() => {
+                                alert("成功報名。")
+                                console.log("Enroll", "enroll")
+                                if (!isLoggedIn) login(true);
+                            })
+                            .catch((err) => {
+                                alert(err.message);
+                                setIsLoading(false);
+                            });
+                    }
+                }).catch(err => {
+                    alert("已經報名。");
+                    setIsLoading(false);
+                })
+            }
+
+            // Show success message.
         } catch (e) {
-            alert("請輸入所需資料或登入。")
+            alert(e.message);
+            setIsLoading(false);
         }
-        // Call the all in one API
-        // Pass in: Name, Email, Phone, Referral Token
-        console.log(selectedLessonId)
-        console.log(enteredUserInfo)
-        console.log(props.match.params.referrerToken)
     }
 
     useEffect(() => {
         axios.get(
-            `${process.env.REACT_APP_BACKEND_SERVER ?? "http://localhost:1337"}/enroll-forms`
+            `${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms`
         ).then((res) => {
             setEnrollFormData(res.data[0])
         }).catch((err) => {
@@ -68,7 +130,7 @@ const PublicEnrollForm = (props) => {
         <div className="p-5 grid grid-cols-1 gap-4 justify-items-center">
             {
                 enrollFormData?.poster && <div className={basicCardTailWindClasses}>
-                    <img src={`${process.env.REACT_APP_BACKEND_SERVER ?? "http://localhost:1337"}${enrollFormData.poster.url}`}></img>
+                    <img src={`${process.env.REACT_APP_BACKEND_SERVER}${enrollFormData.poster.url}`}></img>
                 </div>
             }
 
@@ -77,7 +139,8 @@ const PublicEnrollForm = (props) => {
                     enrollFormData ? <>
                         <PublicEnrollFormPromotion
                             promoTitle={enrollFormData.promoTitle}
-                            promoContent={enrollFormData.promoContent} />
+                            promoContent={enrollFormData.promoContent}
+                        />
                         <PublicEnrollReferral
                             isLoggedIn={isLoggedIn}
                             showLoginDialog={showLoginDialog}
@@ -99,7 +162,7 @@ const PublicEnrollForm = (props) => {
                 <form className="grid grid-cols-1 gap-6" onSubmit={(e) => { e.preventDefault() }}>
                     {enrollFormData ? <PublicEnrollFormLessonSelection lessons={enrollFormData.courses} lessonSelectionCallback={selectLessonWithId} /> : <ContentLoader />}
                     <PublicEnrollFormContact isLoggedIn={getUser()?.id} updateUserInfo={updateUserInfo} />
-                    <input type="submit" className="bg-indigo-700 text-white rounded-md py-2" onClick={handleEnrollment} value="報名" />
+                    <input type="submit" className={`bg-indigo-700 text-white rounded-md py-2 ${isLoading ? "opacity-50" : ""}`} onClick={handleEnrollment} value="報名" disabled={isLoading} />
                 </form>
             </div>
             {/* Login Dialog */}

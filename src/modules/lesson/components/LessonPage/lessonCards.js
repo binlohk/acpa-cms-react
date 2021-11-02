@@ -15,10 +15,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const LessonCards = ({ lessonsDetail }) => {
+const LessonCards = ({ purchased, lessonsDetail }) => {
   const { getUser } = useContext(UserContext);
   const user = getUser();
   const classes = useStyles();
+
+  console.log(purchased)
 
   return (
     <>
@@ -63,13 +65,14 @@ const LessonCards = ({ lessonsDetail }) => {
                       </div>
                     </div>
                     {/* start lesson btn */}
-                    <Link to={`/lesson/${lesson.id}`}>
+                    { purchased && <Link to={`/lesson/${lesson.id}`}>
                       <button className='inline-flex items-center px-2 py-2 my-2 text-xs text-gray-800 bg-gray-300 rounded hover:bg-gray-400'>
                         <span>
                           前往課程
                       </span>
                       </button>
-                    </Link>
+                    </Link>}
+                    
                   </div>
 
                 </div>

@@ -10,7 +10,7 @@ export default function PublicEnrollFormLessonSelection({ lessons, lessonSelecti
                                 lessonSelectionCallback(e.target.value)
                             }
                         }/>
-                        <span>{lesson.description}</span>
+                        <span>{(lesson.description ?? "").split("\n")[0]}</span>
                     </label>
                 )}
             </div>

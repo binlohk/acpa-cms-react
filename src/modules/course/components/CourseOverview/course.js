@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
 import { httpClient } from '../../../../services/api/axiosHelper';
 import { UserContext } from '../../../../contexts/UserContext';
 import LessonCards from '../../../lesson/components/LessonPage/lessonCards';
@@ -9,11 +8,9 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import PermMediaIcon from '@material-ui/icons/PermMedia';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ReactMarkdown from 'react-markdown'
-import { getToken } from '../../../../services/authService'
 
 import CourseMaterials from '../courseMaterials'
 import BuyButton from '../../../utilComponents/BuyButton'
@@ -149,7 +146,7 @@ const Course = (props) => {
                                                     className="inline-flex items-center justify-center px-3 py-2 my-2 text-xs font-bold text-white border border-transparent shadow-sm whitespace-nowrap rounded-3xl"
                                                 >
                                                     開始課程
-                                            </Link>
+                                                </Link>
                                             </>
                                             :
                                             <span className='font-bold text-gray-700'>你已擁有此課程</span>
@@ -213,7 +210,7 @@ const Course = (props) => {
                                                     }
                                                 >
                                                     課程價錢
-                                    </h3>
+                                                </h3>
                                             </div>
                                         </div>
                                     </div>

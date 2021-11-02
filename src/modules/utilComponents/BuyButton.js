@@ -4,7 +4,7 @@ import { handleBuy, handleFreeApply } from '../../services/stripe'
 const BuyButton = ({ courseId, coursePrice, children }) => {
     return (
         <div>
-            { (coursePrice === 0) ?
+            {(coursePrice === 0) ?
                 (
                     <button
                         style={{ background: '#235789', marginTop: 10 }}

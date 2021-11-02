@@ -11,8 +11,12 @@ export const handleBuy = async (courseId) => {
         const reqObj = {
             courseId
         };
-        const session = await httpClient.post(`/user-payments`, reqObj);
-        const result = await stripe.redirectToCheckout({ sessionId: session.data.sessionID });
+        try {
+            const session = await httpClient.post(`/user-payments`, reqObj);
+            const result = await stripe.redirectToCheckout({ sessionId: session.data.sessionID });
+        } catch (err){
+            alert(err.response.data.message);
+        }
     } else {
         window.location.href = '/login'
     }
@@ -24,8 +28,7 @@ export const handleFreeApply = async (courseId) => {
         const reqObj = {
             courseId
         };
-        console.log(reqObj);
-        const session = await httpClient.post('/user-payments', reqObj);
+        await httpClient.post('/user-payments', reqObj);
         window.location.href = '/my-courses'
     } else {
         window.location.href = '/login'
