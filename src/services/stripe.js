@@ -5,8 +5,8 @@ import { getUser } from '../services/authService';
 export const handleBuy = async (courseId) => {
     const user = getUser();
     if (user.id != "" && user.id != null) {
-        console.log(process.env.ACPA_REACT_APP_STRIPE_PK)
-        const stripe = await loadStripe(process.env.ACPA_REACT_APP_STRIPE_PK);
+        console.log(process.env.REACT_APP_STRIPE_PK)
+        const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PK);
         const reqObj = {
             courseId
         };
