@@ -149,7 +149,7 @@ const Header = () => {
                       我的課程
                     </Link>
                   </div>
-                  {!getUser().id ? (
+                  {getUser().id ? (
                     <button
                       onClick={handleLogout}
                       className="inline-flex items-center justify-center px-3 py-2 ml-6 font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm whitespace-nowrap text-md hover:bg-indigo-700"

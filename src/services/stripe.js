@@ -2,12 +2,11 @@ import { loadStripe } from '@stripe/stripe-js';
 import { httpClient } from './api/axiosHelper';
 import { getUser } from '../services/authService';
 
-const stripePromise = loadStripe(`${process.env.ACPA_REACT_APP_STRIPE_PK}`);
-
 export const handleBuy = async (courseId) => {
     const user = getUser();
     if (user.id != "" && user.id != null) {
-        const stripe = await stripePromise;
+        const stripe = await loadStripe(process.env.ACPA_REACT_APP_STRIPE_PK);
+        console.log(process.env.ACPA_REACT_APP_STRIPE_PK)
         const reqObj = {
             courseId
         };
