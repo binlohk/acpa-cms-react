@@ -8,7 +8,7 @@ import { storeToken, storeUser } from "../../../../services/authService";
 import Button from "../../../utilComponents/Button";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import ReactMarkdown from "react-markdown";
-
+import DOMPurify from "dompurify";
 function LoginForm(props) {
   const [loginError, setLoginError] = useState(false);
   const [snackbarContent, setSnackbarContent] = useState(null);
@@ -111,9 +111,7 @@ function LoginForm(props) {
                   </h1>
                 </div>
                 <div>
-                  <ReactMarkdown>
-                    {api.description.replaceAll("\n", "  \n")}
-                  </ReactMarkdown>
+                  <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(api.description) }}></div> 
                 </div>
               </div>
             ) : (

@@ -11,7 +11,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ReactMarkdown from 'react-markdown'
-
+import DOMPurify from "dompurify";
 import CourseMaterials from '../courseMaterials'
 import BuyButton from '../../../utilComponents/BuyButton'
 import axios from 'axios';
@@ -198,8 +198,8 @@ const Course = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='py-6 pl-4'>
-                                        <ReactMarkdown>{courseData.description.replaceAll("\n", "  \n")}</ReactMarkdown>
+                                <div className='py-6 pl-4'>
+                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(courseData.description) }}></div>
                                     </div>
                                     <div className="py-3 border-b-2 rounded-t">
                                         <div className="flex flex-wrap items-center">
