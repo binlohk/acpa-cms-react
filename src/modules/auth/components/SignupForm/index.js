@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import DOMPurify from "dompurify";
+import { Parser } from "html-to-react";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import ReactMarkdown from "react-markdown";
 
@@ -111,7 +111,9 @@ function SignupForm(props) {
                   </h1>
                 </div>
                 <div>
-                  <div dangerouslySetInnerHTML={{__html:DOMPurify.sanitize(api.description)}}></div>
+                  <div>
+                    {Parser().parse(api.description)}
+                  </div>
                 </div>
               </div>
             ) : (

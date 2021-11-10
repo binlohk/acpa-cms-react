@@ -12,7 +12,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Divider } from '@material-ui/core';
 import Vimeo from '@u-wave/react-vimeo';
 import LessonStepper from './LessonStepper';
-
+import { Parser } from 'html-to-react';
 const useStyles = makeStyles(theme => ({
     list: {
         background: '#fff',
@@ -144,7 +144,9 @@ const Lesson = ({ match }) => {
                         </div>
                         <div className='pl-24 pb-9'>
                             <h2>簡介</h2>
-                            <p className='pr-12 mr-6 overflow-scroll max-h-48'>{lessonData.lessonDescription}</p>
+                            <p className='pr-12 mr-6 overflow-scroll max-h-48'>
+                              {Parser().parse(lessonData.lessonDescription)}
+                            </p>
                         </div>
                     </div>
 

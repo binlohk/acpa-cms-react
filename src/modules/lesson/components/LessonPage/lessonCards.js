@@ -4,7 +4,7 @@ import ForwardIcon from '@material-ui/icons/Forward';
 import { Link } from 'react-router-dom';
 import CheckIcon from '@material-ui/icons/Check';
 import { makeStyles } from '@material-ui/core/styles';
-
+import { Parser } from "html-to-react";
 const useStyles = makeStyles(theme => ({
   lessonTextContainer: {
     display: 'flex',
@@ -60,7 +60,7 @@ const LessonCards = ({ purchased, lessonsDetail }) => {
                         </span>
                         {/* lesson text */}
                         <div className='overflow-y-auto'>
-                          {lesson.text}
+                          {Parser().parse(lesson.text)}
                         </div>
                       </div>
                     </div>
