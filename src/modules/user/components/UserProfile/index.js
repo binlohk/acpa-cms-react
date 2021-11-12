@@ -1,6 +1,6 @@
 import { httpClient } from '../../../../services/api/axiosHelper'
 import React, { useEffect, useState } from 'react'
-import { FormControl, makeStyles, Divider } from '@material-ui/core';
+import { FormControl, makeStyles, Divider, ClickAwayListener, Tooltip  } from '@material-ui/core';
 import { FileCopy } from '@material-ui/icons';
 import PublishIcon from '@material-ui/icons/Publish';
 import ReferralList from './referralList';
@@ -47,6 +47,16 @@ function UserProfile() {
     const [userProfile, setUserProfile] = useState(null);
     const [currentFormData, setFormData] = useState(null);
     const [purchasedCourses, setPurchasedCourses] = useState(null);
+    const [open, setOpen] = useState(false);
+    const referralURL = userProfile ? `${process.env.REACT_APP_FRONTEND_SERVER}/signup/${userProfile.referralToken}` : '';
+    const handleTooltipClose = () => {
+        setOpen(false);
+    };
+    const handleCopyLink = async (e) => {
+        e.preventDefault();
+        setOpen(true);
+        await navigator.clipboard.writeText(referralURL);
+    }
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -63,7 +73,7 @@ function UserProfile() {
         fetchUserData()
     }, [currentFormData])
 
-    const referralURL = userProfile ? `${process.env.REACT_APP_FRONTEND_SERVER}/signup/${userProfile.referralToken}` : '';
+    
     const classes = useStyles();
 
     console.log(userProfile);
@@ -88,10 +98,7 @@ function UserProfile() {
     }
     useEffect(() => { fetchUserCourses() }, []);
 
-    const handleCopyLink = async (e) => {
-        e.preventDefault();
-        await navigator.clipboard.writeText(referralURL);
-    }
+ 
 
     return (
         <div className='text-gray-600 '>
@@ -216,27 +223,32 @@ function UserProfile() {
                         </div>
 
 
-                        {/* referral link */}
-                        <FormControl className={`${classes.hoverEffect} ${classes.registerLink}`}>
-                            <p className='font-semibold text-white'>注冊連結</p>
-                            <div className='flex items-center justify-between p-2 mt-2 bg-white rounded-md w-192'>
-                                {/* icon */}
-                                <div className='flex items-center justify-center'>
-                                    <div className='flex items-center justify-center px-2 border-r-2 border-gray-900'>
-                                        <FileCopy
-                                            className={classes.copyButton} />
+                        <div className="pt-4 grid grid-cols-1 gap-2">
+                        <p className="text-sm text-gray-600">點擊分享以下連結成為推薦人：</p>
+                        <ClickAwayListener onClickAway={handleTooltipClose}>
+                            <Tooltip
+                                PopperProps={{
+                                    disablePortal: true,
+                                }}
+                                onClose={handleTooltipClose}
+                                open={open}
+                                disableFocusListener
+                                disableHoverListener
+                                title="已複製"
+                                placement="top"
+                            >
+                                <button className="truncate rounded-full border-2 border-gray-700 bg-gray-700 text-white" onClick={handleCopyLink}>
+                                    <div className="inline-flex item-center gap-2 p-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
+                                            <path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z" />
+                                        </svg>
+                                        <span className="text-sm text-white" href={referralURL}>{referralURL}</span>
                                     </div>
-                                    {/* link */}
-                                    <p className='max-w-lg p-2 overflow-x-scroll text-gray-600'>
-                                        {referralURL}
-                                    </p>
-                                </div>
-                                {/* copy btn */}
-                                <button className='p-2 text-white bg-blue-500 rounded-xl' onClick={handleCopyLink}>
-                                    複製連結
                                 </button>
-                            </div>
-                        </FormControl>
+                            </Tooltip>
+                        </ClickAwayListener>
+                    </div >
                     </div>
                 }
             </div>
