@@ -1,5 +1,6 @@
 import ReactMarkdown from "react-markdown"
 import {Parser} from "html-to-react";
+import DOMPurify from "dompurify";
 export default function PublicEnrollFormPromotion(props) {
     
     function extractUrlValue(key, url) {
@@ -14,7 +15,10 @@ export default function PublicEnrollFormPromotion(props) {
         }
     if (props.promoContent) {
         var value = extractUrlValue('url', props.promoContent);
-        var ViToken = GetyouTubeVideoToken(value);    
+        if(value){
+            var ViToken = GetyouTubeVideoToken(value);    
+        }
+        
     }
     
     return (
@@ -23,7 +27,7 @@ export default function PublicEnrollFormPromotion(props) {
                 { props.promoTitle }
             </h2>
             <div className="pb-5" >
-                {Parser().parse(props.promoContent)}
+                {Parser().parse(DOMPurify.sanitize(props.promoContent))}
             </div>
                {
                     ViToken ? <>

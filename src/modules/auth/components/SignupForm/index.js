@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Parser } from "html-to-react";
+import DOMPurify from "dompurify";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import ReactMarkdown from "react-markdown";
 
@@ -112,7 +113,7 @@ function SignupForm(props) {
                 </div>
                 <div>
                   <div>
-                    {Parser().parse(api.description)}
+                    {Parser().parse(DOMPurify.sanitize(api.description))}
                   </div>
                 </div>
               </div>

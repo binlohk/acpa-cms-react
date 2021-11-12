@@ -12,11 +12,22 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ReactMarkdown from 'react-markdown'
 import {Parser} from 'html-to-react';
+
 import CourseMaterials from '../courseMaterials'
 import BuyButton from '../../../utilComponents/BuyButton'
 import axios from 'axios';
-
+import DOMPurify from 'dompurify';
 var currencyFormatter = require('currency-formatter');
+function extractUrlValue(key, url) {
+    if (typeof(url) === 'undefined')
+    url = window.location.href;
+    var match = url.match(key + '="([^&]+)">');
+    return match ? match[1] : null;
+}
+function GetyouTubeVideoToken(YoutubeVideoUrl){
+    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    return (YoutubeVideoUrl.match(p)) ? RegExp.$1 : false;
+}
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -85,7 +96,7 @@ const Course = (props) => {
 
     const [courseData, setCourseData] = useState(null);
     const [value, setValue] = useState(0);
-
+    const [Videotoken, setVideotoken] = useState("");
     const fetchCourseData = async (courseId) => {
         try {
             var result;
@@ -95,6 +106,13 @@ const Course = (props) => {
                 result = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}`)
             }
             setCourseData(result.data);
+            if (result.data.description !== "") {
+                var value = extractUrlValue('url', result.data.description);
+                if(value){
+                    var ViToken = GetyouTubeVideoToken(value);
+                    setVideotoken(ViToken);
+                }
+            }
         } catch (e) {
             props.history.push('/')
             console.log(e)
@@ -200,7 +218,20 @@ const Course = (props) => {
                                     </div>
                                 <div className='py-6 pl-4'>
                                     <div>
-                                        {Parser().parse(courseData.description)}
+                                        {Parser().parse(DOMPurify.sanitize(courseData.description))}
+                                        {
+                    Videotoken ? <>
+                        <iframe
+                        width="900"
+                        height="500"
+                        src={`https://www.youtube.com/embed/${Videotoken}`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        title="Embedded youtube"
+                        />
+                    </> : ''
+                }
                                     </div>
                                     </div>
                                     <div className="py-3 border-b-2 rounded-t">

@@ -13,6 +13,17 @@ import { Divider } from '@material-ui/core';
 import Vimeo from '@u-wave/react-vimeo';
 import LessonStepper from './LessonStepper';
 import { Parser } from 'html-to-react';
+import DOMPurify  from 'dompurify';
+function extractUrlValue(key, url) {
+    if (typeof(url) === 'undefined')
+    url = window.location.href;
+    var match = url.match(key + '="([^&]+)">');
+    return match ? match[1] : null;
+}
+function GetyouTubeVideoToken(YoutubeVideoUrl){
+    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    return (YoutubeVideoUrl.match(p)) ? RegExp.$1 : false;
+}
 const useStyles = makeStyles(theme => ({
     list: {
         background: '#fff',
@@ -51,7 +62,7 @@ const Lesson = ({ match }) => {
 
     const [lessonData, setLessonData] = useState(null);
     const [courseData, setCourseData] = useState(null);
-
+    const [VideoToken, setVideoToken] = useState("")
     const { lessonId } = match.params
     const classes = useStyles()
 
@@ -60,6 +71,14 @@ const Lesson = ({ match }) => {
             try {
                 const result = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/lessons/${lessonId}`)
                 setLessonData(result.data);
+                if (result.data.lessonDescription !== "") {
+                    var value = extractUrlValue('url', result.data.lessonDescription);
+                    if(value){
+                        var ViToken = GetyouTubeVideoToken(value);
+                        setVideoToken(ViToken);
+                    }
+                    
+                }
                 const courseResult = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${result.data.course.id}`)
                 setCourseData(courseResult.data)
                 console.log(result.data, 'huiiiii')
@@ -145,7 +164,20 @@ const Lesson = ({ match }) => {
                         <div className='pl-24 pb-9'>
                             <h2>簡介</h2>
                             <p className='pr-12 mr-6 overflow-scroll max-h-48'>
-                              {Parser().parse(lessonData.lessonDescription)}
+                              {Parser().parse(DOMPurify.sanitize(lessonData.lessonDescription))}
+                              {
+                    VideoToken ? <>
+                        <iframe
+                        width="400"
+                        height="300"
+                        src={`https://www.youtube.com/embed/${VideoToken}`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        title="Embedded youtube"
+                        />
+                    </> : ''
+                }
                             </p>
                         </div>
                     </div>

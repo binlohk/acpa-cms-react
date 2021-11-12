@@ -9,6 +9,7 @@ import Button from "../../../utilComponents/Button";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import ReactMarkdown from "react-markdown";
 import {Parser} from "html-to-react";
+import DOMPurify from "dompurify";
 function LoginForm(props) {
   const [loginError, setLoginError] = useState(false);
   const [snackbarContent, setSnackbarContent] = useState(null);
@@ -112,7 +113,7 @@ function LoginForm(props) {
                 </div>
                 <div>
                   <div>
-                    {Parser().parse(api.description)}
+                    {Parser().parse(DOMPurify.sanitize(api.description))}
                     </div> 
                 </div>
               </div>
