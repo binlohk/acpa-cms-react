@@ -223,7 +223,7 @@ function UserProfile() {
                         </div>
 
 
-                        <div className="pt-4 grid grid-cols-1 gap-2">
+                        <div className="pt-4 grid grid-cols-1 gap-2  max-w-screen-sm">
                         <p className="text-sm text-gray-600">點擊分享以下連結成為推薦人：</p>
                         <ClickAwayListener onClickAway={handleTooltipClose}>
                             <Tooltip
