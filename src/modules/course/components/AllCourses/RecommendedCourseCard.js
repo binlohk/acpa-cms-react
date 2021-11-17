@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-
+import {Parser} from 'html-to-react';
+import DOMPurify from 'dompurify';
 var currencyFormatter = require('currency-formatter');
 
 function RecommendedCourseCard({ title, price, description, courseId, image, index, indexChecking }) {
@@ -21,11 +22,14 @@ function RecommendedCourseCard({ title, price, description, courseId, image, ind
                                         {
                                             description && description.length > 55 ? (
                                                 <>
-                                                    {description.substring(0, 55) + `...`}
+                                                {Parser().parse(DOMPurify.sanitize(description.substring(0, 55) + `...`))}
                                                 </>
                                             )
                                                 : (
-                                                    description
+                                                    <>
+                                                    {Parser().parse(DOMPurify.sanitize(description))}
+                                                    </>
+                                                    
                                                 )
                                         }
                                     </p>
