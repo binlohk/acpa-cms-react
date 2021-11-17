@@ -159,6 +159,7 @@ const Header = () => {
                     </button>
                   ) : (
                     <div>
+                       <Link to={{ pathname: "https://acpa.training/" }} target="_blank" className="flex items-center justify-center w-full px-4 my-2 py-2 font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm text-md hover:bg-indigo-700" >回到主頁</Link>
                       <Link
                         to="/signup"
                         className="flex items-center justify-center w-full px-4 py-2 font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm text-md hover:bg-indigo-700"
