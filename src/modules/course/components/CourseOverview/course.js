@@ -146,8 +146,8 @@ const Course = (props) => {
         setValue(newValue);
     };
     return (
-        <div className='relative flex flex-col w-full min-w-0 text-gray-600 bg-gray-100 rounded shadow-lg'>
-            <div className='flex flex-col items-center'>
+        <div className='relative flex flex-col w-full items-center min-w-0 text-gray-600 bg-gray-100 rounded shadow-lg'>
+            <div className='flex flex-col items-center' style={{maxWidth:"1024px"}}>
                 {courseData &&
                     <>
                         <h1 className="py-12 text-3xl">{courseData.title}</h1>
