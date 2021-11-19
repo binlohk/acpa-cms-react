@@ -70,6 +70,13 @@ const Lesson = ({ match }) => {
         if (user && user.id !== "" && user.id !== null) {
             try {
                 const result = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/lessons/${lessonId}`)
+            
+                let regex = /(?:http:|https:|)\/\/(?:player.|www.)?vimeo\.com\/(?:video\/|embed\/|watch\?\S*v=|v\/)?(\d*)/g;
+                let checkVimeoValidvideoUrl = result.data.videoUrl.match(regex); 
+                if(checkVimeoValidvideoUrl == null){
+                    result.data.videoUrl = '';
+                }
+
                 setLessonData(result.data);
                 if (result.data.lessonDescription !== "") {
                     var value = extractUrlValue('url', result.data.lessonDescription);
@@ -77,7 +84,6 @@ const Lesson = ({ match }) => {
                         var ViToken = GetyouTubeVideoToken(value);
                         setVideoToken(ViToken);
                     }
-                    
                 }
                 const courseResult = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${result.data.course.id}`)
                 setCourseData(courseResult.data)
