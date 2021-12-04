@@ -100,7 +100,7 @@ const Course = (props) => {
     const fetchCourseData = async (courseId) => {
         try {
             var result;
-            if (user.id != "" && user.id != null) {
+            if (user.id !== "" && user.id != null) {
                 result = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}`)
             } else {
                 result = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}`)
@@ -122,7 +122,7 @@ const Course = (props) => {
     const updateLessonProgress = async (lessonId, isFinished) => {
         let result;
         try {
-            if (user.id != "" && user.id != null) {
+            if (user.id !== "" && user.id != null) {
                 const route = `user-progresses/${lessonId}/${user.id}`;
                 if (isFinished) {
                     result = await httpClient.post(route);
