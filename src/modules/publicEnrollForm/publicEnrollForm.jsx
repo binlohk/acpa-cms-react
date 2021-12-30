@@ -38,6 +38,20 @@ const PublicEnrollForm = ({
     const [isLoggedIn, login] = useState(getUser()?.id != null);
     const [enrollFormData, setEnrollFormData] = useState(null);
     const [courseData, setCourseData] = useState([]);
+    const updateLessonProgress = async () => {
+        try {
+            const user = getUser();
+            const route = `/user-progresses/${selectedLessonId}/${user.id}`;
+            const { data: dbIsLessonFinished } = httpClient.get(route);
+            if (!dbIsLessonFinished) {
+                httpClient.post(route);
+            } else {
+                httpClient.delete(route);
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
     const handleEnrollment = () => {
         setIsLoading(true);
         try {
@@ -46,6 +60,7 @@ const PublicEnrollForm = ({
             // 3. Check if new user filled in contact.
             // 4.
 
+            // updateLessonProgress();
             if (!selectedLessonId) throw new Error('請選擇課程。');
             if (isLoggedIn) {
                 // Enroll the course
@@ -91,11 +106,12 @@ const PublicEnrollForm = ({
                             };
                             httpClient
                                 .post('/user-payments', reqObj)
-                                .then(() => {
+                                .then(async () => {
                                     alert(
                                         '成功報名以及註冊，你的密碼將是你的電話號碼。'
                                     );
                                     if (!isLoggedIn) login(true);
+                                    await updateLessonProgress();
                                 })
                                 .catch((err) => {
                                     alert(err.message);
@@ -121,7 +137,7 @@ const PublicEnrollForm = ({
             .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms`)
             .then(async (res) => {
                 setEnrollFormData(res.data[0]);
-                console.log(enrollFormData);
+
                 let courses = res?.data[0]?.courses;
                 let datesList = [];
                 for (let i = 0; i < courses.length; i++) {
@@ -130,14 +146,15 @@ const PublicEnrollForm = ({
                         `${process.env.REACT_APP_BACKEND_SERVER}/courses/${course}`
                     );
 
-                    let FilteredLesson =
+                    let filteredLesson =
                         await result?.data?.lessonsDetail.filter(
                             (l) => l.title === res.data[0].lessonTitle
                         );
 
-                    if (FilteredLesson.length > 0) {
-                        let date1 = FilteredLesson[0].LessonDate;
-                        let date2 = FilteredLesson[0].LessonDate2;
+                    if (filteredLesson.length > 0) {
+                        courses[i].lessonId = filteredLesson[0].id;
+                        let date1 = filteredLesson[0].LessonDate;
+                        let date2 = filteredLesson[0].LessonDate2;
 
                         datesList.push({ date: date1 }, { date: date2 });
 
