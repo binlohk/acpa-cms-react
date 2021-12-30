@@ -37,7 +37,7 @@ const PublicEnrollForm = ({
     const [referralToken, setReferralToken] = useState('');
     const [isLoggedIn, login] = useState(getUser()?.id != null);
     const [enrollFormData, setEnrollFormData] = useState(null);
-    const [courseData, setCourseData] = useState([]);
+    const [lessonData, setLessonData] = useState([]);
     const updateLessonProgress = async () => {
         try {
             const user = getUser();
@@ -139,30 +139,21 @@ const PublicEnrollForm = ({
                 setEnrollFormData(res.data[0]);
 
                 let courses = res?.data[0]?.courses;
-                let datesList = [];
+                let lessonList = [];
+
                 for (let i = 0; i < courses.length; i++) {
-                    let course = courses[i].id;
-                    let result = await axios.get(
-                        `${process.env.REACT_APP_BACKEND_SERVER}/courses/${course}`
+                    var courseDetails = await axios.get(
+                        `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courses[i].id}`
                     );
 
-                    let filteredLesson =
-                        await result?.data?.lessonsDetail.filter(
-                            (l) => l.title === res.data[0].lessonTitle
-                        );
-
-                    if (filteredLesson.length > 0) {
-                        courses[i].lessonId = filteredLesson[0].id;
-                        let date1 = filteredLesson[0].LessonDate;
-                        let date2 = filteredLesson[0].LessonDate2;
-
-                        datesList.push({ date: date1 }, { date: date2 });
-
-                        courses[i]['date'] = datesList;
-                    }
+                    courseDetails.data.lessonsDetail.forEach((lesson) => {
+                        lessonList.push({
+                            lessonId: lesson.id,
+                            date: lesson.LessonDate
+                        });
+                    });
                 }
-
-                setCourseData(courses);
+                setLessonData(lessonList);
             })
             .catch((err) => {
                 console.log(err);
@@ -226,7 +217,7 @@ const PublicEnrollForm = ({
                 >
                     {enrollFormData ? (
                         <PublicEnrollFormLessonSelection
-                            lessons={courseData}
+                            lessons={lessonData}
                             lessonSelectionCallback={selectLessonWithId}
                         />
                     ) : (

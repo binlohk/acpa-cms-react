@@ -36,72 +36,59 @@ export default function PublicEnrollFormLessonSelection({
                     lessons.map((lesson) => (
                         <span>
                             <div className="flex flex-col">
-                                {lesson.date &&
-                                    lesson.date.map((lessonDate) => (
-                                        <>
-                                            <label
-                                                className="inline-flex items-center gap-2"
-                                                key={lesson.lessonId}
-                                            >
-                                                <input
-                                                    type="radio"
-                                                    className="form-radio"
-                                                    name="lesson"
-                                                    value={lesson.lessonId}
-                                                    onClick={(e) => {
-                                                        lessonSelectionCallback(
-                                                            e.target.value
-                                                        );
-                                                    }}
-                                                />
-                                                <div className="font-semibold">
-                                                    {new Date(
-                                                        Parser().parse(
-                                                            DOMPurify.sanitize(
-                                                                lessonDate.date
-                                                            )
-                                                        )
-                                                    ).getDate() +
-                                                        ' ' +
-                                                        new Date(
-                                                            Parser().parse(
-                                                                DOMPurify.sanitize(
-                                                                    lessonDate.date
-                                                                )
-                                                            )
-                                                        ).toLocaleDateString(
-                                                            'default',
-                                                            {
-                                                                month: 'long'
-                                                            }
-                                                        ) +
-                                                        ' ' +
-                                                        new Date(
-                                                            Parser().parse(
-                                                                DOMPurify.sanitize(
-                                                                    lessonDate.date
-                                                                )
-                                                            )
-                                                        ).getFullYear() +
-                                                        ' ' +
-                                                        new Date(
-                                                            Parser().parse(
-                                                                DOMPurify.sanitize(
-                                                                    lessonDate.date
-                                                                )
-                                                            )
-                                                        ).toLocaleString(
-                                                            'en-US',
-                                                            {
-                                                                hour: 'numeric',
-                                                                minute: 'numeric',
-                                                                hour12: true
-                                                            }
-                                                        )}
-                                                </div>
-                                            </label>
-                                        </>
-                                    ))}
+                                <label
+                                    className="inline-flex items-center gap-2"
+                                    key={lesson?.lessonId}
+                                >
+                                    <input
+                                        type="radio"
+                                        className="form-radio"
+                                        name="lesson"
+                                        value={lesson?.lessonId}
+                                        onClick={(e) => {
+                                            lessonSelectionCallback(
+                                                e.target.value
+                                            );
+                                        }}
+                                    />
+                                    <div className="font-semibold">
+                                        {new Date(
+                                            Parser().parse(
+                                                DOMPurify.sanitize(lesson?.date)
+                                            )
+                                        ).getDate() +
+                                            ' ' +
+                                            new Date(
+                                                Parser().parse(
+                                                    DOMPurify.sanitize(
+                                                        lesson?.date
+                                                    )
+                                                )
+                                            ).toLocaleDateString('default', {
+                                                month: 'long'
+                                            }) +
+                                            ' ' +
+                                            new Date(
+                                                Parser().parse(
+                                                    DOMPurify.sanitize(
+                                                        lesson?.date
+                                                    )
+                                                )
+                                            ).getFullYear() +
+                                            ' ' +
+                                            new Date(
+                                                Parser().parse(
+                                                    DOMPurify.sanitize(
+                                                        lesson?.date
+                                                    )
+                                                )
+                                            ).toLocaleString('en-US', {
+                                                hour: 'numeric',
+                                                minute: 'numeric',
+                                                hour12: true
+                                            })}
+                                    </div>
+                                </label>
                             </div>
                         </span>
                     ))}
