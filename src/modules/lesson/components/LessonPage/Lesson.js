@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useHistory, Link, withRouter } from "react-router-dom";
+import { useHistory, Link, withRouter } from 'react-router-dom';
 import Video from '../../../utilComponents/video';
 import { httpClient } from '../../../../services/api/axiosHelper';
 import axios from 'axios';
@@ -13,18 +13,18 @@ import { Divider } from '@material-ui/core';
 import Vimeo from '@u-wave/react-vimeo';
 import LessonStepper from './LessonStepper';
 import { Parser } from 'html-to-react';
-import DOMPurify  from 'dompurify';
+import DOMPurify from 'dompurify';
 function extractUrlValue(key, url) {
-    if (typeof(url) === 'undefined')
-    url = window.location.href;
+    if (typeof url === 'undefined') url = window.location.href;
     var match = url.match(key + '="([^&]+)">');
     return match ? match[1] : null;
 }
-function GetyouTubeVideoToken(YoutubeVideoUrl){
-    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-    return (YoutubeVideoUrl.match(p)) ? RegExp.$1 : false;
+function GetyouTubeVideoToken(YoutubeVideoUrl) {
+    var p =
+        /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    return YoutubeVideoUrl.match(p) ? RegExp.$1 : false;
 }
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     list: {
         background: '#fff',
         color: '#4B5563',
@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         justifyContent: 'center',
         padding: '1.5rem 0 1.5rem 1.5rem',
-        background: 'transparent',
+        background: 'transparent'
     },
     itemRed: {
         width: '15vw',
@@ -48,12 +48,12 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         padding: '1.5rem 0 1.5rem 1.5rem',
         color: 'white',
-        background: '#A5924B',
+        background: '#A5924B'
     },
     divider: {
         width: '90%',
-        margin: '0 5%',
-    },
+        margin: '0 5%'
+    }
 }));
 
 const Lesson = ({ match }) => {
@@ -62,34 +62,42 @@ const Lesson = ({ match }) => {
 
     const [lessonData, setLessonData] = useState(null);
     const [courseData, setCourseData] = useState(null);
-    const [VideoToken, setVideoToken] = useState("")
-    const { lessonId } = match.params
-    const classes = useStyles()
+    const [VideoToken, setVideoToken] = useState('');
+    const { lessonId } = match.params;
+    const classes = useStyles();
 
     const fetchLessonData = async (lessonId) => {
-        if (user && user.id !== "" && user.id !== null) {
+        if (user && user.id !== '' && user.id !== null) {
             try {
-                const result = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/lessons/${lessonId}`)
-            
-                let regex = /(?:http:|https:|)\/\/(?:player.|www.)?vimeo\.com\/(?:video\/|embed\/|watch\?\S*v=|v\/)?(\d*)/g;
-                let checkVimeoValidvideoUrl = result.data.videoUrl.match(regex); 
-                if(checkVimeoValidvideoUrl == null){
+                const result = await httpClient.get(
+                    `${process.env.REACT_APP_BACKEND_SERVER}/lessons/${lessonId}`
+                );
+
+                let regex =
+                    /(?:http:|https:|)\/\/(?:player.|www.)?vimeo\.com\/(?:video\/|embed\/|watch\?\S*v=|v\/)?(\d*)/g;
+                let checkVimeoValidvideoUrl = result.data.videoUrl.match(regex);
+                if (checkVimeoValidvideoUrl == null) {
                     result.data.videoUrl = '';
                 }
 
                 setLessonData(result.data);
-                if (result.data.lessonDescription !== "") {
-                    var value = extractUrlValue('url', result.data.lessonDescription);
-                    if(value){
+                if (result.data.lessonDescription !== '') {
+                    var value = extractUrlValue(
+                        'url',
+                        result.data.lessonDescription
+                    );
+                    if (value) {
                         var ViToken = GetyouTubeVideoToken(value);
                         setVideoToken(ViToken);
                     }
                 }
-                const courseResult = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${result.data.course.id}`)
-                setCourseData(courseResult.data)
-                console.log(result.data, 'huiiiii')
+                const courseResult = await httpClient.get(
+                    `${process.env.REACT_APP_BACKEND_SERVER}/courses/${result.data.course.id}`
+                );
+                setCourseData(courseResult.data);
+                console.log(result.data, 'huiiiii');
             } catch (e) {
-                console.log(e)
+                console.log(e);
             }
         }
     };
@@ -103,134 +111,166 @@ const Lesson = ({ match }) => {
         event.target.disabled = true;
         await updateLessonProgress(event.target.id);
         event.target.disabled = false;
-    }
+    };
 
     const updateLessonProgress = async (lessonId) => {
         try {
-            if (user.id != "" && user.id != null) {
+            if (user.id != '' && user.id != null) {
                 const route = `/user-progresses/${lessonId}/${user.id}`;
-                const { data: dbIsLessonFinished } = await httpClient.get(route);
-                console.log(dbIsLessonFinished, 'dataaaa')
+                const { data: dbIsLessonFinished } = await httpClient.get(
+                    route
+                );
+                console.log(dbIsLessonFinished, 'dataaaa');
                 if (!dbIsLessonFinished) {
-                    console.log('post progress')
+                    console.log('post progress');
                     await httpClient.post(route);
                 } else {
-                    console.log('del progress')
+                    console.log('del progress');
                     await httpClient.delete(route);
                 }
                 await fetchLessonData(lessonId);
             }
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
-    }
+    };
 
     /**on video end */
     const handleEnd = async () => {
         if (!lessonData.finished) {
             await updateLessonProgress(lessonId);
         }
-    }
+    };
 
     return (
-        <div className='flex justify-center w-full pb-6'>
+        <div className="flex justify-center w-full pb-6">
             {lessonData && (
                 <>
-                    <div className='w-4/5 mx-6 bg-white rounded-xl'>
-                        <div className='flex flex-col items-center'>
-                            <div className='flex flex-col items-center justify-center w-full bg-black justify-items-stetch rounded-t-xl'>
-                                <h1 className='py-12 text-3xl text-white'>{courseData && courseData.title}</h1>
-                                {
-                                    lessonData.videoUrl !== '' ? (
-                                        <Vimeo
-                                            video={lessonData.videoUrl}
-                                            playerOptions
-                                            autoplay
-                                            style={{ display: 'flex', flexBasis: '100%' }}
-                                            width='1500'
-                                            height='800'
-                                            onEnd={handleEnd}
-                                        />
-                                    ) : (
-                                        <div>
-                                            <h1 className="mb-10 text-3xl font-black text-yellow-500 lg:text-5xl">暫無影片資料</h1>
-                                        </div>
-                                    )
-                                }
+                    <div className="w-4/5 mx-6 bg-white rounded-xl">
+                        <div className="flex flex-col items-center">
+                            <div className="flex flex-col items-center justify-center w-full bg-black justify-items-stetch rounded-t-xl">
+                                <h1 className="py-12 text-3xl text-white">
+                                    {courseData && courseData.title}
+                                </h1>
+                                {lessonData.videoUrl !== '' ? (
+                                    <Vimeo
+                                        video={lessonData.videoUrl}
+                                        playerOptions
+                                        autoplay
+                                        style={{
+                                            display: 'flex',
+                                            flexBasis: '100%'
+                                        }}
+                                        width="1500"
+                                        height="800"
+                                        onEnd={handleEnd}
+                                    />
+                                ) : (
+                                    <div>
+                                        <h1 className="mb-10 text-3xl font-black text-yellow-500 lg:text-5xl">
+                                            暫無影片資料
+                                        </h1>
+                                    </div>
+                                )}
                             </div>
-                            {courseData && courseData.lessonsDetail &&
-                                <div className='w-full px-4'>
+                            {courseData && courseData.lessonsDetail && (
+                                <div className="w-full px-4">
                                     <LessonStepper
                                         lessonsDetail={courseData.lessonsDetail}
                                         lessonId={lessonId}
                                     />
                                 </div>
-                            }
+                            )}
                         </div>
-                        <div className='pl-24 pb-9'>
+                        <div className="pl-24 pb-9">
                             <h2>簡介</h2>
-                            <p className='pr-12 mr-6 overflow-scroll max-h-48'>
-                              {Parser().parse(DOMPurify.sanitize(lessonData.lessonDescription))}
-                              {
-                    VideoToken ? <>
-                        <iframe
-                        width="400"
-                        height="300"
-                        src={`https://www.youtube.com/embed/${VideoToken}`}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        title="Embedded youtube"
-                        />
-                    </> : ''
-                }
+                            <p className="pr-12 mr-6 overflow-scroll max-h-48">
+                                {Parser().parse(
+                                    DOMPurify.sanitize(
+                                        lessonData.lessonDescription
+                                    )
+                                )}
+                                {VideoToken ? (
+                                    <>
+                                        <iframe
+                                            width="400"
+                                            height="300"
+                                            src={`https://www.youtube.com/embed/${VideoToken}`}
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                            title="Embedded youtube"
+                                        />
+                                    </>
+                                ) : (
+                                    ''
+                                )}
                             </p>
                         </div>
                     </div>
-
                 </>
-            )
-            }
-            <List
-                className={`${classes.list}`}
-            >
-                {
-                    courseData && courseData.lessonsDetail.map((lesson, ind) => {
+            )}
+            <List className={`${classes.list}`}>
+                {courseData &&
+                    courseData.lessonsDetail.map((lesson, ind) => {
                         return (
                             <>
                                 <ListItem
                                     key={ind}
-                                    className={lessonId == lesson.id ? classes.itemRed : classes.item}
+                                    className={
+                                        lessonId == lesson.id
+                                            ? classes.itemRed
+                                            : classes.item
+                                    }
                                 >
-
                                     <ListItemText
-                                        className={lessonId == lesson.id ? classes.listActive : null}
+                                        className={
+                                            lessonId == lesson.id
+                                                ? classes.listActive
+                                                : null
+                                        }
                                         primary={
                                             <>
-                                                <div className='flex'>
-                                                    <div style={{ background: 'rgba(81,54,84,1)' }} className='flex items-center px-4 text-xl font-semibold text-white rounded-lg'>
+                                                <div className="flex">
+                                                    <div
+                                                        style={{
+                                                            background:
+                                                                'rgba(81,54,84,1)'
+                                                        }}
+                                                        className="flex items-center px-4 text-xl font-semibold text-white rounded-lg"
+                                                    >
                                                         {ind + 1}
                                                     </div>
-                                                    <div className='flex flex-col pl-4'>
-                                                        <span className={`text-lg`}>
-                                                            <Link to={`/lesson/${lesson.id}`}>
+                                                    <div className="flex flex-col pl-4">
+                                                        <span
+                                                            className={`text-lg`}
+                                                        >
+                                                            <Link
+                                                                to={`/lesson/${lesson.id}`}
+                                                            >
                                                                 {lesson.title}
                                                             </Link>
                                                         </span>
                                                         <span
-                                                            className={lessonId == lesson.id ? 'text-sm text-white' : 'text-sm text-gray-400'}
+                                                            className={
+                                                                lessonId ==
+                                                                lesson.id
+                                                                    ? 'text-sm text-white'
+                                                                    : 'text-sm text-gray-400'
+                                                            }
                                                         >
-                                                            {lesson.videoDuration}
+                                                            {
+                                                                lesson.videoDuration
+                                                            }
                                                         </span>
                                                     </div>
                                                 </div>
-
                                             </>
                                         }
                                     />
                                     <ListItemIcon>
                                         <Checkbox
-                                            color='default'
+                                            color="default"
                                             edge="end"
                                             checked={lesson.finished}
                                             disableRipple
@@ -245,12 +285,11 @@ const Lesson = ({ match }) => {
                                     }}
                                 />
                             </>
-                        )
-                    })
-                }
+                        );
+                    })}
             </List>
         </div>
-    )
-}
+    );
+};
 
 export default withRouter(Lesson);
