@@ -146,12 +146,12 @@ const PublicEnrollForm = ({
                         `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courses[i].id}`
                     );
 
-                    courseDetails.data.lessonsDetail.forEach((lesson) => {
+                    courseDetails?.data?.lessonsDetail.map((lesson) =>
                         lessonList.push({
                             lessonId: lesson.id,
                             date: lesson.LessonDate
-                        });
-                    });
+                        })
+                    );
                 }
                 setLessonData(lessonList);
             })
