@@ -110,7 +110,6 @@ const PublicEnrollForm = ({
                                     alert(
                                         '成功報名以及註冊，你的密碼將是你的電話號碼。'
                                     );
-                                    if (!isLoggedIn) login(true);
                                     await updateLessonProgress();
                                 })
                                 .catch((err) => {
