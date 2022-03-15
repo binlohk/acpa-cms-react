@@ -66,18 +66,27 @@ const PublicEnrollForm = ({
                 // Enroll the course
                 const user = getUser();
                 if (user.id != '' && user.id != null) {
-                    const reqObj = {
-                        courseId: selectedLessonId
-                    };
-                    httpClient
-                        .post('/user-payments', reqObj)
-                        .then(() => {
-                            alert('成功報名。');
-                        })
-                        .catch((err) => {
-                            alert('已經報名。');
-                        })
-                        .finally(() => setIsLoading(false));
+                    axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/lessons`).then((lessonRes) => {
+                        let lessons = lessonRes?.data;
+                        lessons?.map((lesson) => {
+                                if (lesson?.id == selectedLessonId) {
+                                    const reqObj = {
+                                        courseId: lesson?.course?.id
+                                    };
+                                    httpClient
+                                        .post('/user-payments', reqObj)
+                                        .then(() => {
+                                            alert('成功報名。');
+                                        })
+                                        .catch((err) => {
+                                            alert('已經報名。');
+                                        })
+                                        .finally(() => setIsLoading(false));
+                                }            
+                            })
+                        }).catch((lessonErr) => {
+                            alert("Course not found for lesson");
+                        });
                 }
             } else {
                 if (!enteredUserInfo) throw new Error('請輸入個人信息或登錄。');
@@ -101,21 +110,30 @@ const PublicEnrollForm = ({
                         // Enroll the course
                         const user = getUser();
                         if (user.id != '' && user.id != null) {
-                            const reqObj = {
-                                courseId: selectedLessonId
-                            };
-                            httpClient
-                                .post('/user-payments', reqObj)
-                                .then(async () => {
-                                    alert(
-                                        '成功報名以及註冊，你的密碼將是你的電話號碼。'
-                                    );
-                                    await updateLessonProgress();
+                            axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/lessons`).then((lessonRes) => {
+                                let lessons = lessonRes?.data;
+                                lessons?.map((lesson) => {
+                                    if (lesson?.id == selectedLessonId) {
+                                        const reqObj = {
+                                            courseId: lesson?.course?.id
+                                        };
+                                        httpClient
+                                            .post('/user-payments', reqObj)
+                                            .then(async () => {
+                                                alert(
+                                                    '成功報名以及註冊，你的密碼將是你的電話號碼。'
+                                                );
+                                                await updateLessonProgress();
+                                            })
+                                            .catch((err) => {
+                                                alert(err.message);
+                                                setIsLoading(false);
+                                            });
+                                    }            
                                 })
-                                .catch((err) => {
-                                    alert(err.message);
-                                    setIsLoading(false);
-                                });
+                            }).catch((lessonErr) => {
+                                alert("Course not found for lesson");
+                            });
                         }
                     })
                     .catch((err) => {
@@ -144,12 +162,13 @@ const PublicEnrollForm = ({
                     var courseDetails = await axios.get(
                         `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courses[i].id}`
                     );
-
-                    courseDetails?.data?.lessonsDetail.map((lesson) =>
+                    
+                    courseDetails?.data?.lessonsDetail.map((lesson) =>{
                         lessonList.push({
                             lessonId: lesson.id,
                             date: lesson.LessonDate
                         })
+                    }
                     );
                 }
                 setLessonData(lessonList);
