@@ -7,7 +7,7 @@ import PublicEnrollFormLessonSelection from './publicEnrollFormLessonSelection';
 import PublicEnrollFormContact from './publicEnrollFormContact';
 import PublicEnrollFormLoginDialog from './publicEnrollFormLoginDialog';
 import { httpClient } from '../../services/api/axiosHelper';
-
+import { loadStripe } from '@stripe/stripe-js';
 const ContentLoader = () => {
     return (
         <div className="animate-pulse flex space-x-4">
@@ -75,7 +75,11 @@ const PublicEnrollForm = ({
                                     };
                                     httpClient
                                         .post('/user-payments', reqObj)
-                                        .then(() => {
+                                        .then(async (session) => {
+                                            if (session.data.amount_total > 0) {
+                                                const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PK);
+                                                const result = await stripe.redirectToCheckout({ sessionId: session.data.id });    
+                                            }
                                             alert('成功報名。');
                                         })
                                         .catch((err) => {
@@ -119,7 +123,11 @@ const PublicEnrollForm = ({
                                         };
                                         httpClient
                                             .post('/user-payments', reqObj)
-                                            .then(async () => {
+                                            .then(async (session) => {
+                                                if (session?.data?.course?.price > 0 || session?.data?.amount_total > 0) {
+                                                    const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PK);
+                                                    const result = await stripe.redirectToCheckout({ sessionId: session.data.id });    
+                                                }
                                                 alert(
                                                     '成功報名以及註冊，你的密碼將是你的電話號碼。'
                                                 );
