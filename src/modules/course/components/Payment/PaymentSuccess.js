@@ -15,31 +15,19 @@ function PaymentSuccess(props) {
     const { session_id } = queryString.parse(search);
     const [data, setData] = useState(null);
     const [ifSessionIdValid, setIfSessionIdValid] = useState(false);
-    // const fetchPaidCourse = async () => {
-    //     try {
-    //         await httpClient.get(`/user-payments/${session_id}`);
-    //         setIfSessionIdValid(true);
-    //     } catch (e) {
-    //         setIfSessionIdValid(false);
-    //     }
-    //     const result = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${params.courseId}`);
-    //     setData(result.data);
-    // }
-
-    const assignCourseToUser = async () => {
-        console.log(`in assignCourseToUser`);
+    const fetchPaidCourse = async () => {
         try {
-            const assignedCourse = await httpClient.post(`/user-payments-success`, { sessionId: session_id, courseId:params.courseId })
-            console.log(`assignedCourse `, assignedCourse);
+            await httpClient.get(`/user-payments/${session_id}`);
             setIfSessionIdValid(true);
-        } catch (error) {
-            console.log(`Error in assign course to user`, error);
+        } catch (e) {
             setIfSessionIdValid(false);
         }
+        const result = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses/${params.courseId}`);
+        setData(result.data);
     }
 
     useEffect(() => {
-        assignCourseToUser();
+        fetchPaidCourse();
     }, [])
     if (ifSessionIdValid) {
         return (
