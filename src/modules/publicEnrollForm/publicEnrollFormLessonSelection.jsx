@@ -66,7 +66,7 @@ export default function PublicEnrollFormLessonSelection({
                                             )
                                         ).toLocaleDateString('default', {
                                             month: 'numeric'
-                                        })}月${new Date(
+                                        })}${new Date(
                                             Parser().parse(
                                                 DOMPurify.sanitize(lesson?.date)
                                             )
