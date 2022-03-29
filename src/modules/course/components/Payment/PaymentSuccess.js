@@ -27,7 +27,7 @@ function PaymentSuccess(props) {
     }
 
     useEffect(() => {
-        fetchPaidCourse()
+        fetchPaidCourse();
     }, [])
     if (ifSessionIdValid) {
         return (
