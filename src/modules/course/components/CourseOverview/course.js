@@ -105,86 +105,90 @@ const Course = (props) => {
     const fetchCourseData = async (courseId) => {
         try {
             var result;
-            if (user.id !== '' && user.id != null) {
+            if (user.id !== "" && user.id != null) {
                 result = await httpClient.get(
                     `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}`
                 );
-                const parentEmbed = stringToHTML(result.data.description);
-                let oldIframe = parentEmbed.querySelectorAll('oembed');
-                let GetImgSrc = parentEmbed.querySelectorAll('img');
-
-                GetImgSrc = Array.from(GetImgSrc);
-                for (const j in GetImgSrc) {
-                    let src = GetImgSrc[j].getAttribute('src');
-                    const NewImg = document.createElement('img');
-
-                    if (src) {
-                        NewImg.setAttribute(
-                            'src',
-                            `${process.env.REACT_APP_BACKEND_SERVER}${src}`
-                        );
-                    }
-                    GetImgSrc[j].parentNode.replaceChild(NewImg, GetImgSrc[j]);
-                }
-                oldIframe = Array.from(oldIframe);
-                for (const i in oldIframe) {
-                    let url = oldIframe[i].getAttribute('url');
-                    const newIframe = document.createElement('iframe');
-                    newIframe.setAttribute('width', '900');
-                    newIframe.setAttribute('height', '500');
-                    newIframe.setAttribute(
-                        'allow',
-                        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-                    );
-                    newIframe.setAttribute('allowFullScreen', '');
-                    newIframe.setAttribute('frameBorder', 0);
-                    if (url) {
-                        newIframe.setAttribute(
-                            'src',
-                            'https://www.youtube.com/embed/' +
-                                GetyouTubeVideoToken(url)
-                        );
-                    }
-                    oldIframe[i].parentNode.replaceChild(
-                        newIframe,
-                        oldIframe[i]
-                    );
-                }
-                const contentToRender = parentEmbed.outerHTML;
-
-                const clean = sanitizeHtml(contentToRender, {
-                    allowedTags: [
-                        'b',
-                        'i',
-                        'em',
-                        'strong',
-                        'a',
-                        'iframe',
-                        'p',
-                        'h1',
-                        'h2',
-                        'h3',
-                        'img'
-                    ],
-                    allowedAttributes: {
-                        a: ['href'],
-                        iframe: [
-                            'src',
-                            'width',
-                            'height',
-                            'allow',
-                            'allowfullscreen',
-                            'frameborder'
-                        ],
-                        img: ['src']
-                    },
-                    allowedIframeHostnames: ['www.youtube.com']
-                });
-                setRenderedHTML(clean);
             } else {
                 result = await axios.get(
                     `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}`
                 );
+            }
+            const parentEmbed = stringToHTML(result.data.description);
+            let oldIframe = parentEmbed.querySelectorAll("oembed");
+            let GetImgSrc = parentEmbed.querySelectorAll("img");
+            
+            GetImgSrc = Array.from(GetImgSrc);
+            for (const j in GetImgSrc) {
+                let src = GetImgSrc[j].getAttribute("src");
+                const NewImg = document.createElement("img");
+            
+                if (src) {
+                    NewImg.setAttribute(
+                        "src",
+                        `${process.env.REACT_APP_BACKEND_SERVER}${src}`
+                    );
+                }
+                GetImgSrc[j].parentNode.replaceChild(NewImg, GetImgSrc[j]);
+            }
+            oldIframe = Array.from(oldIframe);
+            for (const i in oldIframe) {
+                let url = oldIframe[i].getAttribute("url");
+                const newIframe = document.createElement("iframe");
+                newIframe.setAttribute("width", "900");
+                newIframe.setAttribute("height", "500");
+                newIframe.setAttribute(
+                    "allow",
+                    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                );
+                newIframe.setAttribute("allowFullScreen", "");
+                newIframe.setAttribute("frameBorder", 0);
+                if (url) {
+                    newIframe.setAttribute(
+                        "src",
+                        "https://www.youtube.com/embed/" + GetyouTubeVideoToken(url)
+                    );
+                }
+                oldIframe[i].parentNode.replaceChild(newIframe, oldIframe[i]);
+            }
+            const contentToRender = parentEmbed.outerHTML;
+            
+            const clean = sanitizeHtml(contentToRender, {
+                allowedTags: [
+                    "b",
+                    "i",
+                    "em",
+                    "strong",
+                    "a",
+                    "iframe",
+                    "p",
+                    "h1",
+                    "h2",
+                    "h3",
+                    "img",
+                ],
+                allowedAttributes: {
+                    a: ["href"],
+                    iframe: [
+                        "src",
+                        "width",
+                        "height",
+                        "allow",
+                        "allowfullscreen",
+                        "frameborder",
+                    ],
+                    img: ["src"],
+                },
+                allowedIframeHostnames: ["www.youtube.com"],
+            });
+            setRenderedHTML(clean);
+            setCourseData(result.data);
+            if (result.data.description !== "") {
+                var value = extractUrlValue("url", result.data.description);
+                if (value) {
+                    var ViToken = GetyouTubeVideoToken(value);
+                    setVideotoken(ViToken);
+                }
             }
             setCourseData(result.data);
             if (result.data.description !== '') {
