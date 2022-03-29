@@ -161,7 +161,7 @@ const PublicEnrollForm = ({
         axios
             .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms`)
             .then(async (res) => {
-                setEnrollFormData(res.data[0]);
+                setEnrollFormData(res?.data[0]);
 
                 let courses = res?.data[0]?.courses;
                 let lessonList = [];
