@@ -12,7 +12,7 @@ export const handleBuy = async (courseId) => {
         };
         try {
             const session = await httpClient.post(`/user-payments`, reqObj);
-            const result = await stripe.redirectToCheckout({ sessionId: session.data.id });
+            const result = await stripe.redirectToCheckout({ sessionId: session.data.sessionID });
         } catch (err){
             alert(err.response.data.message);
         }
