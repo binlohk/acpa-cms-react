@@ -193,7 +193,9 @@ const PublicEnrollForm = ({
                 });
         }
     }, [isLoggedIn]);
-
+    useEffect(() => {
+        login(!!getUser()?.id)
+      }, [getUser()?.id])
     return (
         <div className="p-5 grid grid-cols-1 gap-4 justify-items-center">
             {enrollFormData?.poster && (
