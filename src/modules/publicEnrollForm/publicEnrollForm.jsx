@@ -25,7 +25,7 @@ const ContentLoader = () => {
 
 const PublicEnrollForm = ({
     match: {
-        params: { referrerToken }
+        params: { referrerToken, enrollFormId }
     }
 }) => {
     const basicCardTailWindClasses =
@@ -159,11 +159,12 @@ const PublicEnrollForm = ({
 
     useEffect(() => {
         axios
-            .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms`)
+            .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms/${enrollFormId}`)
             .then(async (res) => {
-                setEnrollFormData(res?.data[0]);
+                console.log("res ", res);
+                setEnrollFormData(res?.data);
 
-                let courses = res?.data[0]?.courses;
+                let courses = res?.data?.courses;
                 let lessonList = [];
 
                 for (let i = 0; i < courses.length; i++) {
