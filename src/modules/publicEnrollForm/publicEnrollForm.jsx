@@ -217,6 +217,7 @@ const PublicEnrollForm = ({
                             isLoggedIn={isLoggedIn}
                             showLoginDialog={showLoginDialog}
                             referralToken={referralToken}
+                            enrollFormId={enrollFormId}
                         />
                     </>
                 ) : (
