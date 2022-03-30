@@ -52,35 +52,17 @@ export default function PublicEnrollFormLessonSelection({
                                         }}
                                     />
                                     <div className="font-semibold">
-                                        {`${new Date(
-                                            Parser().parse(
-                                                DOMPurify.sanitize(
-                                                    lesson?.date
-                                                )
-                                            )
-                                        ).getFullYear()}年${new Date(
-                                            Parser().parse(
-                                                DOMPurify.sanitize(
-                                                    lesson?.date
-                                                )
-                                            )
-                                        ).toLocaleDateString('default', {
-                                            month: 'numeric'
-                                        })}月${new Date(
-                                            Parser().parse(
-                                                DOMPurify.sanitize(lesson?.date)
-                                            )
-                                        ).getDate()}日 ${new Date(
-                                            Parser().parse(
-                                                DOMPurify.sanitize(
-                                                    lesson?.date
-                                                )
-                                            )
-                                        ).toLocaleString('zh-HK', {
-                                            hour: 'numeric',
-                                            minute: 'numeric',
-                                            hour12: true
-                                        })}`}
+                                        {new Date(Parser().parse(DOMPurify.sanitize(lesson?.date))).toLocaleString(
+                                            "zh-HK",
+                                            {
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                                hour: "numeric",
+                                                minute: "numeric",
+                                                hour12: true,
+                                            }
+                                        )}
                                     </div>
                                 </label>
                             </div>
