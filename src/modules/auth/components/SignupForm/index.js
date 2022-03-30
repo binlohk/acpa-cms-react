@@ -38,18 +38,16 @@ function SignupForm(props) {
 
   const formik = useFormik({
     initialValues: {
-      username: "",
       email: "",
       password: "",
     },
     validationSchema: Yup.object({
-      username: Yup.string().required("username is required!"),
       email: Yup.string().email("請輸入正確的電郵格式").required("請輸入電郵"),
       password: Yup.string().min(8, "請輸入至少8個字母").required("請輸入密碼"),
     }),
     validateOnBlur: false,
     onSubmit: async () => {
-      const { username, email, password } = formik.values;
+      const {  email, password } = formik.values;
       try {
         if (Object.keys(formik.errors).length === 0) {
           let result = null;
@@ -57,7 +55,7 @@ function SignupForm(props) {
             result = await axios.post(
               `${process.env.REACT_APP_BACKEND_SERVER}/auth/local/register/${referralToken}`,
               {
-                username: username,
+                username: email,
                 email: email,
                 password: password,
               }
@@ -66,7 +64,7 @@ function SignupForm(props) {
             result = await axios.post(
               `${process.env.REACT_APP_BACKEND_SERVER}/auth/local/register`,
               {
-                username: username,
+                username: email,
                 email: email,
                 password: password,
               }
@@ -137,22 +135,6 @@ function SignupForm(props) {
               <p class="text-red-500 text-xs italic">
                 用戶名稱或電郵已經被注冊
               </p>
-            )}
-            {formik.errors.username && formik.touched.username && (
-              <p class="text-red-500 text-xs italic">
-                {formik.errors.username}
-              </p>
-            )}
-            <input
-              type="text"
-              className="block w-full p-3 mb-4 border rounded border-grey-light"
-              name="username"
-              placeholder="用戶名稱"
-              value={formik.values.username}
-              onChange={formik.handleChange}
-            />
-            {formik.errors.email && formik.touched.email && (
-              <p class="text-red-500 text-xs italic">{formik.errors.email}</p>
             )}
             <input
               type="text"

@@ -19,12 +19,6 @@ export default function PublicEnrollFormContact({ isLoggedIn, updateUserInfo }) 
                 !isLoggedIn && (
                     <>
                         <div>
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-                                姓名 *
-                            </label>
-                            <input className="appearance-none bg-transparent w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none border-b border-grey-900" type="text" name="name" onBlur={handleInputUpdate} required />
-                        </div>
-                        <div>
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
                                 電話號碼 *
                             </label>
