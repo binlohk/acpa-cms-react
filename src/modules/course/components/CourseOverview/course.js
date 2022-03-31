@@ -102,6 +102,8 @@ const Course = (props) => {
     const [value, setValue] = useState(0);
     const [Videotoken, setVideotoken] = useState('');
     const [RenderedHTML, setRenderedHTML] = useState('');
+    const [isLoading, setIsLoading] = useState();
+
     const fetchCourseData = async (courseId) => {
         try {
             var result;
@@ -224,7 +226,7 @@ const Course = (props) => {
 
     useEffect(() => {
         fetchCourseData(courseId);
-    }, []);
+    }, [isLoading]);
 
     const handleTabChange = (event, newValue) => {
         setValue(newValue);
@@ -268,15 +270,29 @@ const Course = (props) => {
                                         {courseData.price == 0
                                             ? '你尚未報讀此課程'
                                             : '你尚未擁有此課程'}
-                                    </span>
-                                    <BuyButton
+                                        </span>
+                                        {isLoading ?
+                                            (<>
+                                                 <BuyButton
                                         courseId={courseId}
-                                        coursePrice={courseData.price}
+                                            coursePrice={courseData.price}
+                                                setIsLoading={setIsLoading}
+                                                isDisabled={isLoading}>
+                                        稍等 
+                                    </BuyButton>
+                                            </>)
+                                            : <BuyButton
+                                        courseId={courseId}
+                                            coursePrice={courseData.price}
+                                                setIsLoading={setIsLoading}
+                                                isDisabled={isLoading}
+                                                
                                     >
                                         {courseData.price == 0
                                             ? '報名'
                                             : '購買課程'}
-                                    </BuyButton>
+                                    </BuyButton>}
+                                    
                                 </>
                             )}
                         </div>
