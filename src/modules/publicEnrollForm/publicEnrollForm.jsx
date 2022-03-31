@@ -39,6 +39,7 @@ const PublicEnrollForm = ({
     const [enrollFormData, setEnrollFormData] = useState(null);
     const [lessonData, setLessonData] = useState([]);
     const [isEnrolled, setIsEnrolled] = useState(false);
+    const [purchasedCourses, setPurchasedCourses] = useState([])
     const updateLessonProgress = async () => {
         try {
             const user = getUser();
@@ -161,39 +162,88 @@ const PublicEnrollForm = ({
     };
 
     useEffect(() => {
-        axios
+        const fetchUserCourses = async () => {
+            const response = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses`)
+            const data = response.data
+            const purchased = data.filter(item => item.purchased !== false)
+            console.log("purchased ", purchased);
+            axios
             .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms`)
-            .then(async (res) => {
+                .then(async (res) => {
                 setEnrollFormData(res?.data[0]);
-
                 let courses = res?.data[0]?.courses;
                 let lessonList = [];
 
                 for (let i = 0; i < courses.length; i++) {
-                    var courseDetails = await axios.get(
-                        `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courses[i].id}`
-                    );
-                    
-                    courseDetails?.data?.lessonsDetail.map((lesson) =>{
-                        lessonList.push({
-                            lessonId: lesson.id,
-                            date: lesson.LessonDate
-                        })
+                    const purchaseFound = purchased?.some(el => el.id === courses[i].id);
+                    if (!purchaseFound) {
+                        var courseDetails = await axios.get(
+                            `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courses[i].id}`
+                        );    
+                        
+                        courseDetails?.data?.lessonsDetail.map((lesson) =>{
+                            lessonList.push({
+                                lessonId: lesson.id,
+                                date: lesson.LessonDate
+                            })
+                        }
+                        );
                     }
-                    );
-                }
+                    }
+                    if (lessonList.length === 0) {
+                        setIsEnrolled(true);
+                    }
                 setLessonData(lessonList);
             })
             .catch((err) => {
                 console.log(err);
             });
 
+        }
+    
         if (getUser().id) {
+            fetchUserCourses()
             httpClient
                 .get(`${process.env.REACT_APP_BACKEND_SERVER}/users/me`)
                 .then((user) => {
                     setReferralToken(user.data.referralToken);
                 });
+        } else {
+            
+            axios
+            .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms`)
+                .then(async (res) => {
+                try {
+                    setEnrollFormData(res?.data[0]);
+
+                    let courses = res?.data[0]?.courses;
+                    let lessonList = [];
+    
+                    for (let i = 0; i < courses.length; i++) {
+                        var courseDetails = await axios.get(
+                            `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courses[i].id}`
+                        );
+                        
+                        courseDetails?.data?.lessonsDetail.map((lesson) =>{
+                            lessonList.push({
+                                lessonId: lesson.id,
+                                date: lesson.LessonDate
+                            })
+                        }
+                        );
+                    }
+                    if (lessonList.length === 0) {
+                        setIsEnrolled(true);
+                    }
+                    setLessonData(lessonList);                    
+                } catch (error) {
+                    console.log("error", error);
+                }
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         }
     }, [isLoggedIn]);
     useEffect(() => {
