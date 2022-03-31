@@ -101,7 +101,7 @@ const PublicEnrollForm = ({
                             process.env.REACT_APP_BACKEND_SERVER
                         }/registerAndEnroll/${referrerToken ?? ''}`,
                         {
-                            username: enteredUserInfo.name,
+                            username: enteredUserInfo.email,
                             email: enteredUserInfo.email,
                             password: enteredUserInfo.phone,
                             phone: enteredUserInfo.phone
