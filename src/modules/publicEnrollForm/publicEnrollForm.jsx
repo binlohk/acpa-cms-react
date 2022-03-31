@@ -38,6 +38,7 @@ const PublicEnrollForm = ({
     const [isLoggedIn, login] = useState(getUser()?.id != null);
     const [enrollFormData, setEnrollFormData] = useState(null);
     const [lessonData, setLessonData] = useState([]);
+    const [isEnrolled, setIsEnrolled] = useState(false);
     const updateLessonProgress = async () => {
         try {
             const user = getUser();
@@ -80,6 +81,7 @@ const PublicEnrollForm = ({
                                                 const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PK);
                                                 const result = await stripe.redirectToCheckout({ sessionId: session.data.sessionID });    
                                             }
+                                            setIsEnrolled(true);
                                             alert('成功報名。');
                                         })
                                         .catch((err) => {
@@ -128,6 +130,7 @@ const PublicEnrollForm = ({
                                                     const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PK);
                                                     const result = await stripe.redirectToCheckout({ sessionId: session.data.sessionID });    
                                                 }
+                                                setIsEnrolled(true);
                                                 alert(
                                                     '成功報名以及註冊，你的密碼將是你的電話號碼。'
                                                 );
@@ -255,6 +258,20 @@ const PublicEnrollForm = ({
                         isLoggedIn={getUser()?.id}
                         updateUserInfo={updateUserInfo}
                     />
+                    {isEnrolled ?
+                        
+                        (<>
+                              <input
+                        type="submit"
+                        className={`bg-indigo-700 text-white rounded-md py-2 opacity-50`}
+                        value="報名成功"
+                        disabled
+                    />
+                        </>)
+                        
+                        :
+
+                        (<>
                     <input
                         type="submit"
                         className={`bg-indigo-700 text-white rounded-md py-2 ${
@@ -263,7 +280,10 @@ const PublicEnrollForm = ({
                         onClick={handleEnrollment}
                         value="報名"
                         disabled={isLoading}
-                    />
+                    />  
+                        </>)
+                    }
+                  
                 </form>
             </div>
             {/* Login Dialog */}
