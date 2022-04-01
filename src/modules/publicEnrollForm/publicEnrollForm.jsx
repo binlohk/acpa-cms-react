@@ -66,17 +66,36 @@ const PublicEnrollForm = ({
                 // Enroll the course
                 const user = getUser();
                 if (user.id != '' && user.id != null) {
-                    axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/lessons`).then((lessonRes) => {
-                        let lessons = lessonRes?.data;
-                        lessons?.map((lesson) => {
-                                if (lesson?.id == selectedLessonId) {
+                    axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/sessions`).then((sessionRes) => {
+                        console.log("sessionRes ", sessionRes);
+                        let sessions = sessionRes?.data;
+                        console.log("sessions ", sessions);
+                        sessions?.map((session) => {
+                            console.log("session in map", session);
+                                if (session?.id == selectedLessonId) {
                                     const reqObj = {
-                                        courseId: lesson?.course?.id
+                                        courseId: session?.course?.id
                                     };
+                                    console.log("reqObj ", reqObj);
                                     httpClient
                                         .post('/user-payments', reqObj)
                                         .then(async (session) => {
+                                            console.log("session pay", session);
+                                            let userSessionData = {
+                                                enrolledDate: new Date(),
+                                                session: selectedLessonId,
+                                                user:user.id
+                                              }
+                                              
+                                            httpClient
+                                                .post('/user-sessions', userSessionData).then((userSessionRes) => {
+                                                    console.log("userSessionRes ", userSessionRes);
+                                                }).catch((userSessionErr) => {
+                                                    console.log("userSessionErr ", userSessionErr);
+                                                });
+                                            
                                             if (session.data.course.price > 0) {
+
                                                 const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PK);
                                                 const result = await stripe.redirectToCheckout({ sessionId: session.data.sessionID });    
                                             }
@@ -158,39 +177,88 @@ const PublicEnrollForm = ({
     };
 
     useEffect(() => {
-        axios
+        const fetchEnrollFormData = async () => {
+            axios
             .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms`)
             .then(async (res) => {
                 setEnrollFormData(res?.data[0]);
-
+                
+                var userSessions = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/user-sessions?users=${getUser()?.id}`);    
+                let userSessionsData = userSessions?.data
                 let courses = res?.data[0]?.courses;
                 let lessonList = [];
 
                 for (let i = 0; i < courses.length; i++) {
+                    
                     var courseDetails = await axios.get(
                         `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courses[i].id}`
                     );
                     
-                    courseDetails?.data?.lessonsDetail.map((lesson) =>{
-                        lessonList.push({
-                            lessonId: lesson.id,
-                            date: lesson.LessonDate
-                        })
-                    }
-                    );
+                    courseDetails?.data?.sessions.map((session) => {
+                    
+                        const userEnrollerFound = userSessionsData?.some(sessions => sessions.session.id == session.id);
+                    
+                        if (userEnrollerFound) {
+                            lessonList.push({
+                                lessonId: session.id,
+                                date: session.SessionDate,
+                                isEnrolled:true
+                            })    
+                        }
+                        else {
+                            lessonList.push({
+                                lessonId: session.id,
+                                date: session.SessionDate,
+                                isEnrolled:false
+                            })    
+                        }
+                        
+                    });
                 }
                 setLessonData(lessonList);
             })
             .catch((err) => {
                 console.log(err);
             });
+      }
 
         if (getUser().id) {
+            fetchEnrollFormData()
             httpClient
                 .get(`${process.env.REACT_APP_BACKEND_SERVER}/users/me`)
                 .then((user) => {
                     setReferralToken(user.data.referralToken);
                 });
+        }
+        else {
+            axios
+            .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms`)
+            .then(async (res) => {
+                
+                setEnrollFormData(res?.data[0]);
+
+                let courses = res?.data[0]?.courses;
+                let lessonList = [];
+
+                for (let i = 0; i < courses.length; i++) {
+                    
+                    var courseDetails = await axios.get(
+                        `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courses[i].id}`
+                    );
+                    
+                    courseDetails?.data?.sessions.map((session) => {
+                            lessonList.push({
+                                lessonId: session.id,
+                                date: session.SessionDate,
+                                isEnrolled:false
+                            })
+                    });
+                }
+                setLessonData(lessonList);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         }
     }, [isLoggedIn]);
     useEffect(() => {
