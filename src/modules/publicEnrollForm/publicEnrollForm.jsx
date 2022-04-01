@@ -70,14 +70,18 @@ const PublicEnrollForm = ({
                         console.log("sessionRes ", sessionRes);
                         let sessions = sessionRes?.data;
                         console.log("sessions ", sessions);
-                        sessions?.map((session) => {
+                        sessions?.map(async(session) => {
                             console.log("session in map", session);
                                 if (session?.id == selectedLessonId) {
                                     const reqObj = {
                                         courseId: session?.course?.id
                                     };
                                     console.log("reqObj ", reqObj);
-                                    httpClient
+                                    // if already purchased
+                                    const puchasedCourse = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses?id=${session?.course?.id}`);
+                                    console.log("puchasedCourse ", puchasedCourse.data[0].purchased);
+                                    if (!puchasedCourse.data[0].purchased) {
+                                        httpClient
                                         .post('/user-payments', reqObj)
                                         .then(async (session) => {
                                             console.log("session pay", session);
@@ -86,7 +90,7 @@ const PublicEnrollForm = ({
                                                 session: selectedLessonId,
                                                 user:user.id
                                               }
-                                              
+                                              console.log("userSessionData",userSessionData);
                                             httpClient
                                                 .post('/user-sessions', userSessionData).then((userSessionRes) => {
                                                     console.log("userSessionRes ", userSessionRes);
@@ -105,6 +109,27 @@ const PublicEnrollForm = ({
                                             alert('已經報名。');
                                         })
                                         .finally(() => setIsLoading(false));
+                                    }
+                                    else {
+                                        let userSessionData = {
+                                            enrolledDate: new Date(),
+                                            session: selectedLessonId,
+                                            user:user.id
+                                          }
+                                          console.log("userSessionData",userSessionData);
+                                        httpClient
+                                            .post('/user-sessions', userSessionData).then((userSessionRes) => {
+                                                console.log("userSessionRes ", userSessionRes);
+                                                alert('成功報名。');
+                                            }).catch((userSessionErr) => {
+                                                
+                                                console.log("userSessionErr ", userSessionErr);
+                                                alert('已經報名。');
+                                            });
+                                    }
+                                    
+                                    // if already purchased
+
                                 }            
                             })
                         }).catch((lessonErr) => {
@@ -133,19 +158,35 @@ const PublicEnrollForm = ({
                         // Enroll the course
                         const user = getUser();
                         if (user.id != '' && user.id != null) {
-                            axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/lessons`).then((lessonRes) => {
-                                let lessons = lessonRes?.data;
-                                lessons?.map((lesson) => {
-                                    if (lesson?.id == selectedLessonId) {
+                            axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/sessions`).then((sessionRes) => {
+                                let sessions = sessionRes?.data;
+                                sessions?.map(async(session) => {
+                                    console.log("sessionsessionsession",session);
+                                    if (session?.id == selectedLessonId) {
                                         const reqObj = {
-                                            courseId: lesson?.course?.id
+                                            courseId: session?.course?.id
                                         };
-                                        httpClient
+                                        const puchasedCourse = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses?id=${session?.course?.id}`);
+                                        console.log("puchasedCourse ", puchasedCourse);
+                                        if (!puchasedCourse.data[0].purchased) {
+                                            httpClient
                                             .post('/user-payments', reqObj)
-                                            .then(async (session) => {
-                                                if (session?.data?.course?.price > 0) {
+                                            .then(async (sessions) => {
+                                                let userSessionData = {
+                                                    enrolledDate: new Date(),
+                                                    session: selectedLessonId,
+                                                    user:user.id
+                                                  }
+                                                  console.log("userSessionData",userSessionData);
+                                                httpClient
+                                                    .post('/user-sessions', userSessionData).then((userSessionRes) => {
+                                                        console.log("userSessionRes ", userSessionRes);
+                                                    }).catch((userSessionErr) => {
+                                                        console.log("userSessionErr ", userSessionErr);
+                                                    });
+                                                if (sessions?.data?.course?.price > 0) {
                                                     const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PK);
-                                                    const result = await stripe.redirectToCheckout({ sessionId: session.data.sessionID });    
+                                                    const result = await stripe.redirectToCheckout({ sessionId: sessions.data.sessionID });    
                                                 }
                                                 alert(
                                                     '成功報名以及註冊，你的密碼將是你的電話號碼。'
@@ -155,7 +196,27 @@ const PublicEnrollForm = ({
                                             .catch((err) => {
                                                 alert(err.message);
                                                 setIsLoading(false);
-                                            });
+                                            });    
+                                        }
+                                        else {
+                                            let userSessionData = {
+                                                enrolledDate: new Date(),
+                                                session: selectedLessonId,
+                                                user:user.id
+                                              }
+                                              console.log("userSessionData",userSessionData);
+                                            httpClient
+                                                .post('/user-sessions', userSessionData).then((userSessionRes) => {
+                                                    console.log("userSessionRes ", userSessionRes);
+                                                    alert(
+                                                        '成功報名以及註冊，你的密碼將是你的電話號碼。'
+                                                    );
+                                                }).catch((userSessionErr) => {
+                                                    console.log("userSessionErr ", userSessionErr);
+                                                    alert(userSessionErr.message);
+                                                });
+                                        }
+                                        
                                     }            
                                 })
                             }).catch((lessonErr) => {
@@ -183,7 +244,7 @@ const PublicEnrollForm = ({
             .then(async (res) => {
                 setEnrollFormData(res?.data[0]);
                 
-                var userSessions = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/user-sessions?users=${getUser()?.id}`);    
+                var userSessions = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/user-sessions?user=${getUser()?.id}`);    
                 let userSessionsData = userSessions?.data
                 let courses = res?.data[0]?.courses;
                 let lessonList = [];
