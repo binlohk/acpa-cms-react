@@ -242,17 +242,17 @@ const PublicEnrollForm = ({
             axios
             .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms`)
             .then(async (res) => {
+                console.log("res?.data", res?.data);
                 setEnrollFormData(res?.data[0]);
                 
                 var userSessions = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/user-sessions?user=${getUser()?.id}`);    
+                console.log("userSessions",userSessions);
                 let userSessionsData = userSessions?.data
-                let courses = res?.data[0]?.courses;
+                let courses = res?.data[0]?.course;
                 let lessonList = [];
 
-                for (let i = 0; i < courses.length; i++) {
-                    
                     var courseDetails = await axios.get(
-                        `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courses[i].id}`
+                        `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courses.id}`
                     );
                     
                     courseDetails?.data?.sessions.map((session) => {
@@ -275,7 +275,6 @@ const PublicEnrollForm = ({
                         }
                         
                     });
-                }
                 setLessonData(lessonList);
             })
             .catch((err) => {
