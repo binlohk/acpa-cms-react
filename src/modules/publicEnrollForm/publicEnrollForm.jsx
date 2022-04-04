@@ -146,7 +146,8 @@ const PublicEnrollForm = ({
                                 sessions?.map(async(session) => {
                                     if (session?.id == selectedLessonId) {
                                         const reqObj = {
-                                            courseId: session?.course?.id
+                                            courseId: session?.course?.id,
+                                            courseSession:selectedLessonId
                                         };
                                         const puchasedCourse = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses?id=${session?.course?.id}`);
                                         if (!puchasedCourse.data[0].purchased) {
