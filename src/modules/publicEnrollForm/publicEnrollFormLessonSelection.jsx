@@ -50,19 +50,35 @@ export default function PublicEnrollFormLessonSelection({
                                                 e.target.value
                                             );
                                         }}
+                                        disabled={lesson?.isEnrolled}
                                     />
                                     <div className="font-semibold">
-                                        {new Date(Parser().parse(DOMPurify.sanitize(lesson?.date))).toLocaleString(
-                                            "zh-HK",
-                                            {
-                                                year: "numeric",
-                                                month: "long",
-                                                day: "numeric",
-                                                hour: "numeric",
-                                                minute: "numeric",
-                                                hour12: true,
-                                            }
-                                        )}
+                                        {lesson?.isEnrolled ?
+                                            new Date(Parser().parse(DOMPurify.sanitize(lesson?.date))).toLocaleString(
+                                                "zh-HK",
+                                                {
+                                                    year: "numeric",
+                                                    month: "long",
+                                                    day: "numeric",
+                                                    hour: "numeric",
+                                                    minute: "numeric",
+                                                    hour12: true,
+                                                }
+                                            ) + ' ( 已經報名 ) '
+                                            :
+                                            new Date(Parser().parse(DOMPurify.sanitize(lesson?.date))).toLocaleString(
+                                                "zh-HK",
+                                                {
+                                                    year: "numeric",
+                                                    month: "long",
+                                                    day: "numeric",
+                                                    hour: "numeric",
+                                                    minute: "numeric",
+                                                    hour12: true,
+                                                }
+                                            )
+                                    }
+
                                     </div>
                                 </label>
                             </div>
