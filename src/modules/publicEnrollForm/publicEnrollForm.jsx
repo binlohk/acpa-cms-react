@@ -67,46 +67,39 @@ const PublicEnrollForm = ({
                 const user = getUser();
                 if (user.id != '' && user.id != null) {
                     axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/sessions`).then((sessionRes) => {
-                        console.log("sessionRes ", sessionRes);
+                        
                         let sessions = sessionRes?.data;
-                        console.log("sessions ", sessions);
                         sessions?.map(async(session) => {
-                            console.log("session in map", session);
                                 if (session?.id == selectedLessonId) {
                                     const reqObj = {
-                                        courseId: session?.course?.id
+                                        courseId: session?.course?.id,
+                                        courseSession:selectedLessonId
                                     };
-                                    console.log("reqObj ", reqObj);
                                     // if already purchased
                                     const puchasedCourse = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses?id=${session?.course?.id}`);
-                                    console.log("puchasedCourse ", puchasedCourse.data[0].purchased);
                                     if (!puchasedCourse.data[0].purchased) {
                                         httpClient
                                         .post('/user-payments', reqObj)
                                         .then(async (session) => {
-                                            console.log("session pay", session);
-                                            let userSessionData = {
-                                                enrolledDate: new Date(),
-                                                session: selectedLessonId,
-                                                user:user.id
-                                              }
-                                              console.log("userSessionData",userSessionData);
-                                            httpClient
-                                                .post('/user-sessions', userSessionData).then((userSessionRes) => {
-                                                    console.log("userSessionRes ", userSessionRes);
-                                                }).catch((userSessionErr) => {
-                                                    console.log("userSessionErr ", userSessionErr);
-                                                });
-                                            
                                             if (session.data.course.price > 0) {
 
                                                 const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PK);
                                                 const result = await stripe.redirectToCheckout({ sessionId: session.data.sessionID });    
                                             }
-                                            alert('成功報名。');
+                                            else {
+                                                let userSessionData = {
+                                                    enrolledDate: new Date(),
+                                                    session: selectedLessonId,
+                                                    user:user.id
+                                                  }
+                                                await httpClient.post('/user-sessions', userSessionData);
+                                                alert('成功報名。');
+                                            }
+                                            
                                         })
                                         .catch((err) => {
-                                            alert('已經報名。');
+                                            alert('已經報名。1');
+                                            console.log("err", err);
                                         })
                                         .finally(() => setIsLoading(false));
                                     }
@@ -117,19 +110,9 @@ const PublicEnrollForm = ({
                                             user:user.id
                                           }
                                           console.log("userSessionData",userSessionData);
-                                        httpClient
-                                            .post('/user-sessions', userSessionData).then((userSessionRes) => {
-                                                console.log("userSessionRes ", userSessionRes);
-                                                alert('成功報名。');
-                                            }).catch((userSessionErr) => {
-                                                
-                                                console.log("userSessionErr ", userSessionErr);
-                                                alert('已經報名。');
-                                            });
+                                        await httpClient.post('/user-sessions', userSessionData);
+                                        alert('成功報名。');
                                     }
-                                    
-                                    // if already purchased
-
                                 }            
                             })
                         }).catch((lessonErr) => {
@@ -161,32 +144,25 @@ const PublicEnrollForm = ({
                             axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/sessions`).then((sessionRes) => {
                                 let sessions = sessionRes?.data;
                                 sessions?.map(async(session) => {
-                                    console.log("sessionsessionsession",session);
                                     if (session?.id == selectedLessonId) {
                                         const reqObj = {
                                             courseId: session?.course?.id
                                         };
                                         const puchasedCourse = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/courses?id=${session?.course?.id}`);
-                                        console.log("puchasedCourse ", puchasedCourse);
                                         if (!puchasedCourse.data[0].purchased) {
                                             httpClient
                                             .post('/user-payments', reqObj)
                                             .then(async (sessions) => {
-                                                let userSessionData = {
+                                                if (sessions?.data?.course?.price > 0) {
+                                                    const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PK);
+                                                    const result = await stripe.redirectToCheckout({ sessionId: sessions.data.sessionID });    
+                                                } else {
+                                                       let userSessionData = {
                                                     enrolledDate: new Date(),
                                                     session: selectedLessonId,
                                                     user:user.id
                                                   }
-                                                  console.log("userSessionData",userSessionData);
-                                                httpClient
-                                                    .post('/user-sessions', userSessionData).then((userSessionRes) => {
-                                                        console.log("userSessionRes ", userSessionRes);
-                                                    }).catch((userSessionErr) => {
-                                                        console.log("userSessionErr ", userSessionErr);
-                                                    });
-                                                if (sessions?.data?.course?.price > 0) {
-                                                    const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PK);
-                                                    const result = await stripe.redirectToCheckout({ sessionId: sessions.data.sessionID });    
+                                                    await httpClient.post('/user-sessions', userSessionData);
                                                 }
                                                 alert(
                                                     '成功報名以及註冊，你的密碼將是你的電話號碼。'
@@ -204,19 +180,12 @@ const PublicEnrollForm = ({
                                                 session: selectedLessonId,
                                                 user:user.id
                                               }
-                                              console.log("userSessionData",userSessionData);
-                                            httpClient
-                                                .post('/user-sessions', userSessionData).then((userSessionRes) => {
-                                                    console.log("userSessionRes ", userSessionRes);
-                                                    alert(
-                                                        '成功報名以及註冊，你的密碼將是你的電話號碼。'
-                                                    );
-                                                }).catch((userSessionErr) => {
-                                                    console.log("userSessionErr ", userSessionErr);
-                                                    alert(userSessionErr.message);
-                                                });
+                                            await httpClient.post('/user-sessions', userSessionData);
+                                                alert(
+                                                    '成功報名以及註冊，你的密碼將是你的電話號碼。'
+                                            );
+                                            await updateLessonProgress();
                                         }
-                                        
                                     }            
                                 })
                             }).catch((lessonErr) => {
@@ -225,7 +194,7 @@ const PublicEnrollForm = ({
                         }
                     })
                     .catch((err) => {
-                        alert('已經報名。');
+                        alert('已經報名。3');
                         setIsLoading(false);
                     });
             }
@@ -242,11 +211,9 @@ const PublicEnrollForm = ({
             axios
             .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms`)
             .then(async (res) => {
-                console.log("res?.data", res?.data);
                 setEnrollFormData(res?.data[0]);
                 
                 var userSessions = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/user-sessions?user=${getUser()?.id}`);    
-                console.log("userSessions",userSessions);
                 let userSessionsData = userSessions?.data
                 let courses = res?.data[0]?.course;
                 let lessonList = [];
@@ -297,13 +264,11 @@ const PublicEnrollForm = ({
                 
                 setEnrollFormData(res?.data[0]);
 
-                let courses = res?.data[0]?.courses;
+                let courses = res?.data[0]?.course;
                 let lessonList = [];
 
-                for (let i = 0; i < courses.length; i++) {
-                    
                     var courseDetails = await axios.get(
-                        `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courses[i].id}`
+                        `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courses.id}`
                     );
                     
                     courseDetails?.data?.sessions.map((session) => {
@@ -313,7 +278,6 @@ const PublicEnrollForm = ({
                                 isEnrolled:false
                             })
                     });
-                }
                 setLessonData(lessonList);
             })
             .catch((err) => {
