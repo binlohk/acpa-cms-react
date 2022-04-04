@@ -25,7 +25,7 @@ const ContentLoader = () => {
 
 const PublicEnrollForm = ({
     match: {
-        params: { referrerToken }
+        params: { referrerToken, enrollFormId }
     }
 }) => {
     const basicCardTailWindClasses =
@@ -210,13 +210,13 @@ const PublicEnrollForm = ({
     useEffect(() => {
         const fetchEnrollFormData = async () => {
             axios
-            .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms`)
-            .then(async (res) => {
-                setEnrollFormData(res?.data[0]);
+            .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms/${enrollFormId}`)
+                .then(async (res) => {
+                setEnrollFormData(res?.data);
                 
                 var userSessions = await httpClient.get(`${process.env.REACT_APP_BACKEND_SERVER}/user-sessions?user=${getUser()?.id}`);    
                 let userSessionsData = userSessions?.data
-                let courses = res?.data[0]?.course;
+                let courses = res?.data?.course;
                 let lessonList = [];
 
                     var courseDetails = await axios.get(
@@ -260,12 +260,12 @@ const PublicEnrollForm = ({
         }
         else {
             axios
-            .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms`)
+            .get(`${process.env.REACT_APP_BACKEND_SERVER}/enroll-forms/${enrollFormId}`)
             .then(async (res) => {
-                
-                setEnrollFormData(res?.data[0]);
+               
+                setEnrollFormData(res?.data);
 
-                let courses = res?.data[0]?.course;
+                let courses = res?.data?.course;
                 let lessonList = [];
 
                     var courseDetails = await axios.get(
@@ -311,6 +311,7 @@ const PublicEnrollForm = ({
                             isLoggedIn={isLoggedIn}
                             showLoginDialog={showLoginDialog}
                             referralToken={referralToken}
+                            enrollFormId={enrollFormId}
                         />
                     </>
                 ) : (
