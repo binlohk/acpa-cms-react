@@ -1,9 +1,9 @@
 import { ClickAwayListener, Tooltip } from "@material-ui/core";
 import { useState } from "react";
 
-export default function PublicEnrollReferral({ isLoggedIn, showLoginDialog, referralToken }) {
+export default function PublicEnrollReferral({ isLoggedIn, showLoginDialog, referralToken, enrollFormId }) {
 
-    var referralLink = `https://app.acpa.training/publicEnroll/${referralToken}`
+    var referralLink = `https://app.acpa.training/publicEnroll/${enrollFormId}/${referralToken}`
 
     const [open, setOpen] = useState(false);
 
