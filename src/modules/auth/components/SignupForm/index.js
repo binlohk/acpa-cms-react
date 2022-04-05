@@ -15,8 +15,10 @@ function SignupForm(props) {
   const [signupError, setSignupError] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [api, ApiReply] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    console.log("isloading", isLoading);
     var requestOptions = {
       method: "GET",
     };
@@ -47,6 +49,7 @@ function SignupForm(props) {
     }),
     validateOnBlur: false,
     onSubmit: async () => {
+      setIsLoading(true);
       const {  email, password } = formik.values;
       try {
         if (Object.keys(formik.errors).length === 0) {
@@ -71,11 +74,15 @@ function SignupForm(props) {
             );
           }
           console.log("data posted");
+         
           if (result) {
+            // setIsLoading(false);
             //notification for email sent
             setSignupError(false);
             setOpenSnackbar(true);
+            
           }
+          setIsLoading(false);
         }
       } catch (e) {
         setSignupError(true);
@@ -157,13 +164,24 @@ function SignupForm(props) {
               value={formik.values.password}
               onChange={formik.handleChange}
             />
-            <button
-              onClick={formik.handleSubmit}
+            {isLoading ? (<>
+              <button
+              type="submit"
+              className="w-full h-12 px-4 pt-2 font-bold text-white bg-indigo-700 rounded hover:bg-blue-dark focus:outline-none focus:shadow-outline"
+              disabled
+              >
+             稍等
+            </button>
+            </>) : (<>
+              <button
+                  onClick={ formik.handleSubmit }
               type="submit"
               className="w-full h-12 px-4 pt-2 font-bold text-white bg-indigo-700 rounded hover:bg-blue-dark focus:outline-none focus:shadow-outline"
             >
               開戶
             </button>
+            </>)}
+            
             <div className="mt-8 text-sm text-center text-grey-dark">
               By signing up, you agree to the
               <Link
