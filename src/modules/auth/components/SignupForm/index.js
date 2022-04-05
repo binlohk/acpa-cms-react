@@ -88,6 +88,9 @@ function SignupForm(props) {
         setSignupError(true);
         console.log(e);
       }
+      finally {
+        setIsLoading(false);
+      }
     },
   });
 
