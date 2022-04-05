@@ -167,7 +167,7 @@ function SignupForm(props) {
             <button
               onClick={formik.handleSubmit}
               type="submit"
-              className="w-full h-12 px-4 pt-2 font-bold text-white bg-indigo-700 rounded hover:bg-blue-dark focus:outline-none focus:shadow-outline"
+              className={`w-full h-12 px-4 pt-2 font-bold  rounded hover:bg-blue-dark focus:outline-none focus:shadow-outline text-white ${isLoading ?  "bg-gray-600" : "bg-indigo-700"}`}
               disabled={isLoading}
             >
               {isLoading ? '稍等' : '開戶'}
