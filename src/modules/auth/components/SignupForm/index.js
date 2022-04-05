@@ -164,24 +164,14 @@ function SignupForm(props) {
               value={formik.values.password}
               onChange={formik.handleChange}
             />
-            {isLoading ? (<>
-              <button
+            <button
+              onClick={formik.handleSubmit}
               type="submit"
               className="w-full h-12 px-4 pt-2 font-bold text-white bg-indigo-700 rounded hover:bg-blue-dark focus:outline-none focus:shadow-outline"
-              disabled
-              >
-             稍等
-            </button>
-            </>) : (<>
-              <button
-                  onClick={ formik.handleSubmit }
-              type="submit"
-              className="w-full h-12 px-4 pt-2 font-bold text-white bg-indigo-700 rounded hover:bg-blue-dark focus:outline-none focus:shadow-outline"
+              disabled={isLoading}
             >
-              開戶
+              {isLoading ? '稍等' : '開戶'}
             </button>
-            </>)}
-            
             <div className="mt-8 text-sm text-center text-grey-dark">
               By signing up, you agree to the
               <Link
