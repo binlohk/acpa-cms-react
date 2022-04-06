@@ -34,6 +34,18 @@ const stringToHTML = function (str) {
     domContainer.innerHTML = str;
     return domContainer;
 };
+function RemoveBaseUrl(url) {
+    var baseUrlPattern = /^https?:\/\/[a-z\:0-9.]+/;
+    var result = "";
+    var match = baseUrlPattern.exec(url);
+    if (match != null) {
+        result = match[0];
+    }
+    if (result.length > 0) {
+        url = url.replace(result, "");
+    }
+    return url;
+}
 const useStyles = makeStyles((theme) => ({
     paper: {
         width: '100%',
@@ -119,12 +131,15 @@ const Course = (props) => {
             const parentEmbed = stringToHTML(result.data.description);
             let oldIframe = parentEmbed.querySelectorAll("oembed");
             let GetImgSrc = parentEmbed.querySelectorAll("img");
-            
+            console.log("GetImgSrc", result.data.description);
+            console.log("GetImgSrc GetImgSrc",GetImgSrc);
             GetImgSrc = Array.from(GetImgSrc);
             for (const j in GetImgSrc) {
                 let src = GetImgSrc[j].getAttribute("src");
+                src = RemoveBaseUrl(src); // remove base url if exist 
+                // http://localhost:8000/upload/abc.jpg" ==> "/upload/abc.jpg"
                 const NewImg = document.createElement("img");
-            
+
                 if (src) {
                     NewImg.setAttribute(
                         "src",
