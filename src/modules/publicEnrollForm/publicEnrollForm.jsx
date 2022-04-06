@@ -38,6 +38,7 @@ const PublicEnrollForm = ({
     const [isLoggedIn, login] = useState(getUser()?.id != null);
     const [enrollFormData, setEnrollFormData] = useState(null);
     const [lessonData, setLessonData] = useState([]);
+    const [isEnrolled, setIsEnrolled] = useState(false);
     const updateLessonProgress = async () => {
         try {
             const user = getUser();
@@ -94,6 +95,7 @@ const PublicEnrollForm = ({
                                                   }
                                                 await httpClient.post('/user-sessions', userSessionData);
                                                 alert('成功報名。');
+                                                setIsLoading(false)
                                             }
                                             
                                         })
@@ -112,6 +114,7 @@ const PublicEnrollForm = ({
                                           console.log("userSessionData",userSessionData);
                                         await httpClient.post('/user-sessions', userSessionData);
                                         alert('成功報名。');
+                                        setIsLoading(false)
                                     }
                                 }            
                             })
@@ -169,6 +172,7 @@ const PublicEnrollForm = ({
                                                     '成功報名以及註冊，你的密碼將是你的電話號碼。'
                                                 );
                                                 await updateLessonProgress();
+                                                setIsLoading(false)
                                             })
                                             .catch((err) => {
                                                 alert(err.message);
@@ -186,11 +190,13 @@ const PublicEnrollForm = ({
                                                     '成功報名以及註冊，你的密碼將是你的電話號碼。'
                                             );
                                             await updateLessonProgress();
+                                            setIsLoading(false)
                                         }
                                     }            
                                 })
                             }).catch((lessonErr) => {
                                 alert("Course not found for lesson");
+                                setIsLoading(false)
                             });
                         }
                     })
@@ -226,7 +232,6 @@ const PublicEnrollForm = ({
                     courseDetails?.data?.sessions.map((session) => {
                     
                         const userEnrollerFound = userSessionsData?.some(sessions => sessions.session.id == session.id);
-                    
                         if (userEnrollerFound) {
                             lessonList.push({
                                 lessonId: session.id,
@@ -243,6 +248,8 @@ const PublicEnrollForm = ({
                         }
                         
                     });
+                    const isAllEnrolled = lessonList?.filter(session => { return session.isEnrolled != true });
+                    if (isAllEnrolled.length <= 0) setIsEnrolled(true);
                 setLessonData(lessonList);
             })
             .catch((err) => {
@@ -285,7 +292,7 @@ const PublicEnrollForm = ({
                 console.log(err);
             });
         }
-    }, [isLoggedIn]);
+    }, [isLoggedIn, isLoading]);
     useEffect(() => {
         login(!!getUser()?.id)
       }, [getUser()?.id])
@@ -349,6 +356,17 @@ const PublicEnrollForm = ({
                         isLoggedIn={getUser()?.id}
                         updateUserInfo={updateUserInfo}
                     />
+                    {isEnrolled ?
+                        (<>
+                              <input
+                        type="submit"
+                        className={`bg-indigo-700 text-white rounded-md py-2 opacity-50`}
+                        value="報名成功"
+                        disabled
+                    />
+                        </>)
+                        :
+                        (<>
                     <input
                         type="submit"
                         className={`bg-indigo-700 text-white rounded-md py-2 ${
@@ -357,7 +375,9 @@ const PublicEnrollForm = ({
                         onClick={handleEnrollment}
                         value="報名"
                         disabled={isLoading}
-                    />
+                    />  
+                        </>)
+                    }
                 </form>
             </div>
             {/* Login Dialog */}
