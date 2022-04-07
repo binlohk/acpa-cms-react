@@ -17,6 +17,7 @@ import Course from './modules/course/components/CourseOverview/course'
 import AllCourses from './modules/course/components/AllCourses/AllCourses'
 import MyCourses from './modules/course/components/AllCourses/MyCourses'
 import Lesson from './modules/lesson/components/LessonPage/Lesson'
+import NewLesson from './modules/lesson/components/LessonPage/NewLesson'
 import UserProfile from './modules/user/components/UserProfile'
 import UserLayout from './modules/layout/UserLayout'
 import PaymentSuccess from './modules/course/components/Payment/PaymentSuccess'
@@ -45,6 +46,7 @@ function App() {
               <Route exact path='/reset-password/:resetPasswordToken' component={ResetPassword} />
               <Route exact path='/publicEnroll/:enrollFormId/:referrerToken?' component={PublicEnrollForm} />
               <PrivateRoute exact path='/my-courses' component={MyCourses} />
+              <PrivateRoute exact path='/lessonnew/:lessonId' render={props => <NewLesson key={props.match.params.lessonId} />} />
               <PrivateRoute exact path='/lesson/:lessonId' render={props => <Lesson key={props.match.params.lessonId} />} />
               <PrivateRoute exact path='/user/:userId' component={UserProfile} />
               <PrivateRoute exact path='/payment-success/:courseId' component={PaymentSuccess} />
