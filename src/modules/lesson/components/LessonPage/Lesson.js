@@ -14,7 +14,7 @@ import Vimeo from '@u-wave/react-vimeo'
 import LessonStepper from './LessonStepper'
 import { Parser } from 'html-to-react'
 import DOMPurify from 'dompurify'
-
+import ReactPlayer from 'react-player'
 function extractUrlValue(key, url) {
     if (typeof url === 'undefined') url = window.location.href
     var match = url.match(key + '="([^&]+)">')
@@ -209,30 +209,24 @@ const Lesson = ({ match }) => {
                             <div className="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16  lg:px-7 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-5">
                                 <div className="  lg:col-span-2 border-b-2 border-gray-300">
                                     <div className="mx-0 my-0 px-0 py-0 flex flex-col">
-                                        <div className="">
+                                        <div className="bg-black">
                                             {lessonData.videoUrl !== '' ? (
                                                 <>
-                                                    <Vimeo
-                                                        video={
+                                                    <ReactPlayer
+                                                        url={
                                                             lessonData.videoUrl
                                                         }
-                                                        playerOptions
-                                                        autoplay
-                                                        width="800"
-                                                        height="700"
-                                                        style={{
-                                                            marginTop: '-121px',
-                                                            marginBottom:
-                                                                '-75px',
-                                                        }}
-                                                        onEnd={handleEnd}
+                                                        onEnded={handleEnd}
+                                                        width="100%"
+                                                        height="450px"
+                                                        controls
                                                     />
                                                 </>
                                             ) : (
                                                 <></>
                                             )}
                                         </div>
-                                        <div className="text-2xl line-clamp-2">
+                                        <div className="text-2xl line-clamp-2 mt-9">
                                             {lessonData?.title}
                                         </div>
                                     </div>
