@@ -146,7 +146,7 @@ const Lesson = ({ match }) => {
         <>
             {lessonData && (
                 <>
-                    <div className="bg-white">
+                    <div className="bg-lesson-bg">
                         <div className="pt-6">
                             <nav aria-label="Breadcrumb">
                                 <ol
@@ -221,7 +221,7 @@ const Lesson = ({ match }) => {
                                                         width="800"
                                                         height="700"
                                                         style={{
-                                                            marginTop: '-102px',
+                                                            marginTop: '-121px',
                                                             marginBottom:
                                                                 '-75px',
                                                         }}
@@ -238,7 +238,7 @@ const Lesson = ({ match }) => {
                                     </div>
                                 </div>
 
-                                <div className="mt-4 lg:mt-0 lg:row-span-3">
+                                <div className="mt-4 lg:mt-0 lg:row-span-3 bg-lessons-card shadow-lg  rounded-lg h-fit">
                                     {courseData &&
                                         courseData.lessonsDetail.map(
                                             (lesson, ind) => {
@@ -247,48 +247,78 @@ const Lesson = ({ match }) => {
                                                     <Link
                                                         to={`/lesson/${lesson.id}`}
                                                     >
-                                                        <article className="flex items-start space-x-6 p-6  mb-3 w-auto  ">
-                                                            {/* <img
-                                                                srcset="https://vumbnail.com/691749731.jpg, https://vumbnail.com/691749731_large.jpg, https://vumbnail.com/691749731_medium.jpg, https://vumbnail.com/691749731_small.jpg"
-                                                                src="https://vumbnail.com/691749731.jpg"
-                                                                alt="Vimeo Thumbnail"
-                                                                width={168}
-                                                            /> */}
-                                                            <div className="font-bold text-white rounded-full bg-black flex items-center justify-center font-mono px-6 py-3 w-12 text-base">
-                                                                {ind + 1}
-                                                            </div>
-                                                            <div className="min-w-80 relative flex-auto">
-                                                                <p className="font-semibold text-slate-900   pr-10 line-clamp-2">
-                                                                    {
-                                                                        lesson.title
+                                                        <div className="group">
+                                                            <article
+                                                                className={
+                                                                    lessonData?.id ==
+                                                                    lesson.id
+                                                                        ? `flex items-start space-x-6 p-6  mb-3 w-auto border-b-2 bg-acpa-color opacity-100`
+                                                                        : 'flex items-start space-x-6 p-6  mb-3 w-auto border-b-2 group-hover:bg-acpa-color group-hover:opacity-95'
+                                                                }
+                                                            >
+                                                                <div
+                                                                    className={
+                                                                        lessonData?.id ==
+                                                                        lesson.id
+                                                                            ? 'font-bold text-black rounded-full bg-white flex items-center justify-center font-mono px-6 py-3 w-12 text-base'
+                                                                            : 'font-bold group-hover:text-black  text-white rounded-full group-hover:bg-white   bg-acpa-color group-hover:opacity-100 flex items-center justify-center font-mono px-6 py-3 w-12 text-base'
                                                                     }
-                                                                </p>
-                                                                <dl className="mt-2 flex flex-wrap text-sm leading-6 font-medium">
-                                                                    <div className="absolute top-0 right-0 flex items-center space-x-1">
-                                                                        <dt className="text-sky-500">
-                                                                            {lesson.finished && (
-                                                                                <svg
-                                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                                    width="24"
-                                                                                    height="24"
-                                                                                    viewBox="0 0 24 24"
-                                                                                >
-                                                                                    <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
-                                                                                </svg>
-                                                                            )}
-                                                                        </dt>
-                                                                    </div>
+                                                                >
+                                                                    {ind + 1}
+                                                                </div>
+                                                                <div className="min-w-80 relative flex-auto">
+                                                                    <p
+                                                                        className={
+                                                                            lessonData?.id ==
+                                                                            lesson.id
+                                                                                ? 'font-semibold text-white  pr-10 line-clamp-2'
+                                                                                : 'font-semibold group-hover:text-white text-slate-900   pr-10 line-clamp-2'
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            lesson.title
+                                                                        }
+                                                                    </p>
+                                                                    <dl className="mt-2 flex flex-wrap text-sm leading-6 font-medium">
+                                                                        <div className="absolute top-0 right-0 flex items-center space-x-1">
+                                                                            <dt className="text-sky-500">
+                                                                                {lesson.finished && (
+                                                                                    <svg
+                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                        width="24"
+                                                                                        height="24"
+                                                                                        viewBox="0 0 24 24"
+                                                                                        fill={
+                                                                                            lessonData?.id ==
+                                                                                            lesson.id
+                                                                                                ? '#FFFFFF'
+                                                                                                : '"#513654"'
+                                                                                        }
+                                                                                    >
+                                                                                        <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
+                                                                                    </svg>
+                                                                                )}
+                                                                            </dt>
+                                                                        </div>
 
-                                                                    <div className="flex-none w-full mt-2 font-normal">
-                                                                        <dd className="text-slate-400">
-                                                                            {
-                                                                                lesson.videoDuration
-                                                                            }
-                                                                        </dd>
-                                                                    </div>
-                                                                </dl>
-                                                            </div>
-                                                        </article>
+                                                                        <div className="flex-none w-full mt-2 font-normal">
+                                                                            <dd
+                                                                                className={
+                                                                                    lessonData?.id ==
+                                                                                    lesson.id
+                                                                                        ? 'text-white'
+                                                                                        : 'text-slate-400 group-hover:text-white'
+                                                                                }
+                                                                            >
+                                                                                {
+                                                                                    lesson.videoDuration
+                                                                                }
+                                                                            </dd>
+                                                                        </div>
+                                                                    </dl>
+                                                                </div>
+                                                            </article>
+                                                        </div>
                                                     </Link>
                                                 )
                                             }

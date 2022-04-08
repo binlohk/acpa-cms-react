@@ -4,6 +4,10 @@ module.exports = {
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
+            colors: {
+                'acpa-color': '#513654',
+                'lesson-bg': '#F9FAFA',
+            },
             spacing: {
                 72: '18rem',
                 84: '21rem',
