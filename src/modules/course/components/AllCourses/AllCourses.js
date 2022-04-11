@@ -93,7 +93,7 @@ function AllCourses() {
                 {currentFilteredPageData.length !== 0 && (
                     <>
                         <CourseTitle>搜尋結果</CourseTitle>
-                        <div class="flex flex-wrap px-12">
+                        <div class="flex flex-wrap items-start justify-start max-w-full">
                             {currentFilteredPageData.length > 0 &&
                                 currentFilteredPageData.map((item, ind) => {
                                     return (
