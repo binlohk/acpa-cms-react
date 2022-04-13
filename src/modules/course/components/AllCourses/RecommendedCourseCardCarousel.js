@@ -1,26 +1,38 @@
 import React from 'react'
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 // Import Swiper styles
 import './RecommendedCourseCardCarousel.css'
-import "swiper/swiper.min.css";
-import "swiper/components/pagination/pagination.min.css"
-import "swiper/components/navigation/navigation.min.css"
+import 'swiper/swiper.min.css'
+import 'swiper/components/pagination/pagination.min.css'
+import 'swiper/components/navigation/navigation.min.css'
 
 // import Swiper core and required modules
-import SwiperCore, {
-    Pagination, Navigation
-} from 'swiper/core';
+import SwiperCore, { Pagination, Navigation } from 'swiper/core'
 
-SwiperCore.use([Pagination, Navigation]);
+SwiperCore.use([Pagination, Navigation])
 
-function RecommendedCourseCardCarousel({ children, slidesPerView, slidesPerGroup }) {
+function RecommendedCourseCardCarousel({
+    children,
+    slidesPerView,
+    slidesPerGroup,
+}) {
     return (
         <>
             <Swiper
-                slidesPerView={slidesPerView}
-                slidesPerGroup={slidesPerGroup}
+                breakpoints={{
+                    640: {
+                        width: 640,
+                        slidesPerView: 1,
+                        slidesPerGroup: 1,
+                    },
+                    768: {
+                        width: 768,
+                        slidesPerView: 2,
+                        slidesPerGroup: 2,
+                    },
+                }}
                 loop={false}
                 loopFillGroupWithBlank={true}
                 navigation={true}
