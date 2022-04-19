@@ -79,7 +79,7 @@ const ReferralList = () => {
                     })}</>
                 :
                 <>
-                    <div className='font-semibold text-white ml-7 md:ml-0'>被你邀請的用戶</div>
+                    <div className='font-semibold text-white ml-7 md:ml-2'>被你邀請的用戶</div>
                     <div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg gap-x-2 w-80 md:w-156 ml-7 md:ml-0'>
                         <AccountCircleIcon className={classes.accountCircleIcon} />
                         <div>

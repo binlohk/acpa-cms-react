@@ -42,7 +42,7 @@ export default function OwnedCourse({ purchasedCourses }) {
                     </div>
                     :
                     <div>
-                        <div className='font-semibold text-white ml-7 md:ml-0'>你擁有的課程 </div>
+                        <div className='font-semibold text-white ml-7 md:ml-2'>你擁有的課程 </div>
                         <div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg w-80 md:w-156 ml-7 md:ml-0'>
                             <SchoolIcon className={classes.schoolIcon} />
                             <div>
