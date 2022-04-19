@@ -198,7 +198,7 @@ function UserProfile() {
                                     會員名稱
                                 </p>
                             </div>
-                            <div className='flex py-12 gap-x-24'>
+                            <div className='flex py-12 md:gap-x-24 gap-x-6'>
                                 <div className='flex flex-col items-center'>
                                     <h1 className='text-lg font-semibold text-white'>{userProfile.created_at.substring(0, 10)}</h1>
                                     <p className='text-sm text-gray-300'>
@@ -224,7 +224,7 @@ function UserProfile() {
 
 
                         <div className="pt-4 grid grid-cols-1 gap-2  max-w-screen-sm">
-                        <p className="text-sm text-gray-600">點擊分享以下連結成為推薦人：</p>
+                        <p className="text-sm text-gray-600 ml-7 md:ml-0">點擊分享以下連結成為推薦人：</p>
                         <ClickAwayListener onClickAway={handleTooltipClose}>
                             <Tooltip
                                 PopperProps={{
@@ -255,7 +255,7 @@ function UserProfile() {
             <Divider
                 className={classes.divider}
             />
-            <div className='flex items-start justify-center pb-48 gap-x-8'>
+            <div className='flex flex-col lg:flex-row items-start  md:pl-20 justify-center pb-20  gap-x-8 '>
                 <OwnedCourse
                     purchasedCourses={purchasedCourses}
                 />
