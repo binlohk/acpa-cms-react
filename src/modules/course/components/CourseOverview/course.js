@@ -240,7 +240,6 @@ const Course = (props) => {
     };
 
     useEffect(() => {
-        console.log("Being used here");
         fetchCourseData(courseId);
     }, [isLoading]);
 
