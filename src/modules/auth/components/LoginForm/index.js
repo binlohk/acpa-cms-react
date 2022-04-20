@@ -93,7 +93,7 @@ function LoginForm(props) {
         style={{ background: "rgba(81,58,84, 0.75)", minHeight: "90vh" }}
         className="flex flex-col w-full min-h-screen bg-grey-lighter"
       >
-        <div className="container flex flex-row items-center justify-center flex-1 max-w-sm px-2 mx-auto">
+        <div className="container flex md:flex-row flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto">
           <div
             className="w-full px-6 py-8 text-black bg-gray-200 rounded-l-lg shadow-md"
             style={{
@@ -122,7 +122,7 @@ function LoginForm(props) {
             )}
           </div>
           <div
-            className="w-full px-6 py-8 text-black bg-white rounded-r-lg shadow-md"
+            className="w-full  mt-5 md:mt-0 px-6 py-8 text-black bg-white rounded-r-lg shadow-md"
             style={{ minHeight: 600, minWidth: 350 }}
           >
             {loginError && (
