@@ -25,11 +25,11 @@ export default function OwnedCourse({ purchasedCourses }) {
             {
                 (purchasedCourses && Object.keys(purchasedCourses).length !== 0) ?
                     <div>
-                        <div className='font-semibold text-white'>你擁有的課程 </div>
+                        <div className='font-semibold text-white ml-7 md:ml-0'>你擁有的課程 </div>
                         {
                             purchasedCourses.map((course, index) =>
                                 <>
-                                    <div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg w-156' key={`courseName-${index}`}>
+                                    <div className='flex items-center justify-start p-4 pr-4 my-4 bg-white rounded-lg w-80 md:w-156 ml-7 md:ml-0' key={`courseName-${index}`}>
                                         <SchoolIcon className={classes.schoolIcon} />
                                         <div>
                                             <div className='py-2 font-semibold text-black'><Link to={`/course/${course.id}`}>課程名稱: {course.title}</Link></div>
@@ -42,8 +42,8 @@ export default function OwnedCourse({ purchasedCourses }) {
                     </div>
                     :
                     <div>
-                        <div className='font-semibold text-white'>你擁有的課程 </div>
-                        <div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg w-156'>
+                        <div className='font-semibold text-white ml-7 md:ml-2'>你擁有的課程 </div>
+                        <div className='flex items-center justify-start p-4 pr-6 my-4 bg-white rounded-lg w-80 md:w-156 ml-7 md:ml-0'>
                             <SchoolIcon className={classes.schoolIcon} />
                             <div>
                                 <div className='py-2 font-semibold text-black'>你尚未購買任何課程</div>

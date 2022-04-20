@@ -100,7 +100,7 @@ function SignupForm(props) {
         style={{ background: "rgba(81,58,84, 0.75)", minHeight: "90vh" }}
         className="flex flex-col min-h-screen bg-grey-lighter"
       >
-        <div className="container flex flex-row items-center justify-center flex-1 max-w-sm px-2 mx-auto">
+        <div className="container flex flex-col md:flex-row items-center justify-center flex-1 max-w-sm px-2 mx-auto">
           <div
             className="w-full px-6 py-8 text-black bg-gray-200 rounded-l-lg shadow-md"
             style={{
