@@ -3,9 +3,9 @@ import SearchBar from '../../../utilComponents/SearchBar'
 
 function AllCoursesIntro({ numberOfCourses, onSearchChange }) {
     return (
-        <div className="flex justify-center items-start py-48 mx-2">
+        <div className="flex justify-center items-start py-48 mx-4 md:mx-2">
             <div className="focus:animate-moveSideways">
-                <div className="text-white text-4xl pb-4 ">
+                <div className="text-white text-4xl pb-4">
                     我們致力提供優質的金融課程
                 </div>
                 <SearchBar onSearchChange={onSearchChange} />

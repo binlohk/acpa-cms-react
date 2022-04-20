@@ -7,7 +7,7 @@ function AllCourseCard({ title, price, description, courseId, image, filteredCou
 
     return (
         <>
-            <div className='max-w-md px-3 py-6 sm:w-1/2 lg:w-1/6'>
+            <div className='max-w-md px-3 py-6 w-full md:w-1/2 lg:w-1/6'>
                 <div className='overflow-hidden bg-gray-700 rounded-lg shadow-xl'>
                     <Link to={`/course/${courseId}`}>
                         <div className='overflow-hidden rounded'>

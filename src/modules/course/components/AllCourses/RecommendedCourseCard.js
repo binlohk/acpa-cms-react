@@ -8,7 +8,7 @@ function RecommendedCourseCard({ title, price, description, courseId, image, ind
 
     return (
         <>
-            <div className='max-w-md px-3 py-6 sm:w-1/2 lg:w-full'>
+            <div className='max-w-md px-3 py-6 md:w-1/1 lg:w-full'>
                 <div className='overflow-hidden bg-gray-700 rounded-lg shadow-xl'>
                     <Link to={`/course/${courseId}`}>
                         <div className='overflow-hidden rounded'>
