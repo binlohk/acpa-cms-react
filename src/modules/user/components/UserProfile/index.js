@@ -191,7 +191,7 @@ function UserProfile() {
                         {/* username */}
                         <div className='flex flex-col pt-48 '>
                             <div className='flex flex-col items-center'>
-                                <h1  className='-mr-10  font-semibold text-white break-normal block text-2xl leading-6 w-72 break-words'>
+                                <h1  className='-mr-10  font-semibold text-white break-normal block text-2xl leading-6 w-72 break-words sm:flex sm:justify-center'>
                                     {userProfile.username}
                                 </h1>
                                 <p className=' -mr-10 text-sm text-gray-300 mt-4'>
