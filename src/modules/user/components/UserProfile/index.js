@@ -194,7 +194,7 @@ function UserProfile() {
                                 <h1  className='-mr-10  font-semibold text-white break-normal block text-2xl leading-6 w-72 break-words'>
                                     {userProfile.username}
                                 </h1>
-                                <p className='mt-4 -mr-10 text-sm text-gray-300'>
+                                <p className=' -mr-10 text-sm text-gray-300 mt-4'>
                                     會員名稱
                                 </p>
                             </div>
@@ -237,7 +237,7 @@ function UserProfile() {
                                 title="已複製"
                                 placement="top"
                             >
-                                <button className="mr-5 ml-5 md:mr-0 md:ml-0 truncate rounded-full border-2 border-gray-700 bg-gray-700 text-white" onClick={handleCopyLink}>
+                                <button className=" ml-5 mr-5  md:mr-0 md:ml-0 truncate rounded-full border-2 border-gray-700 bg-gray-700 text-white" onClick={handleCopyLink}>
                                     <div className="inline-flex item-center gap-2 p-2 w-70">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                             <path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" />
