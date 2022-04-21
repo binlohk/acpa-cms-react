@@ -152,8 +152,8 @@ const Course = (props) => {
             for (const i in oldIframe) {
                 let url = oldIframe[i].getAttribute("url");
                 const newIframe = document.createElement("iframe");
-                newIframe.setAttribute("width", "900");
-                newIframe.setAttribute("height", "500");
+                newIframe.setAttribute("width", "100%");
+                newIframe.setAttribute("height", "450px");
                 newIframe.setAttribute(
                     "allow",
                     "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -249,8 +249,7 @@ const Course = (props) => {
     return (
         <div className="relative flex flex-col w-full items-center min-w-0 text-gray-600 bg-gray-100 rounded shadow-lg">
             <div
-                className="flex flex-col items-center"
-                style={{ maxWidth: '1024px' }}
+                className="flex flex-col items-center max-w-sm md:max-w-2xl lg:max-w-5xl"
             >
                 {courseData && (
                     <>
@@ -314,9 +313,8 @@ const Course = (props) => {
 
                         <div
                             className="overflow-x-scroll"
-                            style={{ minWidth: 650 }}
                         >
-                            <div className="min-w-full">
+                            <div className="max-w-sm md:max-w-2xl lg:max-w-5xl">
                                 <div className={classes.paper}>
                                     <Tabs
                                         value={value}
@@ -369,7 +367,7 @@ const Course = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="py-6 pl-4">
+                                    <div className="py-6 px-1  md:pl-4 md:px-0 ">
                                         <div
                                             dangerouslySetInnerHTML={{
                                                 __html: RenderedHTML

@@ -49,7 +49,7 @@ const LessonCards = ({ purchased, lessonsDetail }) => {
                                 className="m-4 border-2 border-gray-300 rounded-md"
                                 key={ind}
                             >
-                                <div className="flex items-center justify-between px-6 py-4 text-xs text-left whitespace-nowrap">
+                                <div className="flex items-center justify-between px-2 md:px-6 py-4 text-xs text-left whitespace-nowrap">
                                     <div className="flex flex-grow">
                                         {/* lesson status */}
                                         {user.id && user.id != '' && (
@@ -63,12 +63,12 @@ const LessonCards = ({ purchased, lessonsDetail }) => {
                                             </div>
                                         )}
                                         {/* lesson name */}
-                                        <div className="flex flex-col flex-grow ml-3 w-96">
-                                            <span className="text-lg font-bold">
+                                        <div className="flex flex-col flex-grow ml-3  w-16 md:w-96">
+                                            <span className="text-xs  break-words md:text-lg font-bold">
                                                 {lesson.title}
                                             </span>
                                             {/* lesson text */}
-                                            <div className="overflow-y-auto">
+                                            <div className=" break-words w-1/2 leading-6 text-xs md:text-lg">
                                                 {Parser().parse(
                                                     DOMPurify.sanitize(
                                                         lesson.text
