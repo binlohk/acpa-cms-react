@@ -32,8 +32,8 @@ export default function PublicEnrollFormPromotion(props) {
                {
                     ViToken ? <>
                         <iframe
-                        width="600"
-                        height="300"
+                        width="100%"
+                        height="350px"
                         src={`https://www.youtube.com/embed/${ViToken}`}
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
