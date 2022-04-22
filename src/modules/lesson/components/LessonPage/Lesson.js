@@ -226,7 +226,7 @@ const Lesson = ({ match }) => {
                                                 <></>
                                             )}
                                         </div>
-                                        <div className="text-2xl line-clamp-2 mt-9">
+                                        <div className="text-2xl line-clamp-2 my-9">
                                             {lessonData?.title}
                                         </div>
                                     </div>
