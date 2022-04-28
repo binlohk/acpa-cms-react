@@ -59,20 +59,19 @@ const Header = () => {
                                 </Link>
                                 <Link
                                     to="/"
-                                    className="ml-6 font-bold text-md hover:text-yellow-500"
+                                    className="ml-6 font-bold text-md hover:text-yellow-500 invisible md:visible"
                                 >
                                     所有課程
                                 </Link>
                                 {getUser().id != null && (
                                     <Link
                                         to="/my-courses"
-                                        className="ml-6 font-bold text-md hover:text-yellow-500"
+                                        className="ml-6 font-bold text-md hover:text-yellow-500 invisible md:visible lg:visible;"
                                     >
                                         我的課程
                                     </Link>
                                 )}
                             </div>
-
                             {/* mobile toggle */}
                             <div className="-my-2 md:hidden">
                                 <Popover.Button
@@ -87,7 +86,6 @@ const Header = () => {
                                 </Popover.Button>
                             </div>
                             {/* mobile toggle */}
-
                             <div className="items-center justify-end hidden md:flex md:flex-1 lg:w-0">
                                 {getUser().id != null ? (
                                     <>
@@ -133,7 +131,6 @@ const Header = () => {
                             </div>
                         </div>
                     </div>
-
                     <Transition
                         show={open}
                         as={Fragment}
@@ -147,29 +144,41 @@ const Header = () => {
                         <Popover.Panel
                             focus
                             static
-                            className="absolute inset-x-0 top-0 p-2 transition origin-top-right transform md:hidden"
-                        >
-                            <div className="bg-white divide-y-2 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 divide-gray-50">
-                                <div className="px-5 py-3 space-y-6">
-                                    <div className="grid grid-cols-2 gap-y-4 gap-x-8">
+                         className="absolute inset-x-0 top-13 rounded-lg w-45 h-60 transition origin-top-right transform md:hidden bg-white right-1"
+                         >
+                            <div 
+                            className=" p-2 shadow-lg ring-1"
+                            >
+                                <div 
+                                 className="px-5 py-3 space-y-6"
+                                >
+                                    <div 
+                                     className="flex flex-col gap-y-6  text-center"
+                                    >
+                                        <Link
+                                            to={`/user/${getUser().id}`}
+                                            className="hover:text-yellow"
+                                        >
+                                            <AccountCircleIcon className="text-xl text-center" 
+                                            />
+                                        </Link>
                                         <Link
                                             to="/"
                                             className="font-medium text-center text-gray-900 text-md hover:text-gray-700"
                                         >
                                             所有課程
                                         </Link>
-
                                         <Link
                                             to="/my-courses"
                                             className="font-medium text-center text-gray-900 text-md hover:text-gray-700"
                                         >
                                             我的課程
                                         </Link>
-                                    </div>
+                                    </div><div className='ml-24'>
                                     {getUser().id ? (
                                         <button
                                             onClick={handleLogout}
-                                            className="inline-flex items-center justify-center px-3 py-2 ml-6 font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm whitespace-nowrap text-md hover:bg-indigo-700"
+                                            className=" px-10 py-4 font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm whitespace-nowrap text-md hover:bg-indigo-700"
                                         >
                                             <span>登出</span>
                                         </button>
@@ -202,6 +211,7 @@ const Header = () => {
                                             </p>
                                         </div>
                                     )}
+                                    </div>
                                 </div>
                             </div>
                         </Popover.Panel>
@@ -211,5 +221,4 @@ const Header = () => {
         </Popover>
     )
 }
-
 export default Header
