@@ -247,13 +247,13 @@ const Course = (props) => {
         setValue(newValue);
     };
     return (
-        <div className="relative flex flex-col w-full items-center min-w-0 text-gray-600 bg-gray-100 rounded shadow-lg">
+        <div className="relative flex flex-col w-full items-center  text-gray-600 bg-gray-100 rounded shadow-lg">
             <div
-                className="flex flex-col items-center max-w-sm md:max-w-2xl lg:max-w-5xl"
+                className="flex flex-col items-center w-full md:max-w-2xl lg:max-w-7xl"
             >
                 {courseData && (
                     <>
-                        <h1 className="py-12 text-3xl">{courseData.title}</h1>
+                        <h1 className="py-12 text-3xl align-middle">{courseData.title}</h1>
                         <div className="flex flex-col items-center w-40 p-2 bg-gray-400 rounded">
                             {courseData.purchased ? (
                                 <>
@@ -312,9 +312,9 @@ const Course = (props) => {
                         </div>
 
                         <div
-                            className="overflow-x-scroll"
+                            className="overflow-x-scroll flex items-center flex-col w-full"
                         >
-                            <div className="max-w-sm md:max-w-2xl lg:max-w-5xl">
+                            <div className="  w-5/6">
                                 <div className={classes.paper}>
                                     <Tabs
                                         value={value}
