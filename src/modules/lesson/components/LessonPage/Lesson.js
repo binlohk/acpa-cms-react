@@ -206,8 +206,8 @@ const Lesson = ({ match }) => {
                                 </ol>
                             </nav>
 
-                            <div className="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16  lg:px-7 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-5">
-                                <div className="  lg:col-span-2 border-b-2 border-gray-300">
+                            <div className="flex flex-col lg:flex-none max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16  lg:px-7 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-5">
+                                <div className="order-1 lg:order-none   lg:col-span-2 border-b-2 border-gray-300">
                                     <div className="mx-0 my-0 px-0 py-0 flex flex-col">
                                         <div className="bg-black">
                                             {lessonData.videoUrl !== '' ? (
@@ -232,7 +232,7 @@ const Lesson = ({ match }) => {
                                     </div>
                                 </div>
 
-                                <div className="mt-4 lg:mt-0 lg:row-span-3 bg-lessons-card shadow-lg  rounded-lg overflow-y-auto max-h-screen">
+                                <div className="order-3 lg:order-none  mt-4 lg:mt-0 lg:row-span-3 bg-lessons-card shadow-lg  rounded-lg overflow-y-auto max-h-screen">
                                     {courseData &&
                                         courseData.lessonsDetail.map(
                                             (lesson, ind) => {
@@ -318,7 +318,7 @@ const Lesson = ({ match }) => {
                                             }
                                         )}
                                 </div>
-                                <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2  lg:pr-8 mb-12 ">
+                                <div className="order-2 lg:order-none  py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2  lg:pr-8 mb-12 ">
                                     <div>
                                         <h3 className="">Description</h3>
 
