@@ -82,7 +82,7 @@ const Lesson = ({ match }) => {
                 }
 
                 setLessonData(result.data)
-                if (result.data.lessonDescription !== '') {
+                if (result?.data?.lessonDescription) {
                     var value = extractUrlValue(
                         'url',
                         result.data.lessonDescription
@@ -232,7 +232,7 @@ const Lesson = ({ match }) => {
                                     </div>
                                 </div>
 
-                                <div className="mt-4 lg:mt-0 lg:row-span-3 bg-lessons-card shadow-lg  rounded-lg h-fit">
+                                <div className="mt-4 lg:mt-0 lg:row-span-3 bg-lessons-card shadow-lg  rounded-lg overflow-y-auto max-h-screen">
                                     {courseData &&
                                         courseData.lessonsDetail.map(
                                             (lesson, ind) => {
@@ -318,7 +318,7 @@ const Lesson = ({ match }) => {
                                             }
                                         )}
                                 </div>
-                                <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2  lg:pr-8">
+                                <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2  lg:pr-8 mb-12 ">
                                     <div>
                                         <h3 className="">Description</h3>
 
