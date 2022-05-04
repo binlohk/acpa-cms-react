@@ -144,10 +144,10 @@ const Header = () => {
                         <Popover.Panel
                             focus
                             static
-                         className="absolute inset-x-0 top-13 rounded-lg w-45 h-60 transition origin-top-right transform md:hidden bg-white right-1"
+                         className="absolute inset-x-0 top-13 w-45 h-60 transition origin-top-right transform md:hidden  right-1"
                          >
                             <div 
-                            className=" p-2 shadow-lg ring-1"
+                            className="p-2 bg-white shadow-lg ring-1"
                             >
                                 <div 
                                  className="px-5 py-3 space-y-6"
@@ -174,16 +174,16 @@ const Header = () => {
                                         >
                                             我的課程
                                         </Link>
-                                    </div><div className='ml-24'>
+                                    </div><div>
                                     {getUser().id ? (
                                         <button
                                             onClick={handleLogout}
-                                            className=" px-10 py-4 font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm whitespace-nowrap text-md hover:bg-indigo-700"
+                                            className=" ml-20 px-16 py-4 font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm whitespace-nowrap text-md hover:bg-indigo-700"
                                         >
                                             <span>登出</span>
                                         </button>
                                     ) : (
-                                        <div>
+                                        <div class='ml-1'>
                                             <Link
                                                 to={{
                                                     pathname:
