@@ -147,7 +147,7 @@ const Header = () => {
                          className="absolute inset-x-0 top-13 w-45 h-60 transition origin-top-right transform md:hidden  right-1"
                          >
                             <div 
-                            className=" p-2  bg-white shadow-lg ring-1"
+                            className="p-2 bg-white shadow-lg ring-1"
                             >
                                 <div 
                                  className="px-5 py-3 space-y-6"
