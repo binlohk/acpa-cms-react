@@ -174,7 +174,7 @@ const Header = () => {
                                         >
                                             我的課程
                                         </Link>
-                                    </div><div className='ml-24'>
+                                    </div><div className='ml-24 '>
                                     {getUser().id ? (
                                         <button
                                             onClick={handleLogout}
