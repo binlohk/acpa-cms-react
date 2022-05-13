@@ -1,13 +1,13 @@
 .swiper-button-next {
-  width: 3rem !important;
-  height: 3rem !important;
-  color: black !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  color: white !important;
   font-weight: 700;
 }
 
 .swiper-button-prev {
-  width: 3rem !important;
-  height: 3rem !important;
-  color: black !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  color: white !important;
   font-weight: 700;
 }
