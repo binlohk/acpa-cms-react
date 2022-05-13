@@ -312,9 +312,9 @@ const Course = (props) => {
                         </div>
 
                         <div
-                            className="overflow-x-scroll flex items-center flex-col w-full"
+                            className="flex items-center flex-col w-full"
                         >
-                            <div className="  w-5/6">
+                            <div className="w-5/6">
                                 <div className={classes.paper}>
                                     <Tabs
                                         value={value}
