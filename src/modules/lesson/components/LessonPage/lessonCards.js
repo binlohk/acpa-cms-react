@@ -37,7 +37,7 @@ const LessonCards = ({ purchased, lessonsDetail }) => {
                         </div>
                     </div>
                 </div>
-                <div className="block w-full overflow-x-auto">
+                <div className="block w-full">
                     <div>
                         {lessonsDetail.length === 0 && (
                             <p className="mt-6 ml-4 text-xs">
@@ -64,11 +64,11 @@ const LessonCards = ({ purchased, lessonsDetail }) => {
                                         )}
                                         {/* lesson name */}
                                         <div className="flex flex-col flex-grow ml-3  w-16 md:w-96">
-                                            <span className="text-xs  break-words md:text-lg font-bold">
+                                            <span className="text-xs break-words md:text-lg font-bold truncate md:text-clip">
                                                 {lesson.title}
                                             </span>
                                             {/* lesson text */}
-                                            <div className=" break-words w-1/2 leading-6 text-xs md:text-lg">
+                                            <div className=" break-words w-full leading-6 text-xs md:text-lg truncate md:text-clip">
                                                 {Parser().parse(
                                                     DOMPurify.sanitize(
                                                         lesson.text
