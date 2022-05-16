@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom'
 import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon } from '@heroicons/react/outline'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import useSidebar from '../../hooks/useSidebar'
 
 const customStyles = (offset) => {
     return {
@@ -20,7 +19,6 @@ const customStyles = (offset) => {
 
 const Header = () => {
     const { getUser } = useContext(UserContext)
-    const { open } = useSidebar()
 
     const [offset, setOffset] = useState(0)
     const handleLogout = () => {
@@ -39,7 +37,7 @@ const Header = () => {
 
     return (
         <Popover className="fixed z-50 w-full" style={customStyles(offset)}>
-            {({ open }) => (
+            {({ open,close }) => (
                 <>
                     <div className="max-w-full py-4 mx-2 sm:px-6">
                         <div className="flex items-center justify-between py-1 border-b-2 border-transparent md:justify-start md:space-x-10">
@@ -142,8 +140,6 @@ const Header = () => {
                         leaveTo="opacity-0 scale-95"
                     >
                         <Popover.Panel
-                            focus
-                            static
                          className="absolute inset-x-0 top-13 w-45 h-60 transition origin-top-right transform md:hidden  right-1"
                          >
                             <div 
