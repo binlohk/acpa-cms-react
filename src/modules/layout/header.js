@@ -105,7 +105,7 @@ const Header = () => {
                                         <Link
                                             to={{
                                                 pathname:
-                                                    'https://acpa.training/',
+                                                    'https://acpatraining.com/',
                                             }}
                                             target="_blank"
                                             className="ml-6 font-bold whitespace-nowrap text-md hover:text-yellow-500"
